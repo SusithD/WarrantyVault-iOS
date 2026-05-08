@@ -55,6 +55,9 @@ struct RootView: View {
             }
         }
         .animation(.easeInOut(duration: 0.3), value: coordinator.stage)
+        .task {
+            await NotificationService.shared.requestAuthorizationIfNeeded()
+        }
     }
 }
 

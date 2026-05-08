@@ -49,6 +49,7 @@ struct Warranty: Identifiable, Hashable, Codable {
     var serialNumber: String
     var notes: String
     var receiptAttached: Bool
+    var reminderEnabled: Bool
 
     init(
         id: UUID = UUID(),
@@ -61,7 +62,8 @@ struct Warranty: Identifiable, Hashable, Codable {
         price: Double,
         serialNumber: String = "",
         notes: String = "",
-        receiptAttached: Bool = true
+        receiptAttached: Bool = true,
+        reminderEnabled: Bool = true
     ) {
         self.id = id
         self.productName = productName
@@ -74,6 +76,7 @@ struct Warranty: Identifiable, Hashable, Codable {
         self.serialNumber = serialNumber
         self.notes = notes
         self.receiptAttached = receiptAttached
+        self.reminderEnabled = reminderEnabled
     }
 
     var daysRemaining: Int {

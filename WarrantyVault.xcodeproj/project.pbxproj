@@ -47,6 +47,7 @@
 		875DD61EB0B341FBB313E6CF /* ClaimEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 289A7F013E6181ECDF8AB5DC /* ClaimEntity+CoreDataProperties.swift */; };
 		09F01F53591CEEF0B7C10FE4 /* WarrantyEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D60B2675D348951D4CE1505 /* WarrantyEntity+CoreDataClass.swift */; };
 		9803F7CBC316BB8060ED16A5 /* WarrantyEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24AEE743D783631FEBFA450 /* WarrantyEntity+CoreDataProperties.swift */; };
+		533D78D209768B0620E806B4 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1742C9D25B10917F452469D /* NotificationService.swift */; };
 		C2547F273BC1D92C0CE36C8F /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E97D67F3238351114B404D4 /* PersistenceController.swift */; };
 		09A4B4018EE19DB9F182FB10 /* WarrantyVaultApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2855521D3CECE57610385E92 /* WarrantyVaultApp.swift */; };
 		75A5C27DF026105D470D59C2 /* WarrantyVault.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8A33099F64A214C051F2B74C /* WarrantyVault.xcdatamodeld */; };
@@ -96,11 +97,13 @@
 		289A7F013E6181ECDF8AB5DC /* ClaimEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClaimEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9D60B2675D348951D4CE1505 /* WarrantyEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WarrantyEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		B24AEE743D783631FEBFA450 /* WarrantyEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WarrantyEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		A1742C9D25B10917F452469D /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationService.swift"; sourceTree = "<group>"; };
 		5E97D67F3238351114B404D4 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersistenceController.swift"; sourceTree = "<group>"; };
 		2855521D3CECE57610385E92 /* WarrantyVaultApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WarrantyVaultApp.swift"; sourceTree = "<group>"; };
 		B45634CEEE3EB39F8AD6FF61 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets.xcassets"; sourceTree = "<group>"; };
 		757D7FD6E847403B72ECD838 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		EE093E46BBB7A5A72250A01C /* WarrantyVault.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WarrantyVault.xcdatamodel; sourceTree = "<group>"; };
+		A76F63FEB525BAB2DC000E15 /* WarrantyVault 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WarrantyVault 2.xcdatamodel"; sourceTree = "<group>"; };
+		EE093E46BBB7A5A72250A01C /* WarrantyVault.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WarrantyVault.xcdatamodel"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -289,6 +292,7 @@
 			children = (
 				1C0D4DE3AA05F5F407F5F402 /* Bridging */,
 				0C846BAFF22516A808F23DDF /* Entities */,
+				A1742C9D25B10917F452469D /* NotificationService.swift */,
 				5E97D67F3238351114B404D4 /* PersistenceController.swift */,
 				8A33099F64A214C051F2B74C /* WarrantyVault.xcdatamodeld */,
 			);
@@ -436,6 +440,7 @@
 				875DD61EB0B341FBB313E6CF /* ClaimEntity+CoreDataProperties.swift in Sources */,
 				09F01F53591CEEF0B7C10FE4 /* WarrantyEntity+CoreDataClass.swift in Sources */,
 				9803F7CBC316BB8060ED16A5 /* WarrantyEntity+CoreDataProperties.swift in Sources */,
+				533D78D209768B0620E806B4 /* NotificationService.swift in Sources */,
 				C2547F273BC1D92C0CE36C8F /* PersistenceController.swift in Sources */,
 				09A4B4018EE19DB9F182FB10 /* WarrantyVaultApp.swift in Sources */,
 				75A5C27DF026105D470D59C2 /* WarrantyVault.xcdatamodeld in Sources */,
@@ -448,10 +453,11 @@
 		8A33099F64A214C051F2B74C /* WarrantyVault.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				A76F63FEB525BAB2DC000E15 /* WarrantyVault 2.xcdatamodel */,
 				EE093E46BBB7A5A72250A01C /* WarrantyVault.xcdatamodel */,
 			);
-			currentVersion = EE093E46BBB7A5A72250A01C /* WarrantyVault.xcdatamodel */;
-			path = WarrantyVault.xcdatamodeld;
+			currentVersion = A76F63FEB525BAB2DC000E15 /* WarrantyVault 2.xcdatamodel */;
+			path = "WarrantyVault.xcdatamodeld";
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

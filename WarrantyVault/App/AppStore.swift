@@ -107,12 +107,19 @@ final class AppStore {
         save()
         reloadWarranties()
         reloadActivity()
+
+        Task.detached { await NotificationService.shared.schedule(for: w) }
     }
 
     func updateWarranty(_ w: Warranty) {
         WarrantyEntity.upsert(from: w, in: context)
         save()
         reloadWarranties()
+
+        Task.detached {
+            NotificationService.shared.cancel(for: w.id)
+            await NotificationService.shared.schedule(for: w)
+        }
     }
 
     func deleteWarranty(_ id: UUID) {
@@ -124,6 +131,8 @@ final class AppStore {
             save()
         }
         reloadWarranties()
+
+        Task.detached { NotificationService.shared.cancel(for: id) }
     }
 
     // MARK: Mutations — Claim

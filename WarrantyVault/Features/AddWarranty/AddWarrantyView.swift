@@ -17,6 +17,7 @@ struct AddWarrantyView: View {
     @State private var purchaseDate: Date
     @State private var expiryDate: Date
     @State private var receiptAttached: Bool
+    @State private var reminderEnabled: Bool
 
     init(editing: Warranty? = nil) {
         self.editing = editing
@@ -30,6 +31,7 @@ struct AddWarrantyView: View {
         _purchaseDate  = State(initialValue: editing?.purchaseDate ?? Date())
         _expiryDate    = State(initialValue: editing?.expiryDate ?? Calendar.current.date(byAdding: .year, value: 1, to: Date()) ?? Date())
         _receiptAttached = State(initialValue: editing?.receiptAttached ?? false)
+        _reminderEnabled = State(initialValue: editing?.reminderEnabled ?? true)
     }
 
     var body: some View {
@@ -42,6 +44,7 @@ struct AddWarrantyView: View {
                     datesCard
                     purchaseDetailsCard
                     receiptToggle
+                    reminderToggle
                     notesField
                     savingButton
                 }
@@ -138,6 +141,22 @@ struct AddWarrantyView: View {
         }
     }
 
+    private var reminderToggle: some View {
+        GlassCard {
+            Toggle(isOn: $reminderEnabled) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Expiry reminders")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(AppColors.textPrimary)
+                    Text("Notify 30, 7, and 1 day before expiry.")
+                        .font(.system(size: 12))
+                        .foregroundStyle(AppColors.textSecondary)
+                }
+            }
+            .tint(AppColors.brandBlue)
+        }
+    }
+
     private var notesField: some View {
         GlassCard {
             VStack(alignment: .leading, spacing: 8) {
@@ -178,6 +197,7 @@ struct AddWarrantyView: View {
             updated.purchaseDate = purchaseDate
             updated.expiryDate = expiryDate
             updated.receiptAttached = receiptAttached
+            updated.reminderEnabled = reminderEnabled
             store.updateWarranty(updated)
         } else {
             let w = Warranty(
@@ -190,7 +210,8 @@ struct AddWarrantyView: View {
                 price: price,
                 serialNumber: serial,
                 notes: notes,
-                receiptAttached: receiptAttached
+                receiptAttached: receiptAttached,
+                reminderEnabled: reminderEnabled
             )
             store.addWarranty(w)
         }
