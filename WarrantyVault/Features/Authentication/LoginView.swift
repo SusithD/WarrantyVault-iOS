@@ -1,9 +1,6 @@
 import SwiftUI
 
-/// Full-screen email login gate. Replaces the previous Face ID gate as the
-/// app's authentication entry. Firebase persists the session in keychain,
-/// so once a user signs in they go straight to the main app on subsequent
-/// launches without re-authenticating.
+
 struct LoginView: View {
     @State private var auth = AuthService.shared
 
@@ -46,7 +43,6 @@ struct LoginView: View {
         }
     }
 
-    // MARK: - Sections
 
     private var branding: some View {
         VStack(spacing: 8) {
@@ -163,9 +159,7 @@ struct LoginView: View {
         }
     }
 
-    /// Two-tab switch at the top of the card. Keeps the form layout
-    /// consistent across modes — only the headline copy + name field
-    /// change.
+
     private var modeSwitch: some View {
         HStack(spacing: 0) {
             ForEach(Mode.allCases) { m in
@@ -189,7 +183,6 @@ struct LoginView: View {
         .background(Capsule().fill(AppColors.bgSurface))
     }
 
-    // MARK: - Helpers
 
     private var canSubmit: Bool {
         guard !isWorking, email.contains("@"), password.count >= 6 else { return false }
@@ -228,8 +221,8 @@ struct LoginView: View {
                 await auth.signUp(name: pendingName, email: pendingEmail, password: pendingPassword)
             }
             isWorking = false
-            // Successful auth state change is observed by RootView, which
-            // advances the coordinator to the main app — no manual call here.
+
+
         }
     }
 }

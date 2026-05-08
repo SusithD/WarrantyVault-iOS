@@ -26,8 +26,8 @@ struct ProfileView: View {
         }
         .safeAreaInset(edge: .top, spacing: 0) { navBar }
         .task {
-            // Refresh on every appearance so the banner clears as soon as
-            // the user verifies in another tab.
+
+
             if auth.isSignedIn && !auth.isEmailVerified {
                 await auth.refreshVerificationStatus()
             }
@@ -133,9 +133,7 @@ struct ProfileView: View {
         }
     }
 
-    /// Profile header sources name/email from the signed-in Firebase user
-    /// when available, falling back to the local household mock so the
-    /// offline-only experience still has something to show.
+
     private var displayName: String {
         if auth.isSignedIn, let name = auth.displayName, !name.isEmpty {
             return name
@@ -181,10 +179,7 @@ struct ProfileView: View {
         }
     }
 
-    /// When notifications are turned off, drop every pending warranty
-    /// reminder so the user stops being interrupted. When turned back on,
-    /// re-request authorization and re-schedule reminders for everything
-    /// in the vault.
+
     @MainActor
     private func applyNotificationToggle(_ isOn: Bool) async {
         if isOn {

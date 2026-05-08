@@ -114,7 +114,6 @@ struct HouseholdHubView: View {
     }
 }
 
-// MARK: - Members
 
 struct MembersSection: View {
     @Environment(AppStore.self) private var store
@@ -212,7 +211,6 @@ struct MemberRow: View {
     }
 }
 
-// MARK: - Activity
 
 struct ActivitySection: View {
     @Environment(AppStore.self) private var store

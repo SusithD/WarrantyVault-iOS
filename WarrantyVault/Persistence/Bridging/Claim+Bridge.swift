@@ -2,8 +2,8 @@ import Foundation
 import CoreData
 
 extension Claim {
-    /// Build a struct from a managed entity. Timeline events are deserialised from
-    /// the entity's `timelineData` blob; if decoding fails the timeline comes back empty.
+
+
     init(_ entity: ClaimEntity) {
         let timeline: [ClaimTimelineEvent] = {
             guard let data = entity.timelineData else { return [] }

@@ -25,18 +25,16 @@ enum WarrantyCategory: String, CaseIterable, Identifiable, Codable {
         }
     }
 
-    /// De-saturated tints chosen for the dark palette. Each is bright enough
-    /// to read on a dark grey surface but cool enough not to compete with
-    /// the lime brand accent.
+
     var tint: Color {
         switch self {
-        case .electronics: return Color(hex: "60A5FA")  // Sky-400
-        case .appliance:   return Color(hex: "A78BFA")  // Violet-400
-        case .vehicle:     return Color(hex: "FB923C")  // Orange-400
-        case .furniture:   return Color(hex: "F472B6")  // Pink-400
-        case .jewelry:     return Color(hex: "FCD34D")  // Yellow-300
-        case .tools:       return Color(hex: "5EEAD4")  // Teal-300
-        case .other:       return Color(hex: "9CA3AF")  // Gray-400
+        case .electronics: return Color(hex: "60A5FA")
+        case .appliance:   return Color(hex: "A78BFA")
+        case .vehicle:     return Color(hex: "FB923C")
+        case .furniture:   return Color(hex: "F472B6")
+        case .jewelry:     return Color(hex: "FCD34D")
+        case .tools:       return Color(hex: "5EEAD4")
+        case .other:       return Color(hex: "9CA3AF")
         }
     }
 }
@@ -52,10 +50,8 @@ struct Warranty: Identifiable, Hashable, Codable {
     var price: Double
     var serialNumber: String
     var notes: String
-    /// One entry per scanned receipt page. Empty when no receipt is attached.
-    /// `VNDocumentCameraScan` can return multiple pages (long thermal-roll
-    /// receipts, store-credit slips, etc.) which we keep all of rather than
-    /// dropping every page after the first.
+
+
     var receiptImages: [Data]
     var reminderEnabled: Bool
     var latitude: Double?
@@ -64,10 +60,10 @@ struct Warranty: Identifiable, Hashable, Codable {
 
     var receiptAttached: Bool { !receiptImages.isEmpty }
 
-    /// Convenience for legacy callers that only care about the first page.
+
     var receiptImage: Data? { receiptImages.first }
 
-    /// Returns a coordinate when both lat/lon are present, else `nil`.
+
     var coordinate: CLLocationCoordinate2D? {
         guard let lat = latitude, let lon = longitude else { return nil }
         return CLLocationCoordinate2D(latitude: lat, longitude: lon)

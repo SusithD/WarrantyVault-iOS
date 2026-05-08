@@ -3,21 +3,7 @@ import Observation
 import CoreData
 import FirebaseFirestore
 
-/// Bidirectional Firestore ↔ Core Data sync, scoped to a single signed-in
-/// user. Started by `AppStore` in response to auth-state changes.
-///
-/// **Loop prevention.** Incoming remote writes set `applyingRemote = true`
-/// while applying. The push paths (`pushWarranty`, `pushClaim`, `delete*`)
-/// no-op while that flag is set, so changes received from Firestore aren't
-/// echoed back as local pushes.
-///
-/// **Conflict resolution.** Last-write-wins by `updatedAt`. The local
-/// entity's `updatedAt` is bumped on every local save by the bridging
-/// extensions, so a fresher local value won't be overwritten by stale remote.
-///
-/// **Threading.** Firestore listener callbacks land on the main queue by
-/// default, which matches the Core Data viewContext's queue, so saves are
-/// safe without explicit dispatching.
+
 @Observable
 final class WarrantySyncService {
 
@@ -26,11 +12,10 @@ final class WarrantySyncService {
     private(set) var isActive = false
     private(set) var lastError: String?
 
-    /// Called after applying remote warranty changes (added/modified/removed).
-    /// Used by `AppStore` to refresh its in-memory `warranties` array.
+
     @ObservationIgnored var onWarrantiesChanged: (() -> Void)?
 
-    /// Called after applying remote claim changes.
+
     @ObservationIgnored var onClaimsChanged: (() -> Void)?
 
     @ObservationIgnored private var uid: String?
@@ -41,9 +26,7 @@ final class WarrantySyncService {
 
     private init() {}
 
-    /// Begin listening to the signed-in user's Firestore subtree and apply
-    /// changes into the supplied Core Data context. Re-callable — stops any
-    /// previous listeners first.
+
     func start(uid: String, context: NSManagedObjectContext) {
         stop()
         self.uid = uid
@@ -63,7 +46,6 @@ final class WarrantySyncService {
         isActive = false
     }
 
-    // MARK: - Push (Core Data → Firestore)
 
     func pushWarranty(_ warranty: Warranty) {
         guard !applyingRemote, let collection = warrantyCollection() else { return }
@@ -90,7 +72,6 @@ final class WarrantySyncService {
         }
     }
 
-    // MARK: - Pull (Firestore → Core Data)
 
     private func attachWarrantyListener() {
         guard let collection = warrantyCollection() else { return }
@@ -135,7 +116,7 @@ final class WarrantySyncService {
             do {
                 let dto = try change.document.data(as: WarrantyDTO.self)
                 guard let warranty = dto.asWarranty else { return }
-                // LWW guard — skip when the local copy is fresher.
+
                 if let localUpdated = localUpdatedAt(warrantyId: warranty.id, in: context),
                    localUpdated > dto.updatedAt {
                     return
@@ -179,7 +160,6 @@ final class WarrantySyncService {
         }
     }
 
-    // MARK: - Helpers
 
     private func warrantyCollection() -> CollectionReference? {
         guard let uid else { return nil }

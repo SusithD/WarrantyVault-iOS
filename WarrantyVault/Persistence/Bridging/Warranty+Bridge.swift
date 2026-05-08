@@ -2,8 +2,8 @@ import Foundation
 import CoreData
 
 extension Warranty {
-    /// Build a struct from a managed entity. The entity's stored category is
-    /// matched against `WarrantyCategory.rawValue`; unknown values fall back to `.other`.
+
+
     init(_ entity: WarrantyEntity) {
         self.init(
             id: entity.id,
@@ -26,8 +26,8 @@ extension Warranty {
 }
 
 extension WarrantyEntity {
-    /// Copy struct fields onto this entity. Does not save the context.
-    /// `createdAt` is preserved on existing rows; `updatedAt` is always bumped.
+
+
     func apply(_ value: Warranty) {
         self.id                = value.id
         self.productName       = value.productName
@@ -47,9 +47,7 @@ extension WarrantyEntity {
         self.updatedAt         = Date()
     }
 
-    /// Decode the JSON-encoded array. Falls back to wrapping legacy raw
-    /// single-image bytes in a one-element array so warranties created
-    /// against the v5 schema still round-trip cleanly after migration.
+
     static func decodeReceiptImages(_ raw: Data?) -> [Data] {
         guard let raw, !raw.isEmpty else { return [] }
         if let arr = try? JSONDecoder().decode([Data].self, from: raw) {
@@ -63,7 +61,7 @@ extension WarrantyEntity {
         return try? JSONEncoder().encode(images)
     }
 
-    /// Inserts a new row or updates the existing one matching `value.id`.
+
     @discardableResult
     static func upsert(from value: Warranty, in context: NSManagedObjectContext) -> WarrantyEntity {
         let request = WarrantyEntity.fetchRequest()

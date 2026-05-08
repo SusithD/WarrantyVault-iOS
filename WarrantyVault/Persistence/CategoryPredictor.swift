@@ -1,29 +1,16 @@
 import Foundation
 import NaturalLanguage
 
-/// Predicts a `WarrantyCategory` from receipt text using a hybrid strategy:
-///
-/// 1. **Brand / token dictionary** — exact substring matches against a
-///    curated list of recognisable brand and product tokens. Longest match
-///    wins so multi-word tokens like `"lg washtower"` beat the bare `"lg"`.
-/// 2. **NLEmbedding fallback** — when no token hits, use Apple's
-///    pre-trained English word embeddings (shipped with iOS, served by
-///    Core ML under the hood) to find the closest category by cosine
-///    distance to a small set of seed words per category.
-///
-/// Returns `nil` if neither layer is confident — the picker keeps its
-/// current value rather than getting an arbitrary guess.
+
 final class CategoryPredictor {
 
     static let shared = CategoryPredictor()
 
     private let embedding: NLEmbedding?
 
-    /// Substring-matchable tokens, ordered as listed but resolved by
-    /// longest-match-wins at lookup time. Multi-word tokens (e.g.
-    /// `"lg washtower"`) take precedence over their single-word prefixes.
+
     private let brandMap: [(token: String, category: WarrantyCategory)] = [
-        // Electronics
+
         ("apple", .electronics), ("iphone", .electronics), ("ipad", .electronics),
         ("macbook", .electronics), ("airpods", .electronics), ("apple watch", .electronics),
         ("samsung galaxy", .electronics), ("samsung qled", .electronics), ("samsung neo qled", .electronics),
@@ -40,7 +27,7 @@ final class CategoryPredictor {
         ("eero", .electronics), ("meta quest", .electronics), ("insta360", .electronics),
         ("lg oled", .electronics), ("lg tv", .electronics),
 
-        // Appliance — include strong appliance phrases first
+
         ("lg washtower", .appliance), ("lg washer", .appliance), ("lg french door", .appliance),
         ("samsung bespoke", .appliance), ("samsung family hub", .appliance),
         ("whirlpool", .appliance), ("maytag", .appliance), ("kitchenaid", .appliance),
@@ -54,7 +41,7 @@ final class CategoryPredictor {
         ("breville", .appliance), ("keurig", .appliance), ("cuisinart", .appliance),
         ("levoit", .appliance), ("honeywell hepa", .appliance),
 
-        // Vehicle
+
         ("tesla", .vehicle), ("toyota", .vehicle), ("ford", .vehicle), ("honda", .vehicle),
         ("nissan", .vehicle), ("hyundai", .vehicle), ("kia", .vehicle), ("mazda", .vehicle),
         ("subaru", .vehicle), ("jeep", .vehicle), ("ram 1500", .vehicle), ("chevrolet", .vehicle),
@@ -66,7 +53,7 @@ final class CategoryPredictor {
         ("mobil 1", .vehicle), ("optima yellowtop", .vehicle), ("diehard", .vehicle),
         ("weathertech", .vehicle), ("thule", .vehicle), ("yakima", .vehicle),
 
-        // Furniture
+
         ("herman miller", .furniture), ("steelcase", .furniture), ("knoll", .furniture),
         ("ikea", .furniture), ("west elm", .furniture), ("pottery barn", .furniture),
         ("crate and barrel", .furniture), ("crate & barrel", .furniture),
@@ -79,7 +66,7 @@ final class CategoryPredictor {
         ("rove concepts", .furniture), ("inside weather", .furniture),
         ("lovesac", .furniture),
 
-        // Jewelry
+
         ("tiffany", .jewelry), ("cartier", .jewelry), ("bvlgari", .jewelry),
         ("van cleef", .jewelry), ("hermes clic", .jewelry), ("mikimoto", .jewelry),
         ("pandora", .jewelry), ("kay jewelers", .jewelry), ("zales", .jewelry),
@@ -92,7 +79,7 @@ final class CategoryPredictor {
         ("seiko", .jewelry), ("citizen eco-drive", .jewelry), ("movado", .jewelry),
         ("daniel wellington", .jewelry),
 
-        // Tools
+
         ("dewalt", .tools), ("milwaukee", .tools), ("makita", .tools),
         ("ryobi", .tools), ("ridgid", .tools), ("hilti", .tools),
         ("klein tools", .tools), ("knipex", .tools), ("wera", .tools),
@@ -105,10 +92,7 @@ final class CategoryPredictor {
         ("sawstop", .tools),
     ]
 
-    /// Seed words per category for the embedding fallback. These are
-    /// intentionally generic English nouns that exist in `NLEmbedding`'s
-    /// English vocabulary. We deliberately leave `.other` out — a missing
-    /// match should return `nil`, not an arbitrary catch-all.
+
     private let categoryAnchors: [WarrantyCategory: [String]] = [
         .electronics: ["phone", "laptop", "television", "headphones", "camera",
                        "tablet", "monitor", "speaker", "console", "smartwatch"],
@@ -124,19 +108,18 @@ final class CategoryPredictor {
                        "sander", "toolkit"],
     ]
 
-    /// Below this distance the fallback prediction is considered confident.
-    /// `NLEmbedding` distances run roughly 0–2; ~1.0 is "loosely related".
+
     private let embeddingDistanceThreshold: Double = 1.0
 
     init() {
         self.embedding = NLEmbedding.wordEmbedding(for: .english)
     }
 
-    /// Returns the predicted category, or `nil` if nothing matches with confidence.
+
     func predict(from text: String) -> WarrantyCategory? {
         let lower = text.lowercased()
 
-        // 1. Brand / token dictionary, longest-match-wins.
+
         var best: (token: String, category: WarrantyCategory)?
         for (token, category) in brandMap where lower.contains(token) {
             if let current = best, current.token.count >= token.count { continue }
@@ -144,16 +127,13 @@ final class CategoryPredictor {
         }
         if let best { return best.category }
 
-        // 2. NLEmbedding fallback.
+
         return predictByEmbedding(in: lower)
     }
 
-    /// Whether any prediction layer is available — the brand dictionary always
-    /// is, the embedding layer requires the English model to be downloaded
-    /// (it is, on every shipping iOS device, but we guard anyway).
+
     var isAvailable: Bool { true }
 
-    // MARK: - Embedding fallback
 
     private func predictByEmbedding(in lowercaseText: String) -> WarrantyCategory? {
         guard let embedding else { return nil }

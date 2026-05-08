@@ -56,8 +56,8 @@ struct RootView: View {
         .task {
             await NotificationService.shared.requestAuthorizationIfNeeded()
         }
-        // React to FirebaseAuth state changes — sign-in advances past the
-        // gate; sign-out bounces back to it.
+
+
         .onChange(of: auth.isSignedIn) { _, signedIn in
             coordinator.applyAuthState(isSignedIn: signedIn)
         }

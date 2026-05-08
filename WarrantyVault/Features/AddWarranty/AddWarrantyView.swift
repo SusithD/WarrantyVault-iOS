@@ -7,7 +7,7 @@ struct AddWarrantyView: View {
     @Environment(AppStore.self) private var store
     @Environment(\.dismiss) private var dismiss
 
-    /// Pass a warranty to edit it; nil creates a new one.
+
     let editing: Warranty?
 
     @State private var productName: String
@@ -36,15 +36,11 @@ struct AddWarrantyView: View {
 
     private static let calendarSyncDefaultKey = "calendarSyncDefault"
 
-    /// Two distinct flows the form supports:
-    ///   - `editing`: an existing warranty in Core Data → save() takes the
-    ///     update path so we don't create a duplicate.
-    ///   - `prefilled`: a fresh draft (e.g. from the dashboard scan flow) with
-    ///     fields populated by OCR. save() takes the create path.
+
     init(editing: Warranty? = nil, prefilled: Warranty? = nil) {
         self.editing = editing
-        // Whichever is non-nil seeds the form; `editing` wins if both are set
-        // because that's the safer assumption.
+
+
         let baseline = editing ?? prefilled
 
         _productName   = State(initialValue: baseline?.productName ?? "")
@@ -61,22 +57,17 @@ struct AddWarrantyView: View {
         _latitude        = State(initialValue: baseline?.latitude)
         _longitude       = State(initialValue: baseline?.longitude)
 
-        // Editing existing warranty: derive calendar toggle from whether an event exists.
-        // New warranty: read the user's saved default from UserDefaults (off until opted in once).
+
         if let editing {
             _calendarSyncEnabled = State(initialValue: editing.eventIdentifier != nil)
         } else {
             _calendarSyncEnabled = State(initialValue: UserDefaults.standard.bool(forKey: Self.calendarSyncDefaultKey))
         }
 
-        // Treat the category as "manually picked" when editing or prefilled,
-        // so the in-form OCR auto-fill doesn't override a value we just set
-        // from the dashboard scan flow.
+
         _categoryWasManuallyPicked = State(initialValue: editing != nil || prefilled != nil)
 
-        // Mark a prefilled draft as "auto-filled from receipt" so the same
-        // banner that shows after in-form OCR also shows here. The user sees
-        // the same affordance regardless of where the scan happened.
+
         _didAutoFillFromReceipt = State(initialValue: prefilled != nil)
     }
 
@@ -150,9 +141,7 @@ struct AddWarrantyView: View {
         .animation(.easeInOut(duration: 0.2), value: isScanningReceipt)
     }
 
-    /// Stores all picked / scanned pages and runs OCR auto-fill on the
-    /// first one. PhotosPicker calls this with a single-element array;
-    /// the document scanner can hand over multi-page receipts.
+
     @MainActor
     private func handlePickedReceipts(_ images: [UIImage]) async {
         guard !images.isEmpty else { return }
@@ -186,13 +175,12 @@ struct AddWarrantyView: View {
             didFill = true
         }
         if let scanned = result.purchaseDate, editing == nil {
-            // For brand-new warranties only — never overwrite an explicit edit.
+
             purchaseDate = scanned
             didFill = true
         }
 
-        // Core ML category prediction — only if the user hasn't picked a chip
-        // and the predictor produced a confident answer.
+
         if !categoryWasManuallyPicked,
            let predicted = CategoryPredictor.shared.predict(from: result.rawText),
            predicted != category {
@@ -208,7 +196,6 @@ struct AddWarrantyView: View {
         return CLLocationCoordinate2D(latitude: lat, longitude: lon)
     }
 
-    // MARK: Form cards
 
     private var productCard: some View {
         GlassCard {
@@ -332,7 +319,7 @@ struct AddWarrantyView: View {
         } catch LocationService.Failure.authorizationDenied {
             locationDeniedHint = true
         } catch {
-            // Silent — user can fall back to Pick on map.
+
         }
     }
 
@@ -555,9 +542,7 @@ struct AddWarrantyView: View {
             savedId = w.id
         }
 
-        // Reconcile calendar sync. Surface a denied hint if the user wants
-        // the event but hasn't granted access — in that case we keep the
-        // form open so the user can read the hint instead of dismissing.
+
         if calendarSyncEnabled, EKEventStore.authorizationStatus(for: .event) == .denied {
             calendarDeniedHint = true
             return
@@ -572,7 +557,6 @@ struct AddWarrantyView: View {
     }
 }
 
-// MARK: - Labeled text field
 
 struct LabeledTextField: View {
     let label: String

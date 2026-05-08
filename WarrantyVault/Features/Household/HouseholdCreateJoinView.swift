@@ -172,9 +172,7 @@ struct HouseholdCreateJoinView: View {
         }
     }
 
-    /// Build a `HouseholdMember` for the signed-in user. Falls back to a
-    /// generic "You" entry if Firebase has no profile yet (offline / signed
-    /// out) so the household always has at least one seat.
+
     private func currentUserAsMember() -> HouseholdMember {
         let name = auth.displayName?.trimmingCharacters(in: .whitespaces).nonEmptyOrNil
                    ?? auth.email?.components(separatedBy: "@").first

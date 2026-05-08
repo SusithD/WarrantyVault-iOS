@@ -31,8 +31,7 @@ struct PrimaryButton: View {
     }
 }
 
-/// Secondary pill. Dark grey fill, white text. Used as a "not the primary
-/// action" companion — e.g. "Edit" next to "File Claim".
+
 struct SecondaryButton: View {
     let title: String
     var icon: String? = nil

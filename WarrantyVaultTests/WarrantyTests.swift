@@ -1,29 +1,14 @@
-//
-//  WarrantyTests.swift
-//  WarrantyVaultTests
-//
-//  Pure-logic tests for the `Warranty` struct: date arithmetic for
-//  `daysRemaining`, `status`, and `coverageProgress`, plus the two derived
-//  conveniences (`receiptAttached`, `coordinate`).
-//
-//  Every test creates the warranty with explicit dates relative to "today"
-//  so the assertions are stable across time zones and run dates.
-//
-
 import XCTest
 @testable import WarrantyVault
 
 final class WarrantyTests: XCTestCase {
 
-    // MARK: - Helpers
 
-    /// `Date` that is `days` away from now (positive = future, negative = past).
     private func date(daysFromNow days: Int) -> Date {
         Calendar.current.date(byAdding: .day, value: days, to: Date())!
     }
 
-    /// Builds a minimal `Warranty` with controllable purchase + expiry dates.
-    /// Other fields default to empty so the test reads as "this is about dates".
+
     private func makeWarranty(
         purchase: Date = Date().addingTimeInterval(-86400 * 30),
         expiry: Date,
@@ -45,11 +30,10 @@ final class WarrantyTests: XCTestCase {
         )
     }
 
-    // MARK: - daysRemaining
 
     func test_daysRemaining_futureExpiry_returnsPositive() {
         let w = makeWarranty(expiry: date(daysFromNow: 30))
-        // Allow ±1 day of slack because the date math straddles midnight.
+
         XCTAssertEqual(w.daysRemaining, 30, accuracy: 1)
     }
 
@@ -63,7 +47,6 @@ final class WarrantyTests: XCTestCase {
         XCTAssertEqual(w.daysRemaining, 0, accuracy: 1)
     }
 
-    // MARK: - status
 
     func test_status_far_future_isActive() {
         let w = makeWarranty(expiry: date(daysFromNow: 100))
@@ -76,7 +59,7 @@ final class WarrantyTests: XCTestCase {
     }
 
     func test_status_at_exactly_30_days_isExpiringSoon() {
-        // Boundary: the rule is `daysRemaining <= 30 → .expiringSoon`.
+
         let w = makeWarranty(expiry: date(daysFromNow: 30))
         XCTAssertEqual(w.status, .expiringSoon)
     }
@@ -86,10 +69,9 @@ final class WarrantyTests: XCTestCase {
         XCTAssertEqual(w.status, .expired)
     }
 
-    // MARK: - coverageProgress
 
     func test_coverageProgress_halfwayThrough_isApproximatelyHalf() {
-        // Purchase 6 months ago, expiry 6 months ahead → ~50% elapsed.
+
         let w = makeWarranty(
             purchase: date(daysFromNow: -180),
             expiry:   date(daysFromNow: 180)
@@ -106,7 +88,7 @@ final class WarrantyTests: XCTestCase {
     }
 
     func test_coverageProgress_clampsAt0BeforeStart() {
-        // Future purchase date — covers a hypothetical "scheduled" warranty.
+
         let w = makeWarranty(
             purchase: date(daysFromNow: 30),
             expiry:   date(daysFromNow: 365)
@@ -115,14 +97,13 @@ final class WarrantyTests: XCTestCase {
     }
 
     func test_coverageProgress_zeroSpan_returnsZero() {
-        // Purchase == expiry: protect against a divide-by-zero if a user ever
-        // saves a malformed warranty.
+
+
         let now = Date()
         let w = makeWarranty(purchase: now, expiry: now)
         XCTAssertEqual(w.coverageProgress, 0)
     }
 
-    // MARK: - receiptAttached (derived)
 
     func test_receiptAttached_isTrueWhenImageDataPresent() {
         let w = makeWarranty(expiry: date(daysFromNow: 30), receiptImages: [Data([0xFF, 0xD8, 0xFF, 0xE0])])
@@ -134,7 +115,6 @@ final class WarrantyTests: XCTestCase {
         XCTAssertFalse(w.receiptAttached)
     }
 
-    // MARK: - coordinate (derived)
 
     func test_coordinate_isNilWhenLatitudeMissing() {
         let w = makeWarranty(expiry: date(daysFromNow: 30), latitude: nil, longitude: -122.0)

@@ -1,21 +1,9 @@
-//
-//  AppStoreTests.swift
-//  WarrantyVaultTests
-//
-//  Tests the derived/filtered state on `AppStore`. Each test uses the
-//  preview-style convenience init that spins up an in-memory Core Data
-//  context so nothing leaks between tests.
-//
-
 import XCTest
 @testable import WarrantyVault
 
 final class AppStoreTests: XCTestCase {
 
-    // MARK: - Helpers
 
-    /// Builds a Warranty with explicit dates + just enough fields populated
-    /// to drive search and filter tests deterministically.
     private func warranty(
         product: String,
         brand: String = "BrandX",
@@ -34,7 +22,7 @@ final class AppStoreTests: XCTestCase {
         )
     }
 
-    /// Build a store seeded with a known small set so we can assert exact counts.
+
     private func makeStore(warranties: [Warranty] = [], claims: [Claim] = []) -> AppStore {
         AppStore(
             warranties: warranties,
@@ -45,7 +33,6 @@ final class AppStoreTests: XCTestCase {
         )
     }
 
-    // MARK: - filteredWarranties: search
 
     func test_filteredWarranties_returnsAll_whenSearchEmpty() {
         let store = makeStore(warranties: [
@@ -61,7 +48,7 @@ final class AppStoreTests: XCTestCase {
             warranty(product: "MacBook Pro"),
             warranty(product: "AirPods")
         ])
-        store.searchText = "phone"      // case-insensitive contains
+        store.searchText = "phone"
         let names = store.filteredWarranties.map(\.productName)
         XCTAssertEqual(names, ["iPhone 15 Pro"])
     }
@@ -84,7 +71,6 @@ final class AppStoreTests: XCTestCase {
         XCTAssertEqual(store.filteredWarranties.map(\.retailer), ["Best Buy"])
     }
 
-    // MARK: - filteredWarranties: category
 
     func test_filteredWarranties_filtersByCategory() {
         let store = makeStore(warranties: [
@@ -96,7 +82,6 @@ final class AppStoreTests: XCTestCase {
         XCTAssertEqual(store.filteredWarranties.map(\.productName), ["Washer"])
     }
 
-    // MARK: - filteredWarranties: ordering
 
     func test_filteredWarranties_sortedByExpiryAscending() {
         let store = makeStore(warranties: [
@@ -110,7 +95,6 @@ final class AppStoreTests: XCTestCase {
         )
     }
 
-    // MARK: - status counts
 
     func test_activeCount_includesOnlyActiveWarranties() {
         let store = makeStore(warranties: [
@@ -139,7 +123,6 @@ final class AppStoreTests: XCTestCase {
         XCTAssertEqual(store.expiredCount, 1)
     }
 
-    // MARK: - openClaimsCount
 
     func test_openClaimsCount_excludesCompletedAndRejected() {
         let warrantyId = UUID()
@@ -154,7 +137,7 @@ final class AppStoreTests: XCTestCase {
                   issueSummary: "y", status: .rejected,     filedDate: Date(), updatedDate: Date(), timeline: [])
         ]
         let store = makeStore(claims: claims)
-        // Open = submitted + underReview + approved (3 in our seed counts as 2 open)
+
         XCTAssertEqual(store.openClaimsCount, 2)
     }
 }

@@ -1,17 +1,13 @@
 import Foundation
 
-/// Compile-time constants shared between the main app and the widget extension
-/// — the App Group identifier, the snapshot filename, and the JSON layout.
+
 enum WidgetSharedConstants {
-    /// Must match the App Group capability declared in both `.entitlements` files.
+
     static let appGroupID = "group.com.salwis.warrantyvault"
     static let snapshotFilename = "widget_snapshot.json"
 }
 
-/// Compact, Codable view of "the next thing the user cares about" — used by
-/// the home-screen widget. Written by the main app after every save and read
-/// by the widget process. Deliberately small so it crosses the App Group
-/// container quickly and doesn't drag Core Data internals into the widget.
+
 struct WidgetSnapshot: Codable, Equatable {
     let nextWarrantyId: UUID?
     let nextProductName: String
@@ -39,13 +35,10 @@ struct WidgetSnapshot: Codable, Equatable {
     )
 }
 
-/// File-backed shared store. Always crosses the App Group container so the
-/// widget process can read what the app process wrote.
+
 enum WidgetSnapshotStore {
 
-    /// Snapshot file inside the App Group container. `nil` only if the
-    /// container is unavailable (typically because the entitlement is
-    /// missing — should not happen in a correctly signed build).
+
     static var fileURL: URL? {
         FileManager.default
             .containerURL(forSecurityApplicationGroupIdentifier: WidgetSharedConstants.appGroupID)?

@@ -15,9 +15,9 @@ struct OnboardingPage: Identifiable {
 }
 
 enum OnboardingIllustration {
-    case vault         // page 1 — document with lock + QR
-    case notification  // page 2 — card with bell + alert chip
-    case biometric     // page 3 — face/avatar with shield + lock
+    case vault
+    case notification
+    case biometric
 }
 
 enum OnboardingContent {

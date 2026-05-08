@@ -57,7 +57,7 @@ struct OnboardingPageView: View {
             .padding(.horizontal, 24)
 
             if page.showSkip && !page.showBrandHeader {
-                // inline skip below next button (page 2 style)
+
                 SecondaryTextButton(title: "SKIP", action: onSkip)
                     .padding(.top, 4)
             } else {
@@ -112,7 +112,7 @@ struct OnboardingPageView: View {
                 }
             }
         } else {
-            // Empty top bar to keep layout consistent
+
             Color.clear.frame(height: 20)
         }
     }

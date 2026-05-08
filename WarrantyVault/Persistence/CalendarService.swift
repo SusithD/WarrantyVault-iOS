@@ -1,8 +1,7 @@
 import Foundation
 import EventKit
 
-/// Wraps `EKEventStore` for warranty-expiry calendar sync.
-/// Always uses the default calendar; one all-day event per warranty with a 9 AM alarm.
+
 final class CalendarService {
 
     static let shared = CalendarService()
@@ -15,10 +14,7 @@ final class CalendarService {
 
     private let store = EKEventStore()
 
-    // MARK: - Authorization
 
-    /// Asks for full-access calendar permission if not yet decided.
-    /// Returns whether the app currently has full access after the call.
     @discardableResult
     func requestAccessIfNeeded() async -> Bool {
         switch EKEventStore.authorizationStatus(for: .event) {
@@ -37,11 +33,7 @@ final class CalendarService {
         }
     }
 
-    // MARK: - Mutations
 
-    /// Creates or updates the calendar event for a warranty. Returns the
-    /// resulting event identifier — store it on the warranty for later updates.
-    /// Returns `nil` if calendar access is denied.
     func upsertEvent(for warranty: Warranty) async throws -> String? {
         guard await requestAccessIfNeeded() else { throw Failure.authorizationDenied }
         guard let calendar = store.defaultCalendarForNewEvents else {
@@ -75,8 +67,7 @@ final class CalendarService {
         }
     }
 
-    /// Removes the event with the given identifier if it still exists.
-    /// Silent no-op when the event has already been deleted manually.
+
     func deleteEvent(identifier: String) throws {
         guard let event = store.event(withIdentifier: identifier) else { return }
         do {
@@ -86,7 +77,6 @@ final class CalendarService {
         }
     }
 
-    // MARK: - Helpers
 
     private func nineAM(on date: Date) -> Date {
         var comps = Calendar.current.dateComponents([.year, .month, .day], from: date)

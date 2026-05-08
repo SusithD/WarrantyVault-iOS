@@ -18,7 +18,7 @@ struct GlassCard<Content: View>: View {
 
 typealias Panel = GlassCard
 
-/// 1px hairline used inside dark cards for separating internal sections.
+
 struct HairlineDivider: View {
     var color: Color = AppColors.borderSubtle
     var body: some View {
@@ -26,8 +26,7 @@ struct HairlineDivider: View {
     }
 }
 
-/// ALL-CAPS overline + small bottom padding, used at the top of any
-/// section/card: "WARRANTY", "COVERAGE", "RECEIPT".
+
 struct SectionHeader: View {
     let title: String
     var trailing: AnyView? = nil

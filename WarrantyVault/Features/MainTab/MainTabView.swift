@@ -48,7 +48,6 @@ struct MainTabView: View {
     }
 }
 
-// MARK: - Bottom navigation
 
 struct BottomNavBar: View {
     @Binding var selected: MainTab
@@ -61,7 +60,7 @@ struct BottomNavBar: View {
             navItem(.dashboard, symbol: "square.grid.2x2", filledSymbol: "square.grid.2x2.fill", title: "Home")
             navItem(.claims,    symbol: "doc.text.magnifyingglass", filledSymbol: "doc.text.magnifyingglass", title: "Claims")
 
-            // Invisible spacer reserves width for the floating + button
+
             Color.clear
                 .frame(width: addSize + 12, height: 1)
 
@@ -101,15 +100,13 @@ struct BottomNavBar: View {
             .frame(maxWidth: .infinity)
         }
         .buttonStyle(.plain)
-        // Make this look like a tab to VoiceOver and announce its state.
+
         .accessibilityLabel(title)
         .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
         .accessibilityHint(isSelected ? "" : "Double-tap to switch to \(title) tab")
     }
 
-    /// Floating circular CTA. Lime fill, black plus icon. Wrapped in a
-    /// 3pt black ring so it reads as a separate "lozenge" against the
-    /// dark grey tab bar.
+
     private var addButton: some View {
         Button(action: onAddTapped) {
             Circle()
@@ -125,8 +122,8 @@ struct BottomNavBar: View {
                 )
         }
         .buttonStyle(.plain)
-        // The visible content is just a "+" — VoiceOver can't infer "Add new
-        // warranty" from that. Provide an explicit label.
+
+
         .accessibilityLabel("Add new warranty")
         .accessibilityHint("Double-tap to open the warranty creation form")
     }

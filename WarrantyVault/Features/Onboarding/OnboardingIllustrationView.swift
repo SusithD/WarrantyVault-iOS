@@ -12,7 +12,6 @@ struct OnboardingIllustrationView: View {
     }
 }
 
-// MARK: - Page 1: Vault
 
 private struct VaultIllustration: View {
     var body: some View {
@@ -74,7 +73,6 @@ private struct VaultIllustration: View {
     }
 }
 
-// MARK: - Page 2: Notification
 
 private struct NotificationIllustration: View {
     var body: some View {
@@ -130,7 +128,6 @@ private struct NotificationIllustration: View {
     }
 }
 
-// MARK: - Page 3: Biometric
 
 private struct BiometricIllustration: View {
     var body: some View {

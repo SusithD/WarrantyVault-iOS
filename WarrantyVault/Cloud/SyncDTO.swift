@@ -1,12 +1,5 @@
 import Foundation
 
-/// Wire-format DTOs for Firestore. Kept separate from the domain types so
-/// the Core Data schema can evolve without breaking interop with already-
-/// synced documents (and vice-versa).
-///
-/// Image bytes ride inline as a base64 string. Receipts are downscaled by
-/// `ImageProcessing` before reaching this layer, so the inflated payload
-/// stays comfortably under Firestore's 1 MB document limit.
 
 struct WarrantyDTO: Codable {
     var id: String
@@ -25,10 +18,7 @@ struct WarrantyDTO: Codable {
     var longitude: Double?
     var updatedAt: Date
 
-    /// Firestore docs cap at ~1 MB. We trim trailing receipt pages until
-    /// the encoded payload fits comfortably below that ceiling rather than
-    /// refusing to sync the whole warranty. Local Core Data still holds the
-    /// full set of pages — only the cloud copy is capped.
+
     private static let maxReceiptPayloadBytes = 850_000
 
     init(_ w: Warranty, updatedAt: Date = Date()) {
@@ -49,9 +39,7 @@ struct WarrantyDTO: Codable {
         self.updatedAt = updatedAt
     }
 
-    /// Encode pages to base64, dropping pages from the end until the total
-    /// fits within Firestore's 1 MB document budget. Drops everything if
-    /// even the first page is too large.
+
     private static func encodePagesWithinDocLimit(_ pages: [Data]) -> [String] {
         var encoded: [String] = []
         var runningBytes = 0
@@ -81,8 +69,8 @@ struct WarrantyDTO: Codable {
             reminderEnabled: reminderEnabled,
             latitude: latitude,
             longitude: longitude,
-            // Calendar event identifiers are device-local and intentionally
-            // not synced — a different device wouldn't share the EventKit DB.
+
+
             eventIdentifier: nil
         )
     }

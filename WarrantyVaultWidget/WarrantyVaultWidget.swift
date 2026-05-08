@@ -1,7 +1,6 @@
 import WidgetKit
 import SwiftUI
 
-// MARK: - Bundle entry point
 
 @main
 struct WarrantyVaultWidgetBundle: WidgetBundle {
@@ -10,7 +9,6 @@ struct WarrantyVaultWidgetBundle: WidgetBundle {
     }
 }
 
-// MARK: - Widget declaration
 
 struct WarrantyVaultWidget: Widget {
     let kind: String = "WarrantyVaultWidget"
@@ -26,7 +24,6 @@ struct WarrantyVaultWidget: Widget {
     }
 }
 
-// MARK: - Timeline entry + provider
 
 struct Entry: TimelineEntry {
     let date: Date
@@ -46,13 +43,12 @@ struct Provider: TimelineProvider {
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
         let snapshot = WidgetSnapshotStore.read() ?? .empty
         let entry = Entry(date: Date(), snapshot: snapshot)
-        // Refresh again in 1 hour in case nothing else triggers a reload.
+
         let nextRefresh = Calendar.current.date(byAdding: .hour, value: 1, to: Date()) ?? Date()
         completion(Timeline(entries: [entry], policy: .after(nextRefresh)))
     }
 }
 
-// MARK: - Views
 
 struct WarrantyVaultWidgetView: View {
     @Environment(\.widgetFamily) private var family
@@ -124,10 +120,7 @@ private struct MediumView: View {
     }
 }
 
-// MARK: - Helpers shared across views
 
-/// Color per category — kept self-contained because the widget can't import
-/// the main app's `AppColors` symbols across the target boundary cleanly.
 private func categoryTint(_ raw: String) -> Color {
     switch raw {
     case "Electronics": return .blue
@@ -166,7 +159,6 @@ private func deepLink(for snapshot: WidgetSnapshot) -> URL? {
     return URL(string: "warrantyvault://warranty/\(id.uuidString)")
 }
 
-// MARK: - Preview
 
 #Preview(as: .systemSmall) {
     WarrantyVaultWidget()

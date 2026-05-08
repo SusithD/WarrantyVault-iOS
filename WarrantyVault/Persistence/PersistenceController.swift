@@ -1,8 +1,7 @@
 import Foundation
 import CoreData
 
-/// Owns the Core Data stack for WarrantyVault.
-/// Single shared instance for the running app, plus an in-memory variant for previews/tests.
+
 final class PersistenceController {
 
     static let shared = PersistenceController()
@@ -37,7 +36,6 @@ final class PersistenceController {
         }
     }
 
-    // MARK: - Seeding
 
     private func seedIfNeeded() {
         let defaults = UserDefaults.standard

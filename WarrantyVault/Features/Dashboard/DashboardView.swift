@@ -4,14 +4,14 @@ import PhotosUI
 struct DashboardView: View {
     @Environment(AppStore.self) private var store
 
-    // MARK: - Scan flow state
+
     @State private var presentingScanSourcePicker = false
     @State private var presentingPhotosPicker = false
     @State private var presentingCameraPicker = false
     @State private var photosPickerItem: PhotosPickerItem?
     @State private var isScanning = false
-    /// Using `Identifiable item:` binding so the sheet only opens after a
-    /// successful scan — never with a stale empty draft.
+
+
     @State private var scannedDraft: Warranty?
 
     var body: some View {
@@ -79,7 +79,7 @@ struct DashboardView: View {
                    let image = UIImage(data: data) {
                     await processScannedPages([image])
                 }
-                // Reset so re-picking the same image triggers `.onChange` again.
+
                 photosPickerItem = nil
             }
         }
@@ -114,8 +114,7 @@ struct DashboardView: View {
         .animation(.easeInOut(duration: 0.18), value: isScanning)
     }
 
-    /// All pages are encoded and attached — long thermal-roll receipts often
-    /// span multiple pages and we want to preserve the full proof.
+
     @MainActor
     private func processScannedPages(_ images: [UIImage]) async {
         guard let firstImage = images.first else { return }
@@ -124,18 +123,15 @@ struct DashboardView: View {
 
         let encodedPages = images.compactMap { $0.receiptEncoded() }
 
-        // OCR + parse (already non-blocking inside the scanner).
+
         guard let result = try? await ReceiptScanner.shared.scan(firstImage) else {
-            // Even if OCR fails, drop the user into a blank form with the
-            // images attached so they can fill it in manually.
+
+
             scannedDraft = blankDraft(with: encodedPages)
             return
         }
 
-        // Heuristic post-processing: the OCR `purchaseDate` is the receipt's
-        // own date if it found one. Default expiry to one year out — typical
-        // for consumer warranties — so the user only needs to adjust if the
-        // coverage period differs.
+
         let purchase = result.purchaseDate ?? Date()
         let expiry = Calendar.current.date(byAdding: .year, value: 1, to: purchase) ?? purchase
 
@@ -143,7 +139,7 @@ struct DashboardView: View {
 
         scannedDraft = Warranty(
             productName: result.productName ?? "",
-            brand: "",  // brand isn't reliably extractable; user fills it
+            brand: "",
             category: predictedCategory,
             purchaseDate: purchase,
             expiryDate: expiry,
@@ -153,8 +149,7 @@ struct DashboardView: View {
         )
     }
 
-    /// Fallback when OCR fails — empty draft, but with the pages already
-    /// attached so the manual flow doesn't lose what the user picked.
+
     private func blankDraft(with encodedPages: [Data]) -> Warranty {
         Warranty(
             productName: "",
@@ -168,7 +163,6 @@ struct DashboardView: View {
         )
     }
 
-    // MARK: Subviews
 
     private var navBar: some View {
         HStack {
@@ -199,8 +193,8 @@ struct DashboardView: View {
                 .tracking(-0.4)
                 .foregroundStyle(AppColors.textPrimary)
                 .lineSpacing(2)
-                // Allow the headline to shrink at AX5 instead of clipping —
-                // 80% retains legibility while keeping the layout intact.
+
+
                 .minimumScaleFactor(0.8)
         }
         .padding(.top, 8)
@@ -208,8 +202,7 @@ struct DashboardView: View {
         .accessibilityLabel("Welcome back. Your coverage, at a glance.")
     }
 
-    /// Lime fill so it reads as a primary action; sits just below the welcome
-    /// header where the eye lands first.
+
     private var scanCard: some View {
         Button {
             presentingScanSourcePicker = true
@@ -382,7 +375,6 @@ struct DashboardView: View {
     }
 }
 
-// MARK: - Row
 
 struct WarrantyRow: View {
     let warranty: Warranty
@@ -427,9 +419,8 @@ struct WarrantyRow: View {
                     .accessibilityHidden(true)
             }
         }
-        // Combine the whole row into one VoiceOver element so the user hears
-        // "MacBook Pro, Apple, Electronics, Status: Active, 312 days remaining"
-        // as a single utterance, then can swipe to the next row.
+
+
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(warranty.productName), \(warranty.brand), \(warranty.category.rawValue)")
         .accessibilityHint("Double-tap to view details")

@@ -2,9 +2,7 @@ import SwiftUI
 import MapKit
 import CoreLocation
 
-/// Sheet for picking a coordinate on a map. The map's center point is what
-/// gets returned — a fixed crosshair sits over it so users always know what
-/// they're committing to. Modern iOS 17 SwiftUI Map APIs only.
+
 struct LocationPickerView: View {
     @Environment(\.dismiss) private var dismiss
 
@@ -15,7 +13,7 @@ struct LocationPickerView: View {
     @State private var center: CLLocationCoordinate2D
     @State private var addressLine: String = ""
 
-    private static let fallback = CLLocationCoordinate2D(latitude: 37.3349, longitude: -122.0090) // Apple Park
+    private static let fallback = CLLocationCoordinate2D(latitude: 37.3349, longitude: -122.0090)
 
     init(initial: CLLocationCoordinate2D?, onPicked: @escaping (CLLocationCoordinate2D) -> Void) {
         self.initialCoordinate = initial
@@ -40,13 +38,13 @@ struct LocationPickerView: View {
                         Task { await reverseGeocode(center) }
                     }
 
-                // Center crosshair
+
                 VStack(spacing: 0) {
                     Image(systemName: "mappin")
                         .font(.system(size: 30, weight: .bold))
                         .foregroundStyle(AppColors.brandBlue)
                         .shadow(color: .black.opacity(0.25), radius: 3, y: 2)
-                    // Tail offset so the pin tip points at the actual center
+
                     Color.clear.frame(height: 30)
                 }
                 .allowsHitTesting(false)

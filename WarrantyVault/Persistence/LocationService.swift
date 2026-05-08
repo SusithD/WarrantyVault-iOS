@@ -1,9 +1,7 @@
 import Foundation
 import CoreLocation
 
-/// One-shot wrapper around `CLLocationManager`. Asks for `whenInUse`
-/// authorization on first call, returns the user's current location once,
-/// then stops. Never tracks continuously.
+
 @MainActor
 final class LocationService: NSObject {
 
@@ -26,7 +24,7 @@ final class LocationService: NSObject {
         manager.desiredAccuracy = kCLLocationAccuracyHundredMeters
     }
 
-    /// Whether the user has authorised When-In-Use access.
+
     var isAuthorized: Bool {
         switch manager.authorizationStatus {
         case .authorizedWhenInUse, .authorizedAlways: return true
@@ -34,24 +32,30 @@ final class LocationService: NSObject {
         }
     }
 
-    /// Whether the user has explicitly denied access (so the UI can deep-link to Settings).
+
     var isDenied: Bool {
         manager.authorizationStatus == .denied || manager.authorizationStatus == .restricted
     }
 
-    /// Asks for one location fix. Triggers the system permission alert on the
-    /// very first call. Throws if the user denied access or no fix was found.
+
     func requestCurrentLocation() async throws -> CLLocation {
-        if manager.authorizationStatus == .notDetermined {
-            manager.requestWhenInUseAuthorization()
-        }
         if isDenied {
             throw Failure.authorizationDenied
         }
 
         return try await withCheckedThrowingContinuation { cont in
             self.continuation = cont
-            manager.requestLocation()
+            switch manager.authorizationStatus {
+            case .notDetermined:
+                manager.requestWhenInUseAuthorization()
+
+
+            case .authorizedWhenInUse, .authorizedAlways:
+                manager.requestLocation()
+            default:
+                cont.resume(throwing: Failure.authorizationDenied)
+                self.continuation = nil
+            }
         }
     }
 }
@@ -78,7 +82,19 @@ extension LocationService: CLLocationManagerDelegate {
     }
 
     nonisolated func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        // No-op: we don't auto-retry on auth changes. The next call to
-        // `requestCurrentLocation()` will see the new status.
+
+
+        Task { @MainActor in
+            guard self.continuation != nil else { return }
+            switch manager.authorizationStatus {
+            case .authorizedWhenInUse, .authorizedAlways:
+                manager.requestLocation()
+            case .denied, .restricted:
+                self.continuation?.resume(throwing: Failure.authorizationDenied)
+                self.continuation = nil
+            default:
+                break
+            }
+        }
     }
 }

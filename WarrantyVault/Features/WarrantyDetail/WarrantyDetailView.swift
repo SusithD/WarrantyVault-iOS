@@ -84,7 +84,6 @@ struct WarrantyDetailView: View {
         }
     }
 
-    // MARK: Cards
 
     private func hero(_ w: Warranty) -> some View {
         GlassCard {
@@ -295,7 +294,7 @@ struct WarrantyDetailView: View {
                             RoundedRectangle(cornerRadius: 10, style: .continuous)
                                 .stroke(AppColors.border, lineWidth: 0.5)
                         )
-                        .padding(.bottom, 28)  // breathing room above page dots
+                        .padding(.bottom, 28)
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .always))
@@ -350,14 +349,7 @@ struct WarrantyDetailView: View {
     }
 }
 
-// MARK: - Coverage bar
 
-/// Custom 4pt-tall coverage progress bar with a subtle background track.
-/// Replaces `ProgressView`'s default styling — looks bespoke instead of stock.
-///
-/// VoiceOver: announces as "Coverage progress, X percent" via the standard
-/// `.progressBar` trait so users with screen readers get the numerical value
-/// rather than just "image".
 struct CoverageBar: View {
     let progress: Double
     let tint: Color

@@ -63,7 +63,6 @@ struct FileClaimView: View {
         }
     }
 
-    // MARK: Sections
 
     private var intro: some View {
         VStack(alignment: .leading, spacing: 6) {

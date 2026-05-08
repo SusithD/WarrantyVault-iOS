@@ -2,7 +2,6 @@ import Foundation
 
 enum MockData {
 
-    // MARK: Helpers
 
     private static let calendar = Calendar(identifier: .gregorian)
 
@@ -22,7 +21,6 @@ enum MockData {
         calendar.date(byAdding: .day, value: days, to: Date()) ?? Date()
     }
 
-    // MARK: Warranties
 
     static let warranties: [Warranty] = [
         Warranty(
@@ -104,7 +102,6 @@ enum MockData {
         )
     ]
 
-    // MARK: Claims
 
     static let claims: [Claim] = [
         Claim(
@@ -157,7 +154,6 @@ enum MockData {
         )
     ]
 
-    // MARK: Chat
 
     static let chatMessages: [ChatMessage] = [
         ChatMessage(text: "Hi Jamie — thanks for filing #CLM-2026-0412. I've pulled up your LG WashTower claim.", isFromUser: false, sentAt: daysAgo(1), agentName: "Sofia"),
@@ -167,7 +163,6 @@ enum MockData {
         ChatMessage(text: "Perfect — received. A technician will reach out in 24 hours to book a visit.", isFromUser: false, sentAt: Date().addingTimeInterval(-3600), agentName: "Sofia")
     ]
 
-    // MARK: Household
 
     static let household: Household = {
         let members: [HouseholdMember] = [
@@ -179,7 +174,6 @@ enum MockData {
         return Household(name: "Chen Family", inviteCode: "WV-7X42-PR9", members: members)
     }()
 
-    // MARK: Activity
 
     static let activity: [ActivityEntry] = [
         ActivityEntry(kind: .added,        actorName: "Jamie Chen",  actorInitials: "JC", actorAccentHex: "#0A84FF", title: "Added Samsung QN90C 65\" Neo QLED", detail: "Electronics · 3 year coverage", occurredAt: Date().addingTimeInterval(-900)),

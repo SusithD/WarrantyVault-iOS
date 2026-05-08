@@ -10,9 +10,9 @@ struct IconBadge: View {
     enum Style { case soft, solid, outline }
 
     enum Size {
-        case small   // 32 tile, 13 icon
-        case medium  // 40 tile, 15 icon
-        case large   // 56 tile, 22 icon
+        case small
+        case medium
+        case large
 
         var tile: CGFloat { self == .small ? 32 : self == .medium ? 40 : 56 }
         var icon: CGFloat { self == .small ? 13 : self == .medium ? 15 : 22 }
@@ -29,9 +29,8 @@ struct IconBadge: View {
                 .foregroundStyle(iconColor)
         }
         .frame(width: size.tile, height: size.tile)
-        // Decorative by default — the parent row/button already carries a
-        // meaningful label so VoiceOver shouldn't say "tv inset filled icon"
-        // before reading the actual product name.
+
+
         .accessibilityHidden(true)
     }
 

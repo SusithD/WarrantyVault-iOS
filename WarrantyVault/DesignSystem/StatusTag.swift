@@ -20,13 +20,13 @@ struct StatusTag: View {
             RoundedRectangle(cornerRadius: 6, style: .continuous)
                 .fill(AppColors.bgSurfaceHi)
         )
-        // Announce as a single utterance: "Status: Active, 312 days remaining"
-        // rather than three separate elements (dot + text fragments).
+
+
         .accessibilityElement(children: .combine)
         .accessibilityLabel(accessibilityDescription)
     }
 
-    /// Spoken form for VoiceOver. Plain English, not the truncated visual label.
+
     private var accessibilityDescription: String {
         switch status {
         case .active:       return "Status: Active, \(daysRemaining) days remaining"

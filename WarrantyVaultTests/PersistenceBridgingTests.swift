@@ -1,20 +1,3 @@
-//
-//  PersistenceBridgingTests.swift
-//  WarrantyVaultTests
-//
-//  Validates that struct ↔ entity bridging is loss-less for the three
-//  persisted entities (Warranty, Claim, Activity). Each test creates a
-//  fresh in-memory Core Data context per test so seed state can't leak.
-//
-//  The pattern for each round-trip is:
-//      1. Build a struct
-//      2. Upsert into the context
-//      3. Save
-//      4. Fetch the entity back by `id`
-//      5. Bridge the entity back into a struct
-//      6. Assert structural equality on every field that survives storage
-//
-
 import XCTest
 import CoreData
 @testable import WarrantyVault
@@ -26,8 +9,8 @@ final class PersistenceBridgingTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        // `inMemory: true` routes the store to /dev/null. Each test gets a
-        // brand-new controller, so prior tests can't influence the next.
+
+
         controller = PersistenceController(inMemory: true, seedPreviewData: false)
         ctx = controller.viewContext
     }
@@ -38,7 +21,6 @@ final class PersistenceBridgingTests: XCTestCase {
         super.tearDown()
     }
 
-    // MARK: - Warranty
 
     func test_warranty_roundTrip_preservesAllFields() throws {
         let original = Warranty(
@@ -52,8 +34,8 @@ final class PersistenceBridgingTests: XCTestCase {
             serialNumber: "C02ZL0AC-JK23",
             notes: "AppleCare+ included.",
             receiptImages: [
-                Data([0xFF, 0xD8, 0xFF, 0xE0]),  // 4-byte JPEG-prefix as a stand-in
-                Data([0xFF, 0xD8, 0xFF, 0xE1])   // second page — exercises the array path
+                Data([0xFF, 0xD8, 0xFF, 0xE0]),
+                Data([0xFF, 0xD8, 0xFF, 0xE1])
             ],
             reminderEnabled: true,
             latitude: 37.3349,
@@ -94,14 +76,14 @@ final class PersistenceBridgingTests: XCTestCase {
         WarrantyEntity.upsert(from: v1, in: ctx)
         try ctx.save()
 
-        // Same `id`, different content — upsert should mutate in place.
+
         var v2 = v1
         v2.productName = "Updated"
         v2.price = 99
         WarrantyEntity.upsert(from: v2, in: ctx)
         try ctx.save()
 
-        // There should still be exactly one row with this id.
+
         let request = WarrantyEntity.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
         let rows = try ctx.fetch(request)
@@ -110,7 +92,6 @@ final class PersistenceBridgingTests: XCTestCase {
         XCTAssertEqual(rows.first?.price, 99)
     }
 
-    // MARK: - Claim (with timeline JSON)
 
     func test_claim_roundTrip_preservesTimelineJSON() throws {
         let timeline = [
@@ -141,13 +122,12 @@ final class PersistenceBridgingTests: XCTestCase {
         XCTAssertEqual(roundTripped.status,        original.status)
         XCTAssertEqual(roundTripped.filedDate,     original.filedDate)
         XCTAssertEqual(roundTripped.updatedDate,   original.updatedDate)
-        // Timeline survives via JSON-encoded blob on the entity.
+
         XCTAssertEqual(roundTripped.timeline.count, 2)
         XCTAssertEqual(roundTripped.timeline.first?.title, "Submitted")
         XCTAssertEqual(roundTripped.timeline.last?.isDone, false)
     }
 
-    // MARK: - ActivityEntry
 
     func test_activityEntry_roundTrip() throws {
         let original = ActivityEntry(
@@ -177,7 +157,6 @@ final class PersistenceBridgingTests: XCTestCase {
         XCTAssertEqual(roundTripped.occurredAt, original.occurredAt)
     }
 
-    // MARK: - Helpers
 
     private func fetchWarranty(id: UUID) throws -> WarrantyEntity {
         let request = WarrantyEntity.fetchRequest()

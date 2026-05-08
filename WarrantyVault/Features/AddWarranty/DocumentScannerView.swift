@@ -2,14 +2,7 @@ import SwiftUI
 import VisionKit
 import UIKit
 
-/// SwiftUI wrapper around `VNDocumentCameraViewController` — the same scanner
-/// used by Notes / Files. Receipts come back pre-cropped and perspective-
-/// corrected, which materially improves OCR over a raw camera frame.
-///
-/// Returns *all* scanned pages — long thermal-roll receipts and store-credit
-/// slips often span 2–4 pages. The first page drives the OCR pre-fill; the
-/// remainder is stored alongside it so the warranty detail can show the full
-/// proof.
+
 struct DocumentScannerView: UIViewControllerRepresentable {
     var onScanned: ([UIImage]) -> Void
     var onCancel: () -> Void = {}

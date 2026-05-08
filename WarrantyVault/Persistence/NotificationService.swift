@@ -1,23 +1,17 @@
 import Foundation
 import UserNotifications
 
-/// Wraps `UNUserNotificationCenter` with a small API tailored to warranty
-/// expiry reminders. Up to four pending requests per warranty (`-30`, `-7`,
-/// `-1`, `0` days from expiry); past fire dates are dropped.
+
 final class NotificationService {
 
     static let shared = NotificationService()
 
     private let center = UNUserNotificationCenter.current()
 
-    /// Offsets (in days) from the warranty's expiry date.
-    /// Negative = before expiry. `0` = on expiry day.
+
     private let offsetsInDays: [Int] = [-30, -7, -1, 0]
 
-    // MARK: - Authorization
 
-    /// Asks the user for `[.alert, .badge, .sound]` if the current status is
-    /// `.notDetermined`. Returns whether the app is authorised after the call.
     @discardableResult
     func requestAuthorizationIfNeeded() async -> Bool {
         let settings = await center.notificationSettings()
@@ -37,11 +31,7 @@ final class NotificationService {
         }
     }
 
-    // MARK: - Schedule / cancel
 
-    /// Schedule the four expiry reminders for a warranty. No-op if the warranty
-    /// has reminders disabled or the user has not authorised notifications.
-    /// Existing requests for the same warranty are replaced.
     func schedule(for warranty: Warranty) async {
         cancel(for: warranty.id)
 
@@ -82,24 +72,23 @@ final class NotificationService {
             do {
                 try await center.add(request)
             } catch {
-                // Swallow individual scheduling errors; one bad request shouldn't abort the rest.
+
                 continue
             }
         }
     }
 
-    /// Removes any pending requests previously scheduled for `warrantyId`.
+
     func cancel(for warrantyId: UUID) {
         let ids = offsetsInDays.map { identifier(for: warrantyId, offset: $0) }
         center.removePendingNotificationRequests(withIdentifiers: ids)
     }
 
-    /// Snapshot of pending requests — useful for tests and diagnostics.
+
     func pendingRequests() async -> [UNNotificationRequest] {
         await center.pendingNotificationRequests()
     }
 
-    // MARK: - Helpers
 
     private func identifier(for warrantyId: UUID, offset: Int) -> String {
         "warranty.\(warrantyId.uuidString).\(offset)"

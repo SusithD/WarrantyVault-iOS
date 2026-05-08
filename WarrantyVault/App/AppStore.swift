@@ -3,29 +3,24 @@ import Observation
 import CoreData
 import WidgetKit
 
-/// `household` and `messages` remain in-memory; only the three persisted
-/// entities (Warranty / Claim / Activity) round-trip through Core Data.
+
 @Observable
 final class AppStore {
 
-    // MARK: Persisted, read-through arrays
 
     var warranties: [Warranty] = []
     var claims:     [Claim]    = []
     var activity:   [ActivityEntry] = []
 
-    // MARK: In-memory only
 
     var household: Household
     var messages:  [ChatMessage]
 
-    // MARK: UI state
 
     var selectedTab: MainTab = .dashboard
     var searchText: String = ""
     var categoryFilter: WarrantyCategory? = nil
 
-    // MARK: Internals
 
     @ObservationIgnored private let context: NSManagedObjectContext
 
@@ -42,10 +37,7 @@ final class AppStore {
         bindCloudSync()
     }
 
-    /// Wires AuthService and WarrantySyncService into the store. When a user
-    /// signs in we attach Firestore listeners; on sign-out they detach. Remote
-    /// changes call back into reloadWarranties / reloadClaims so the in-memory
-    /// arrays stay current. Idempotent — safe to call once at init.
+
     private func bindCloudSync() {
         let sync = WarrantySyncService.shared
         sync.onWarrantiesChanged = { [weak self] in
@@ -86,7 +78,6 @@ final class AppStore {
         self.init(context: previewContext, household: household, messages: messages)
     }
 
-    // MARK: Derived
 
     var filteredWarranties: [Warranty] {
         warranties
@@ -112,7 +103,6 @@ final class AppStore {
         claims.filter { $0.status != .completed && $0.status != .rejected }.count
     }
 
-    // MARK: Mutations — Warranty
 
     func addWarranty(_ w: Warranty) {
         WarrantyEntity.upsert(from: w, in: context)
@@ -170,13 +160,7 @@ final class AppStore {
         }
     }
 
-    /// Reconciles a warranty's calendar event with the user's intent.
-    /// Call after `addWarranty` or `updateWarranty` whenever the form's
-    /// "Add to Calendar" toggle could differ from the persisted state.
-    /// - When `enabled` is true: creates or updates the event, persists the
-    ///   resulting identifier back on the warranty entity.
-    /// - When `enabled` is false: deletes any existing event and clears
-    ///   the identifier.
+
     func applyCalendarSync(for warrantyId: UUID, enabled: Bool) async {
         let request = WarrantyEntity.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", warrantyId as CVarArg)
@@ -198,7 +182,6 @@ final class AppStore {
         }
     }
 
-    // MARK: Mutations — Claim
 
     func addClaim(_ c: Claim) {
         ClaimEntity.upsert(from: c, in: context)
@@ -221,10 +204,7 @@ final class AppStore {
         WarrantySyncService.shared.pushClaim(c)
     }
 
-    /// Records that the user attached new evidence to a claim. Appends a
-    /// timeline event and bumps `updatedDate`; the actual photo is consumed
-    /// elsewhere (claim chat, support flow). Returns the timestamp used so
-    /// the caller can show a matching confirmation.
+
     @discardableResult
     func appendClaimEvidence(claimID: UUID, photoCount: Int = 1) -> Date? {
         guard let idx = claims.firstIndex(where: { $0.id == claimID }) else { return nil }
@@ -247,7 +227,6 @@ final class AppStore {
         return now
     }
 
-    // MARK: Mutations — Chat / Household (in-memory only)
 
     func appendMessage(_ text: String) {
         let msg = ChatMessage(text: text, isFromUser: true, sentAt: Date())
@@ -267,7 +246,6 @@ final class AppStore {
         household.members[idx].role = role
     }
 
-    // MARK: Core Data plumbing
 
     private func save() {
         guard context.hasChanges else { return }
@@ -306,9 +284,7 @@ final class AppStore {
         activity = entities.map(ActivityEntry.init)
     }
 
-    /// Persist a small snapshot of "what's expiring next" to the App Group
-    /// container and ask WidgetKit to redraw. Cheap; safe to call after every
-    /// mutation. No-op when the App Group container isn't available.
+
     private func refreshWidgetSnapshot() {
         let candidate = warranties
             .filter { $0.status != .expired }

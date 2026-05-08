@@ -2,9 +2,7 @@ import Foundation
 import Observation
 import FirebaseAuth
 
-/// Observable wrapper around FirebaseAuth. The app is fully usable while
-/// signed out — sync simply doesn't run. Sign-in / sign-up are async; UI
-/// surfaces `lastError` for inline form messaging.
+
 @Observable
 final class AuthService {
 
@@ -18,9 +16,7 @@ final class AuthService {
 
     @ObservationIgnored private var listenerHandle: AuthStateDidChangeListenerHandle?
 
-    /// Hook the app installs once at boot. Fires whenever auth state flips
-    /// (initial restore, sign-in, sign-out, token refresh). Used to start
-    /// and stop `WarrantySyncService`.
+
     @ObservationIgnored var onAuthStateChanged: ((String?) -> Void)?
 
     var isSignedIn: Bool { uid != nil }
@@ -57,12 +53,12 @@ final class AuthService {
                 let change = result.user.createProfileChangeRequest()
                 change.displayName = trimmedName
                 try await change.commitChanges()
-                // The auth state listener fires before profile commit completes,
-                // so reflect the new name immediately for the UI.
+
+
                 self.displayName = trimmedName
             }
-            // Send the verification email automatically — the user can resend
-            // from the Profile banner if it didn't arrive.
+
+
             try? await result.user.sendEmailVerification()
         } catch {
             lastError = friendlyMessage(for: error)
@@ -83,9 +79,7 @@ final class AuthService {
         try? Auth.auth().signOut()
     }
 
-    /// Trigger Firebase to send a password-reset email. Returns true on
-    /// success so the caller can show a confirmation message; on failure
-    /// `lastError` carries a user-readable reason.
+
     @discardableResult
     func sendPasswordReset(email: String) async -> Bool {
         lastError = nil
@@ -98,7 +92,7 @@ final class AuthService {
         }
     }
 
-    /// Re-send the email-verification link to the current user.
+
     @discardableResult
     func resendEmailVerification() async -> Bool {
         guard let user = Auth.auth().currentUser else { return false }
@@ -112,9 +106,7 @@ final class AuthService {
         }
     }
 
-    /// Pull the latest profile from Firebase. `isEmailVerified` is cached
-    /// locally and only refreshes when explicitly asked — call this after
-    /// the user clicks the verification link in their inbox.
+
     func refreshVerificationStatus() async {
         guard let user = Auth.auth().currentUser else { return }
         do {
@@ -125,7 +117,7 @@ final class AuthService {
         }
     }
 
-    /// Map FirebaseAuth's NSError codes to copy a user can act on.
+
     private func friendlyMessage(for error: Error) -> String {
         let nsErr = error as NSError
         if let code = AuthErrorCode(rawValue: nsErr.code) {

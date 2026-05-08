@@ -10,9 +10,7 @@ struct AuthenticationView: View {
     @State private var hasAutoPrompted = false
     @State private var errorMessage: String?
 
-    /// Honour the system "Reduce Motion" setting — when on, we drop the
-    /// scale-pulse animation on the Face-ID tile so users who get nauseous
-    /// from animation aren't forced to see it.
+
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
@@ -52,15 +50,14 @@ struct AuthenticationView: View {
             .padding(.horizontal, 28)
         }
         .onAppear {
-            // Auto-prompt the system biometric sheet so the user doesn't have
-            // to tap. Guarded so transient re-renders don't fire it twice.
+
+
             guard !hasAutoPrompted else { return }
             hasAutoPrompted = true
             beginBiometricAuth()
         }
     }
 
-    // MARK: - Brand header
 
     private var brandHeader: some View {
         VStack(spacing: 8) {
@@ -75,7 +72,6 @@ struct AuthenticationView: View {
         }
     }
 
-    // MARK: - Avatar
 
     private var avatarBadge: some View {
         ZStack {
@@ -86,11 +82,10 @@ struct AuthenticationView: View {
                 .font(.system(size: 38, weight: .regular))
                 .foregroundStyle(AppColors.accent)
         }
-        // Decorative; the welcome copy below already names the screen.
+
         .accessibilityHidden(true)
     }
 
-    // MARK: - Welcome copy
 
     private var copyBlock: some View {
         VStack(spacing: 8) {
@@ -107,7 +102,6 @@ struct AuthenticationView: View {
         }
     }
 
-    // MARK: - Face-ID scan
 
     private var scanBlock: some View {
         VStack(spacing: 14) {
@@ -116,13 +110,13 @@ struct AuthenticationView: View {
                     .fill(AppColors.bgSurface)
                     .frame(width: 132, height: 132)
                     .overlay(faceIDIcon)
-                    // Skip the scale pulse when Reduce Motion is on.
+
                     .scaleEffect(reduceMotion ? 1.0 : (isScanning ? 0.96 : 1.0))
                     .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: isScanning)
             }
             .buttonStyle(.plain)
-            // The whole tile + label functions as one button. Combine into a
-            // single VoiceOver element with a clear action hint.
+
+
             .accessibilityLabel(isScanning ? "Scanning your face" : "Authenticate with Face ID")
             .accessibilityHint("Double-tap to scan and unlock your vault")
 
@@ -130,8 +124,8 @@ struct AuthenticationView: View {
                 .font(AppTypography.overline)
                 .tracking(1.6)
                 .foregroundStyle(AppColors.accent)
-                // The tile-button label already covers this state for
-                // VoiceOver — the visible text is decoration, hide it.
+
+
                 .accessibilityHidden(true)
         }
     }
@@ -154,7 +148,6 @@ struct AuthenticationView: View {
         }
     }
 
-    // MARK: - Family vault chip
 
     private var familyVaultChip: some View {
         HStack(spacing: 10) {
@@ -187,7 +180,6 @@ struct AuthenticationView: View {
         .background(Capsule().fill(AppColors.bgSurface))
     }
 
-    // MARK: - Encrypted footer line
 
     private var encryptedFooter: some View {
         HStack(spacing: 6) {
@@ -200,11 +192,7 @@ struct AuthenticationView: View {
         .foregroundStyle(AppColors.textTertiary)
     }
 
-    // MARK: - Footer
 
-    /// Fallback when biometrics are unavailable, denied, or the user wants
-    /// to switch accounts: signs out of Firebase and bounces to the login
-    /// gate where they can enter their email + password.
     private var footer: some View {
         Button("Use password instead") {
             coordinator.signOut()
@@ -213,7 +201,6 @@ struct AuthenticationView: View {
         .foregroundStyle(AppColors.accent)
     }
 
-    // MARK: - Auth
 
     private func beginBiometricAuth() {
         withAnimation { isScanning = true }
@@ -224,7 +211,7 @@ struct AuthenticationView: View {
 
         guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,
                                         error: &error) else {
-            // In simulator / no biometrics → auto-succeed for dev builds.
+
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                 isScanning = false
                 onAuthenticated()

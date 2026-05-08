@@ -1,8 +1,6 @@
 import SwiftUI
 
-/// Sheet for cloud-sync sign-in / sign-up. Optional flow — the app works
-/// fully offline without ever signing in. When signed in, shows the active
-/// account and a sign-out action.
+
 struct CloudSyncView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var auth = AuthService.shared
@@ -48,7 +46,6 @@ struct CloudSyncView: View {
         }
     }
 
-    // MARK: - Signed in
 
     private var signedInCard: some View {
         GlassCard {
@@ -91,7 +88,6 @@ struct CloudSyncView: View {
         }
     }
 
-    // MARK: - Sign in / sign up
 
     private var signInCard: some View {
         GlassCard {
@@ -142,9 +138,7 @@ struct CloudSyncView: View {
         }
     }
 
-    /// Segmented control at the top of the card. Tapping flips the mode and
-    /// clears the password (less risk of typing a sign-up password into a
-    /// sign-in attempt by accident).
+
     private var modeSwitch: some View {
         HStack(spacing: 0) {
             ForEach(Mode.allCases) { m in
@@ -182,7 +176,6 @@ struct CloudSyncView: View {
         }
     }
 
-    // MARK: - Helpers
 
     private var canSubmit: Bool {
         guard !isWorking, email.contains("@"), password.count >= 6 else { return false }

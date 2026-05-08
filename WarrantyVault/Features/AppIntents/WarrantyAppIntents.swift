@@ -2,20 +2,14 @@ import AppIntents
 import CoreData
 import Foundation
 
-/// Voice-activated query: "What warranties are expiring soon in WarrantyVault?"
-/// Reads the live Core Data store, filters to active warranties, and reports
-/// the next-expiring one along with how many fall in the 30-day "expiring
-/// soon" window.
-///
-/// The intent is auto-discovered by iOS via `WarrantyVaultAppShortcuts` and
-/// surfaces in Spotlight, the Shortcuts app, and Siri.
+
 struct ExpiringWarrantiesIntent: AppIntent {
     static var title: LocalizedStringResource = "Expiring Warranties"
     static var description = IntentDescription(
         "Find out which warranties are expiring soon and when the next one ends."
     )
 
-    /// `false` so Siri can answer hands-free — fetching warranties is read-only.
+
     static var openAppWhenRun: Bool = false
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
@@ -46,9 +40,7 @@ struct ExpiringWarrantiesIntent: AppIntent {
         return .result(dialog: dialog)
     }
 
-    /// Hop to the main actor to read the view-context safely. App Intents
-    /// run in their own task; the Core Data context is bound to the main
-    /// queue.
+
     @MainActor
     private static func fetchWarranties() -> [Warranty] {
         let context = PersistenceController.shared.viewContext
@@ -58,8 +50,7 @@ struct ExpiringWarrantiesIntent: AppIntent {
     }
 }
 
-/// Registers the intent with the system so it shows up automatically in the
-/// Shortcuts app and is invokable by voice. No user setup required.
+
 struct WarrantyVaultAppShortcuts: AppShortcutsProvider {
     static var appShortcuts: [AppShortcut] {
         AppShortcut(
