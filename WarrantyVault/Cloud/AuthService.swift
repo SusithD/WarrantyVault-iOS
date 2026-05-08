@@ -12,6 +12,7 @@ final class AuthService {
 
     private(set) var uid: String?
     private(set) var email: String?
+    private(set) var displayName: String?
     private(set) var lastError: String?
 
     @ObservationIgnored private var listenerHandle: AuthStateDidChangeListenerHandle?
@@ -27,11 +28,13 @@ final class AuthService {
         if let user = Auth.auth().currentUser {
             self.uid = user.uid
             self.email = user.email
+            self.displayName = user.displayName
         }
         listenerHandle = Auth.auth().addStateDidChangeListener { [weak self] _, user in
             guard let self else { return }
             self.uid = user?.uid
             self.email = user?.email
+            self.displayName = user?.displayName
             self.onAuthStateChanged?(user?.uid)
         }
     }
@@ -42,10 +45,19 @@ final class AuthService {
         }
     }
 
-    func signUp(email: String, password: String) async {
+    func signUp(name: String, email: String, password: String) async {
         lastError = nil
         do {
-            _ = try await Auth.auth().createUser(withEmail: email, password: password)
+            let result = try await Auth.auth().createUser(withEmail: email, password: password)
+            let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+            if !trimmedName.isEmpty {
+                let change = result.user.createProfileChangeRequest()
+                change.displayName = trimmedName
+                try await change.commitChanges()
+                // The auth state listener fires before profile commit completes,
+                // so reflect the new name immediately for the UI.
+                self.displayName = trimmedName
+            }
         } catch {
             lastError = friendlyMessage(for: error)
         }

@@ -72,15 +72,15 @@ struct ProfileView: View {
             HStack(spacing: 14) {
                 ZStack {
                     Circle().fill(AppColors.brandBlue.opacity(0.25)).frame(width: 60, height: 60)
-                    Text(store.household.members.first?.avatarInitials ?? "JC")
+                    Text(displayInitials)
                         .font(.system(size: 18, weight: .bold))
                         .foregroundStyle(AppColors.brandBlue)
                 }
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(store.household.members.first?.name ?? "Jamie Chen")
+                    Text(displayName)
                         .font(.system(size: 17, weight: .semibold))
                         .foregroundStyle(AppColors.textPrimary)
-                    Text(store.household.members.first?.email ?? "jamie@chenfamily.co")
+                    Text(displayEmail)
                         .font(.system(size: 12))
                         .foregroundStyle(AppColors.textSecondary)
                     HStack(spacing: 6) {
@@ -92,6 +92,33 @@ struct ProfileView: View {
                 Spacer()
             }
         }
+    }
+
+    /// Profile header sources name/email from the signed-in Firebase user
+    /// when available, falling back to the local household mock so the
+    /// offline-only experience still has something to show.
+    private var displayName: String {
+        if auth.isSignedIn, let name = auth.displayName, !name.isEmpty {
+            return name
+        }
+        if auth.isSignedIn, let email = auth.email {
+            return email
+        }
+        return store.household.members.first?.name ?? "Guest"
+    }
+
+    private var displayEmail: String {
+        if auth.isSignedIn, let email = auth.email {
+            return email
+        }
+        return store.household.members.first?.email ?? ""
+    }
+
+    private var displayInitials: String {
+        let source = displayName
+        let words = source.split(whereSeparator: { !$0.isLetter })
+        let initials = words.prefix(2).compactMap { $0.first.map(String.init) }.joined()
+        return initials.uppercased().isEmpty ? "•" : initials.uppercased()
     }
 
     private var preferencesCard: some View {

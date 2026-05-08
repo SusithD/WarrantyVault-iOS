@@ -9,11 +9,16 @@ struct CloudSyncView: View {
     @State private var sync = WarrantySyncService.shared
 
     @State private var mode: Mode = .signIn
+    @State private var name = ""
     @State private var email = ""
     @State private var password = ""
     @State private var isWorking = false
 
-    enum Mode { case signIn, signUp }
+    enum Mode: String, CaseIterable, Identifiable {
+        case signIn = "Sign In"
+        case signUp = "Sign Up"
+        var id: String { rawValue }
+    }
 
     var body: some View {
         NavigationStack {
@@ -91,8 +96,17 @@ struct CloudSyncView: View {
     private var signInCard: some View {
         GlassCard {
             VStack(alignment: .leading, spacing: 14) {
-                Text(mode == .signIn ? "Sign In".uppercased() : "Create Account".uppercased())
-                    .overlineStyle()
+                modeSwitch
+
+                if mode == .signUp {
+                    fieldLabel("Name")
+                    TextField("Your name", text: $name)
+                        .textContentType(.name)
+                        .autocorrectionDisabled()
+                        .padding(.horizontal, 14).padding(.vertical, 12)
+                        .background(RoundedRectangle(cornerRadius: 12).fill(AppColors.bgSurface))
+                        .foregroundStyle(AppColors.textPrimary)
+                }
 
                 fieldLabel("Email")
                 TextField("you@example.com", text: $email)
@@ -124,21 +138,36 @@ struct CloudSyncView: View {
                 ) {
                     submit()
                 }
+            }
+        }
+    }
 
+    /// Segmented control at the top of the card. Tapping flips the mode and
+    /// clears the password (less risk of typing a sign-up password into a
+    /// sign-in attempt by accident).
+    private var modeSwitch: some View {
+        HStack(spacing: 0) {
+            ForEach(Mode.allCases) { m in
                 Button {
-                    mode = (mode == .signIn ? .signUp : .signIn)
+                    if mode != m {
+                        mode = m
+                        password = ""
+                    }
                 } label: {
-                    Text(mode == .signIn
-                         ? "No account? Create one"
-                         : "Already have an account? Sign in")
-                        .font(.system(size: 12, weight: .medium))
-                        .foregroundStyle(AppColors.accent)
+                    Text(m.rawValue)
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(mode == m ? AppColors.textInverse : AppColors.textSecondary)
                         .frame(maxWidth: .infinity)
-                        .padding(.top, 4)
+                        .padding(.vertical, 10)
+                        .background(
+                            Capsule().fill(mode == m ? AppColors.accent : Color.clear)
+                        )
                 }
                 .buttonStyle(.plain)
             }
         }
+        .padding(4)
+        .background(Capsule().fill(AppColors.bgSurface))
     }
 
     private var infoCard: some View {
@@ -156,9 +185,11 @@ struct CloudSyncView: View {
     // MARK: - Helpers
 
     private var canSubmit: Bool {
-        !isWorking
-        && email.contains("@")
-        && password.count >= 6
+        guard !isWorking, email.contains("@"), password.count >= 6 else { return false }
+        if mode == .signUp {
+            return !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        }
+        return true
     }
 
     private func fieldLabel(_ text: String) -> some View {
@@ -168,13 +199,16 @@ struct CloudSyncView: View {
     }
 
     private func submit() {
+        let pendingName = name.trimmingCharacters(in: .whitespacesAndNewlines)
         let pendingEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
         let pendingPassword = password
         Task {
             isWorking = true
             switch mode {
-            case .signIn:  await auth.signIn(email: pendingEmail, password: pendingPassword)
-            case .signUp:  await auth.signUp(email: pendingEmail, password: pendingPassword)
+            case .signIn:
+                await auth.signIn(email: pendingEmail, password: pendingPassword)
+            case .signUp:
+                await auth.signUp(name: pendingName, email: pendingEmail, password: pendingPassword)
             }
             isWorking = false
             if auth.isSignedIn {
