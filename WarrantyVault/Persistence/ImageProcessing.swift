@@ -1,4 +1,5 @@
 import UIKit
+import CoreGraphics
 
 extension UIImage {
     /// Downscale so the longest edge is at most `maxDimension` (in points) and
@@ -19,5 +20,25 @@ extension UIImage {
             self.draw(in: CGRect(origin: .zero, size: target))
         }
         return resized.jpegData(compressionQuality: quality)
+    }
+
+    /// Returns a `CGImage` whose long edge is at most `maxDimension`. If the
+    /// receiver is already smaller, returns the underlying CGImage as-is.
+    /// Used to bound work done by Vision OCR for speed.
+    func downscaledCGImage(maxDimension: CGFloat) -> CGImage? {
+        let longest = max(size.width, size.height)
+        if longest <= maxDimension { return cgImage }
+
+        let scale = maxDimension / longest
+        let target = CGSize(width: size.width * scale, height: size.height * scale)
+
+        let format = UIGraphicsImageRendererFormat.default()
+        format.scale = 1.0
+
+        let renderer = UIGraphicsImageRenderer(size: target, format: format)
+        let resized = renderer.image { _ in
+            self.draw(in: CGRect(origin: .zero, size: target))
+        }
+        return resized.cgImage
     }
 }

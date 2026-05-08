@@ -54,6 +54,7 @@
 		C87BAB3D4406779D878A957F /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA6CECEE989193FA10E3B5 /* LocationService.swift */; };
 		533D78D209768B0620E806B4 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1742C9D25B10917F452469D /* NotificationService.swift */; };
 		C2547F273BC1D92C0CE36C8F /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E97D67F3238351114B404D4 /* PersistenceController.swift */; };
+		67A5D492E2010B560E6666D4 /* ReceiptScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0605DE40290970C2D42A6772 /* ReceiptScanner.swift */; };
 		09A4B4018EE19DB9F182FB10 /* WarrantyVaultApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2855521D3CECE57610385E92 /* WarrantyVaultApp.swift */; };
 		75A5C27DF026105D470D59C2 /* WarrantyVault.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8A33099F64A214C051F2B74C /* WarrantyVault.xcdatamodeld */; };
 		9C4613ADC9B57FC436F0057B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B45634CEEE3EB39F8AD6FF61 /* Assets.xcassets */; };
@@ -109,6 +110,7 @@
 		4CBA6CECEE989193FA10E3B5 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocationService.swift"; sourceTree = "<group>"; };
 		A1742C9D25B10917F452469D /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationService.swift"; sourceTree = "<group>"; };
 		5E97D67F3238351114B404D4 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersistenceController.swift"; sourceTree = "<group>"; };
+		0605DE40290970C2D42A6772 /* ReceiptScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReceiptScanner.swift"; sourceTree = "<group>"; };
 		2855521D3CECE57610385E92 /* WarrantyVaultApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WarrantyVaultApp.swift"; sourceTree = "<group>"; };
 		B45634CEEE3EB39F8AD6FF61 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets.xcassets"; sourceTree = "<group>"; };
 		757D7FD6E847403B72ECD838 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -312,6 +314,7 @@
 				4CBA6CECEE989193FA10E3B5 /* LocationService.swift */,
 				A1742C9D25B10917F452469D /* NotificationService.swift */,
 				5E97D67F3238351114B404D4 /* PersistenceController.swift */,
+				0605DE40290970C2D42A6772 /* ReceiptScanner.swift */,
 				8A33099F64A214C051F2B74C /* WarrantyVault.xcdatamodeld */,
 			);
 			path = "Persistence";
@@ -465,6 +468,7 @@
 				C87BAB3D4406779D878A957F /* LocationService.swift in Sources */,
 				533D78D209768B0620E806B4 /* NotificationService.swift in Sources */,
 				C2547F273BC1D92C0CE36C8F /* PersistenceController.swift in Sources */,
+				67A5D492E2010B560E6666D4 /* ReceiptScanner.swift in Sources */,
 				09A4B4018EE19DB9F182FB10 /* WarrantyVaultApp.swift in Sources */,
 				75A5C27DF026105D470D59C2 /* WarrantyVault.xcdatamodeld in Sources */,
 			);

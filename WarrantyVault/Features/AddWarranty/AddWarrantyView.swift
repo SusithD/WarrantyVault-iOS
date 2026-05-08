@@ -30,6 +30,8 @@ struct AddWarrantyView: View {
     @State private var locationDeniedHint = false
     @State private var calendarSyncEnabled: Bool
     @State private var calendarDeniedHint = false
+    @State private var isScanningReceipt = false
+    @State private var didAutoFillFromReceipt = false
 
     private static let calendarSyncDefaultKey = "calendarSyncDefault"
 
@@ -88,7 +90,7 @@ struct AddWarrantyView: View {
         }
         .sheet(isPresented: $presentingCamera) {
             CameraPicker { image in
-                receiptImage = image.receiptEncoded()
+                Task { await handlePickedReceipt(image) }
             }
             .ignoresSafeArea()
         }
@@ -104,11 +106,68 @@ struct AddWarrantyView: View {
             Task {
                 if let data = try? await item.loadTransferable(type: Data.self),
                    let image = UIImage(data: data) {
-                    await MainActor.run { receiptImage = image.receiptEncoded() }
+                    await handlePickedReceipt(image)
                 }
             }
         }
         .task { await refreshLocationLabel() }
+        .overlay {
+            if isScanningReceipt {
+                ZStack {
+                    Color.black.opacity(0.30).ignoresSafeArea()
+                    HStack(spacing: 10) {
+                        ProgressView()
+                        Text("Scanning receipt…")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundStyle(AppColors.textPrimary)
+                    }
+                    .padding(.horizontal, 18).padding(.vertical, 14)
+                    .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+                }
+                .transition(.opacity)
+            }
+        }
+        .animation(.easeInOut(duration: 0.2), value: isScanningReceipt)
+    }
+
+    /// Stores the picked image and runs OCR auto-fill. The image is downscaled
+    /// + JPEG-encoded for storage independent of the OCR pipeline.
+    @MainActor
+    private func handlePickedReceipt(_ image: UIImage) async {
+        receiptImage = image.receiptEncoded()
+        await scanAndAutoFill(image)
+    }
+
+    @MainActor
+    private func scanAndAutoFill(_ image: UIImage) async {
+        isScanningReceipt = true
+        defer { isScanningReceipt = false }
+
+        guard let result = try? await ReceiptScanner.shared.scan(image) else { return }
+
+        var didFill = false
+        if productName.trimmingCharacters(in: .whitespaces).isEmpty,
+           let p = result.productName, !p.isEmpty {
+            productName = p
+            didFill = true
+        }
+        if retailer.trimmingCharacters(in: .whitespaces).isEmpty,
+           let r = result.retailer, !r.isEmpty {
+            retailer = r
+            didFill = true
+        }
+        if priceText.trimmingCharacters(in: .whitespaces).isEmpty,
+           let total = result.totalPrice, total > 0 {
+            priceText = String(format: "%.2f", total)
+            didFill = true
+        }
+        if let scanned = result.purchaseDate, editing == nil {
+            // For brand-new warranties only — never overwrite an explicit edit.
+            purchaseDate = scanned
+            didFill = true
+        }
+
+        didAutoFillFromReceipt = didFill
     }
 
     private var currentCoordinate: CLLocationCoordinate2D? {
@@ -280,9 +339,20 @@ struct AddWarrantyView: View {
                         Button(role: .destructive) {
                             receiptImage = nil
                             photosPickerItem = nil
+                            didAutoFillFromReceipt = false
                         } label: {
                             receiptActionLabel(symbol: "trash", text: "Remove")
                         }
+                    }
+                }
+
+                if didAutoFillFromReceipt {
+                    HStack(spacing: 6) {
+                        Image(systemName: "sparkles")
+                            .foregroundStyle(AppColors.brandBlue)
+                        Text("Auto-filled from receipt — tap any field to edit.")
+                            .font(.system(size: 11, weight: .medium))
+                            .foregroundStyle(AppColors.textSecondary)
                     }
                 }
             }
