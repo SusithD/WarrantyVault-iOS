@@ -101,3 +101,4 @@ Swap this for persistence (SwiftData / CoreData / API) later without touching vi
 
 ## Sample data
 See `Models/MockData.swift` for 7 warranties, 3 claims, a 5-message chat, a 4-member household, and 5 activity entries.
+
