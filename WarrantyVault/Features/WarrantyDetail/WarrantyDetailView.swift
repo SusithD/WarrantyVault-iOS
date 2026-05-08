@@ -295,12 +295,7 @@ struct WarrantyDetailView: View {
                 .foregroundStyle(AppColors.textPrimary)
                 .frame(maxWidth: .infinity, minHeight: 50)
                 .background(
-                    RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .fill(Color.white)
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .stroke(AppColors.border, lineWidth: 0.5)
+                    Capsule().fill(AppColors.bgSurface)
                 )
             }
             .buttonStyle(.plain)

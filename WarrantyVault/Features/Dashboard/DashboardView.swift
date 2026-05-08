@@ -191,16 +191,12 @@ struct DashboardView: View {
         Button(action: action) {
             Text(title)
                 .font(AppTypography.chip)
-                .foregroundStyle(isSelected ? .white : AppColors.textSecondary)
+                .foregroundStyle(isSelected ? AppColors.textInverse : AppColors.textSecondary)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 7)
                 .background(
                     RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .fill(isSelected ? AppColors.brandBlue : Color.white)
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .stroke(isSelected ? .clear : AppColors.border, lineWidth: 0.5)
+                        .fill(isSelected ? AppColors.accent : AppColors.bgSurfaceHi)
                 )
         }
         .buttonStyle(.plain)

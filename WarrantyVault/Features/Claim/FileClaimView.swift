@@ -87,15 +87,16 @@ struct FileClaimView: View {
                             } label: {
                                 HStack(spacing: 8) {
                                     Image(systemName: w.category.symbolName)
-                                        .foregroundStyle(w.category.tint)
+                                        .foregroundStyle(selectedWarrantyID == w.id ? AppColors.textInverse : w.category.tint)
                                     Text(w.productName)
                                         .font(.system(size: 13, weight: .semibold))
                                         .lineLimit(1)
                                 }
-                                .foregroundStyle(selectedWarrantyID == w.id ? .white : AppColors.textPrimary)
+                                .foregroundStyle(selectedWarrantyID == w.id ? AppColors.textInverse : AppColors.textPrimary)
                                 .padding(.horizontal, 12).padding(.vertical, 8)
-                                .background(Capsule().fill(selectedWarrantyID == w.id ? AppColors.brandBlue : .white))
-                                .overlay(Capsule().stroke(selectedWarrantyID == w.id ? .clear : AppColors.border, lineWidth: 1))
+                                .background(
+                                    Capsule().fill(selectedWarrantyID == w.id ? AppColors.accent : AppColors.bgSurfaceHi)
+                                )
                             }
                             .buttonStyle(.plain)
                         }
@@ -116,24 +117,25 @@ struct FileClaimView: View {
                         } label: {
                             HStack(spacing: 8) {
                                 Image(systemName: cat.symbol)
+                                    .foregroundStyle(issueCategory == cat ? AppColors.accent : AppColors.textSecondary)
                                 Text(cat.rawValue)
                                     .lineLimit(1)
+                                    .foregroundStyle(issueCategory == cat ? AppColors.textPrimary : AppColors.textSecondary)
                                 Spacer()
                                 if issueCategory == cat {
                                     Image(systemName: "checkmark.circle.fill")
-                                        .foregroundStyle(AppColors.brandBlue)
+                                        .foregroundStyle(AppColors.accent)
                                 }
                             }
                             .font(.system(size: 13, weight: .semibold))
-                            .foregroundStyle(AppColors.textPrimary)
                             .padding(.horizontal, 12).padding(.vertical, 12)
                             .background(
                                 RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                    .fill(issueCategory == cat ? AppColors.brandBlueSoft : Color.white)
+                                    .fill(AppColors.bgSurfaceHi)
                             )
                             .overlay(
                                 RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                    .stroke(issueCategory == cat ? AppColors.brandBlue : AppColors.border, lineWidth: 1)
+                                    .stroke(issueCategory == cat ? AppColors.accent : Color.clear, lineWidth: 1)
                             )
                         }
                         .buttonStyle(.plain)
@@ -147,11 +149,19 @@ struct FileClaimView: View {
         GlassCard {
             VStack(alignment: .leading, spacing: 8) {
                 Text("Short summary").overlineStyle()
-                TextField("e.g. Drum vibration on spin cycle", text: $summary)
-                    .font(.system(size: 15))
-                    .padding(.horizontal, 14).padding(.vertical, 12)
-                    .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(.white))
-                    .overlay(RoundedRectangle(cornerRadius: 12, style: .continuous).stroke(AppColors.border, lineWidth: 1))
+                TextField(
+                    "",
+                    text: $summary,
+                    prompt: Text("e.g. Drum vibration on spin cycle")
+                        .foregroundColor(AppColors.textTertiary)
+                )
+                .font(AppTypography.body)
+                .foregroundStyle(AppColors.textPrimary)
+                .padding(.horizontal, 14).padding(.vertical, 12)
+                .background(
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .fill(AppColors.bgSurfaceHi)
+                )
             }
         }
     }
@@ -161,12 +171,14 @@ struct FileClaimView: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text("What happened?").overlineStyle()
                 TextEditor(text: $description)
-                    .font(.system(size: 14))
+                    .font(AppTypography.body)
+                    .foregroundStyle(AppColors.textPrimary)
                     .frame(minHeight: 120)
                     .scrollContentBackground(.hidden)
+                    .padding(8)
                     .background(
                         RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .fill(AppColors.surfaceMuted.opacity(0.4))
+                            .fill(AppColors.bgSurfaceHi)
                     )
             }
         }
@@ -182,24 +194,28 @@ struct FileClaimView: View {
                 } label: {
                     HStack(spacing: 12) {
                         ZStack {
-                            Circle().fill(AppColors.brandBlueSoft).frame(width: 36, height: 36)
-                            Image(systemName: "photo.on.rectangle").foregroundStyle(AppColors.brandBlue)
+                            Circle().fill(AppColors.bgApp).frame(width: 36, height: 36)
+                            Image(systemName: "photo.on.rectangle")
+                                .foregroundStyle(AppColors.textPrimary)
                         }
                         VStack(alignment: .leading, spacing: 2) {
                             Text("Attach photos or video")
                                 .font(.system(size: 14, weight: .semibold))
                                 .foregroundStyle(AppColors.textPrimary)
                             Text(photosAttached == 0 ? "Up to 6 files" : "\(photosAttached) attached")
-                                .font(.system(size: 12))
+                                .font(AppTypography.caption)
                                 .foregroundStyle(AppColors.textSecondary)
                         }
                         Spacer()
                         Image(systemName: "plus.circle.fill")
-                            .foregroundStyle(AppColors.brandBlue)
+                            .font(.system(size: 22))
+                            .foregroundStyle(AppColors.accent)
                     }
                     .padding(.horizontal, 12).padding(.vertical, 10)
-                    .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(.white))
-                    .overlay(RoundedRectangle(cornerRadius: 12, style: .continuous).stroke(AppColors.border, lineWidth: 1))
+                    .background(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(AppColors.bgSurfaceHi)
+                    )
                 }
                 .buttonStyle(.plain)
 
@@ -208,7 +224,7 @@ struct FileClaimView: View {
                         .font(.system(size: 13, weight: .medium))
                         .foregroundStyle(AppColors.textPrimary)
                 }
-                .tint(AppColors.brandBlue)
+                .tint(AppColors.accent)
             }
         }
     }

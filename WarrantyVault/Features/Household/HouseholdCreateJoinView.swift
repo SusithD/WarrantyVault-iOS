@@ -62,11 +62,12 @@ struct HouseholdCreateJoinView: View {
                 Button { mode = m } label: {
                     Text(m.rawValue)
                         .font(.system(size: 14, weight: .semibold))
-                        .foregroundStyle(mode == m ? .white : AppColors.textPrimary)
+                        .foregroundStyle(mode == m ? AppColors.textInverse : AppColors.textSecondary)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 12)
-                        .background(Capsule().fill(mode == m ? AppColors.brandBlue : Color.white))
-                        .overlay(Capsule().stroke(mode == m ? .clear : AppColors.border, lineWidth: 1))
+                        .background(
+                            Capsule().fill(mode == m ? AppColors.accent : AppColors.bgSurfaceHi)
+                        )
                 }
                 .buttonStyle(.plain)
             }
@@ -77,13 +78,21 @@ struct HouseholdCreateJoinView: View {
         GlassCard {
             VStack(alignment: .leading, spacing: 14) {
                 Text("Household name").overlineStyle()
-                TextField("e.g. The Chen Family", text: $householdName)
-                    .font(.system(size: 15))
-                    .padding(.horizontal, 14).padding(.vertical, 12)
-                    .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(.white))
-                    .overlay(RoundedRectangle(cornerRadius: 12, style: .continuous).stroke(AppColors.border, lineWidth: 1))
+                TextField(
+                    "",
+                    text: $householdName,
+                    prompt: Text("e.g. The Chen Family")
+                        .foregroundColor(AppColors.textTertiary)
+                )
+                .font(AppTypography.body)
+                .foregroundStyle(AppColors.textPrimary)
+                .padding(.horizontal, 14).padding(.vertical, 12)
+                .background(
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .fill(AppColors.bgSurfaceHi)
+                )
 
-                Divider()
+                Divider().background(AppColors.borderSubtle)
 
                 featureRow(symbol: "person.2.fill",       title: "Invite up to 8 people")
                 featureRow(symbol: "lock.shield.fill",    title: "Role-based access (Owner, Admin, Member, Viewer)")
@@ -96,13 +105,21 @@ struct HouseholdCreateJoinView: View {
         GlassCard {
             VStack(alignment: .leading, spacing: 14) {
                 Text("Invite code").overlineStyle()
-                TextField("e.g. WV-7X42-PR9", text: $inviteCode)
-                    .font(.system(size: 16, weight: .bold, design: .monospaced))
-                    .textInputAutocapitalization(.characters)
-                    .autocorrectionDisabled()
-                    .padding(.horizontal, 14).padding(.vertical, 12)
-                    .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(.white))
-                    .overlay(RoundedRectangle(cornerRadius: 12, style: .continuous).stroke(AppColors.border, lineWidth: 1))
+                TextField(
+                    "",
+                    text: $inviteCode,
+                    prompt: Text("e.g. WV-7X42-PR9")
+                        .foregroundColor(AppColors.textTertiary)
+                )
+                .font(.system(size: 16, weight: .bold, design: .monospaced))
+                .foregroundStyle(AppColors.textPrimary)
+                .textInputAutocapitalization(.characters)
+                .autocorrectionDisabled()
+                .padding(.horizontal, 14).padding(.vertical, 12)
+                .background(
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .fill(AppColors.bgSurfaceHi)
+                )
 
                 HStack(spacing: 6) {
                     Image(systemName: "info.circle").foregroundStyle(AppColors.textSecondary)

@@ -98,10 +98,11 @@ struct InviteMemberView: View {
                             Button { role = r } label: {
                                 Text(r.rawValue)
                                     .font(.system(size: 12, weight: .semibold))
-                                    .foregroundStyle(role == r ? .white : AppColors.textPrimary)
+                                    .foregroundStyle(role == r ? AppColors.textInverse : AppColors.textSecondary)
                                     .padding(.horizontal, 12).padding(.vertical, 7)
-                                    .background(Capsule().fill(role == r ? r.tint : Color.white))
-                                    .overlay(Capsule().stroke(role == r ? .clear : AppColors.border, lineWidth: 1))
+                                    .background(
+                                        Capsule().fill(role == r ? r.tint : AppColors.bgSurfaceHi)
+                                    )
                             }
                             .buttonStyle(.plain)
                         }

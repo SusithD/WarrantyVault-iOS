@@ -88,28 +88,35 @@ struct ClaimChatView: View {
                 Image(systemName: "paperclip")
                     .foregroundStyle(AppColors.textSecondary)
                     .frame(width: 40, height: 40)
-                    .background(Circle().fill(.white))
-                    .overlay(Circle().stroke(AppColors.border))
+                    .background(Circle().fill(AppColors.bgSurfaceHi))
             }
             .buttonStyle(.plain)
 
-            TextField("Message support", text: $draft, axis: .vertical)
-                .focused($focused)
-                .font(.system(size: 15))
-                .padding(.horizontal, 14).padding(.vertical, 10)
-                .background(RoundedRectangle(cornerRadius: 20, style: .continuous).fill(.white))
-                .overlay(RoundedRectangle(cornerRadius: 20, style: .continuous).stroke(AppColors.border, lineWidth: 1))
+            TextField(
+                "",
+                text: $draft,
+                prompt: Text("Message support").foregroundColor(AppColors.textTertiary),
+                axis: .vertical
+            )
+            .focused($focused)
+            .font(AppTypography.body)
+            .foregroundStyle(AppColors.textPrimary)
+            .padding(.horizontal, 14).padding(.vertical, 10)
+            .background(
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .fill(AppColors.bgSurfaceHi)
+            )
 
             Button {
                 send()
             } label: {
                 Image(systemName: "arrow.up")
                     .font(.system(size: 16, weight: .bold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(AppColors.textInverse)
                     .frame(width: 40, height: 40)
                     .background(
                         Circle().fill(draft.trimmingCharacters(in: .whitespaces).isEmpty
-                                      ? AppColors.textTertiary : AppColors.brandBlue)
+                                      ? AppColors.bgSurfaceHi : AppColors.accent)
                     )
             }
             .buttonStyle(.plain)
@@ -117,8 +124,11 @@ struct ClaimChatView: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
-        .background(.white)
-        .overlay(Rectangle().fill(AppColors.border).frame(height: 1), alignment: .top)
+        .background(AppColors.bgSurface)
+        .overlay(
+            Rectangle().fill(AppColors.borderSubtle).frame(height: 0.5),
+            alignment: .top
+        )
     }
 
     private func send() {
@@ -138,15 +148,11 @@ struct ChatBubble: View {
             VStack(alignment: message.isFromUser ? .trailing : .leading, spacing: 4) {
                 Text(message.text)
                     .font(.system(size: 14))
-                    .foregroundStyle(message.isFromUser ? .white : AppColors.textPrimary)
+                    .foregroundStyle(message.isFromUser ? AppColors.textInverse : AppColors.textPrimary)
                     .padding(.horizontal, 14).padding(.vertical, 10)
                     .background(
                         RoundedRectangle(cornerRadius: 18, style: .continuous)
-                            .fill(message.isFromUser ? AppColors.brandBlue : Color.white)
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 18, style: .continuous)
-                            .stroke(message.isFromUser ? .clear : AppColors.border, lineWidth: 1)
+                            .fill(message.isFromUser ? AppColors.accent : AppColors.bgSurfaceHi)
                     )
                 Text(message.sentAt.formatted(.relative(presentation: .named)))
                     .font(.system(size: 10))

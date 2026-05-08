@@ -92,13 +92,12 @@ struct HouseholdHubView: View {
                 Button { segment = seg } label: {
                     Text(seg.rawValue)
                         .font(.system(size: 13, weight: .semibold))
-                        .foregroundStyle(segment == seg ? .white : AppColors.textPrimary)
+                        .foregroundStyle(segment == seg ? AppColors.textInverse : AppColors.textSecondary)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 10)
                         .background(
-                            Capsule().fill(segment == seg ? AppColors.brandBlue : Color.white)
+                            Capsule().fill(segment == seg ? AppColors.accent : AppColors.bgSurfaceHi)
                         )
-                        .overlay(Capsule().stroke(segment == seg ? .clear : AppColors.border, lineWidth: 1))
                 }
                 .buttonStyle(.plain)
             }
