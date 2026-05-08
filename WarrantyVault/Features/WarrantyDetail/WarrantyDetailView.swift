@@ -48,9 +48,14 @@ struct WarrantyDetailView: View {
                         Label("Delete", systemImage: "trash")
                     }
                 } label: {
-                    Image(systemName: "ellipsis.circle.fill")
-                        .font(.system(size: 20))
-                        .foregroundStyle(AppColors.brandBlue)
+                    Image(systemName: "ellipsis")
+                        .font(.system(size: 17, weight: .semibold))
+                        .foregroundStyle(AppColors.textPrimary)
+                        .frame(width: 36, height: 36)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .stroke(AppColors.border, lineWidth: 0.5)
+                        )
                 }
             }
         }
@@ -81,30 +86,29 @@ struct WarrantyDetailView: View {
 
     private func hero(_ w: Warranty) -> some View {
         GlassCard {
-            VStack(alignment: .leading, spacing: 14) {
+            VStack(alignment: .leading, spacing: 16) {
                 HStack(spacing: 12) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 16, style: .continuous)
-                            .fill(w.category.tint.opacity(0.18))
-                            .frame(width: 56, height: 56)
-                        Image(systemName: w.category.symbolName)
-                            .font(.system(size: 22, weight: .semibold))
-                            .foregroundStyle(w.category.tint)
-                    }
+                    IconBadge(
+                        symbol: w.category.symbolName,
+                        tint: w.category.tint,
+                        style: .soft,
+                        size: .large
+                    )
                     VStack(alignment: .leading, spacing: 4) {
                         Text(w.brand.uppercased())
                             .overlineStyle()
                         Text(w.productName)
-                            .font(.system(size: 20, weight: .bold))
+                            .font(AppTypography.headline)
+                            .tracking(-0.2)
                             .foregroundStyle(AppColors.textPrimary)
                             .fixedSize(horizontal: false, vertical: true)
                     }
                 }
                 HStack {
-                    StatusChip(status: w.status, daysRemaining: w.daysRemaining)
+                    StatusTag(status: w.status, daysRemaining: w.daysRemaining)
                     Spacer()
                     Text(w.price.formatted(.currency(code: "USD")))
-                        .font(.system(size: 14, weight: .semibold))
+                        .font(AppTypography.monoBold)
                         .foregroundStyle(AppColors.textPrimary)
                 }
             }
@@ -113,26 +117,35 @@ struct WarrantyDetailView: View {
 
     private func coverageCard(_ w: Warranty) -> some View {
         GlassCard {
-            VStack(alignment: .leading, spacing: 12) {
-                Text("Coverage".uppercased()).overlineStyle()
-                ProgressView(value: w.coverageProgress)
-                    .tint(w.status.tint)
+            VStack(alignment: .leading, spacing: 14) {
+                HStack(alignment: .firstTextBaseline) {
+                    Text("Coverage").overlineStyle()
+                    Spacer()
+                    Text("\(Int(w.coverageProgress * 100))%")
+                        .font(AppTypography.captionStrong)
+                        .foregroundStyle(AppColors.textSecondary)
+                }
+
+                CoverageBar(progress: w.coverageProgress, tint: w.status.tint)
+
                 HStack {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Purchased")
-                            .font(.system(size: 11, weight: .semibold))
-                            .foregroundStyle(AppColors.textSecondary)
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text("PURCHASED")
+                            .font(.system(size: 9, weight: .heavy))
+                            .tracking(0.8)
+                            .foregroundStyle(AppColors.textTertiary)
                         Text(w.purchaseDate.formatted(date: .abbreviated, time: .omitted))
-                            .font(.system(size: 13, weight: .semibold))
+                            .font(AppTypography.mono)
                             .foregroundStyle(AppColors.textPrimary)
                     }
                     Spacer()
-                    VStack(alignment: .trailing, spacing: 2) {
-                        Text("Expires")
-                            .font(.system(size: 11, weight: .semibold))
-                            .foregroundStyle(AppColors.textSecondary)
+                    VStack(alignment: .trailing, spacing: 3) {
+                        Text("EXPIRES")
+                            .font(.system(size: 9, weight: .heavy))
+                            .tracking(0.8)
+                            .foregroundStyle(AppColors.textTertiary)
                         Text(w.expiryDate.formatted(date: .abbreviated, time: .omitted))
-                            .font(.system(size: 13, weight: .semibold))
+                            .font(AppTypography.mono)
                             .foregroundStyle(AppColors.textPrimary)
                     }
                 }
@@ -143,22 +156,26 @@ struct WarrantyDetailView: View {
     private func detailsCard(_ w: Warranty) -> some View {
         GlassCard {
             VStack(alignment: .leading, spacing: 14) {
-                Text("Details".uppercased()).overlineStyle()
-                detailRow("Retailer",       value: w.retailer)
-                detailRow("Category",       value: w.category.rawValue)
-                detailRow("Serial number",  value: w.serialNumber.isEmpty ? "—" : w.serialNumber)
+                Text("Details").overlineStyle()
+                detailRow("Retailer", value: w.retailer)
+                detailRow("Category", value: w.category.rawValue)
+                detailRow(
+                    "Serial number",
+                    value: w.serialNumber.isEmpty ? "—" : w.serialNumber,
+                    valueFont: AppTypography.mono
+                )
             }
         }
     }
 
-    private func detailRow(_ label: String, value: String) -> some View {
+    private func detailRow(_ label: String, value: String, valueFont: Font = AppTypography.captionStrong) -> some View {
         HStack {
             Text(label)
-                .font(.system(size: 13, weight: .medium))
+                .font(AppTypography.caption)
                 .foregroundStyle(AppColors.textSecondary)
             Spacer()
             Text(value)
-                .font(.system(size: 13, weight: .semibold))
+                .font(valueFont)
                 .foregroundStyle(AppColors.textPrimary)
         }
     }
@@ -168,16 +185,20 @@ struct WarrantyDetailView: View {
         GlassCard {
             VStack(alignment: .leading, spacing: 12) {
                 HStack {
-                    Text("Purchase location".uppercased()).overlineStyle()
+                    Text("Purchase location").overlineStyle()
                     Spacer()
                     if w.coordinate != nil {
-                        Button {
-                            openInMaps(w)
-                        } label: {
-                            Label("Open in Maps", systemImage: "arrow.up.right.square")
-                                .font(.system(size: 12, weight: .semibold))
-                                .foregroundStyle(AppColors.brandBlue)
+                        Button { openInMaps(w) } label: {
+                            HStack(spacing: 4) {
+                                Text("OPEN IN MAPS")
+                                    .font(.system(size: 10, weight: .heavy))
+                                    .tracking(0.8)
+                                Image(systemName: "arrow.up.right")
+                                    .font(.system(size: 9, weight: .heavy))
+                            }
+                            .foregroundStyle(AppColors.brandBlue)
                         }
+                        .buttonStyle(.plain)
                     }
                 }
 
@@ -192,19 +213,20 @@ struct WarrantyDetailView: View {
                             .tint(AppColors.brandBlue)
                     }
                     .mapStyle(.standard(elevation: .realistic))
-                    .frame(height: 200)
-                    .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    .frame(height: 180)
+                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                     .allowsHitTesting(false)
                 } else {
                     HStack(spacing: 10) {
                         Image(systemName: "mappin.slash")
+                            .font(.system(size: 14, weight: .medium))
                             .foregroundStyle(AppColors.textTertiary)
                         Text("No location captured")
-                            .font(.system(size: 13, weight: .medium))
+                            .font(AppTypography.caption)
                             .foregroundStyle(AppColors.textSecondary)
                         Spacer()
                     }
-                    .padding(.vertical, 8)
+                    .padding(.vertical, 6)
                 }
             }
         }
@@ -223,20 +245,19 @@ struct WarrantyDetailView: View {
     private func receiptCard(_ w: Warranty) -> some View {
         GlassCard {
             VStack(alignment: .leading, spacing: 12) {
-                HStack(spacing: 14) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .fill(AppColors.brandBlueSoft)
-                            .frame(width: 44, height: 44)
-                        Image(systemName: w.receiptAttached ? "doc.text.fill" : "doc.text")
-                            .foregroundStyle(AppColors.brandBlue)
-                    }
+                HStack(spacing: 12) {
+                    IconBadge(
+                        symbol: w.receiptAttached ? "doc.text.fill" : "doc.text",
+                        tint: AppColors.brandBlue,
+                        style: .soft,
+                        size: .medium
+                    )
                     VStack(alignment: .leading, spacing: 2) {
                         Text(w.receiptAttached ? "Receipt" : "No receipt attached")
-                            .font(.system(size: 14, weight: .semibold))
+                            .font(AppTypography.bodyStrong)
                             .foregroundStyle(AppColors.textPrimary)
                         Text(w.receiptAttached ? "Saved with this warranty" : "Edit to add one")
-                            .font(.system(size: 12))
+                            .font(AppTypography.caption)
                             .foregroundStyle(AppColors.textSecondary)
                     }
                     Spacer()
@@ -247,14 +268,18 @@ struct WarrantyDetailView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(maxWidth: .infinity)
-                        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .stroke(AppColors.border, lineWidth: 0.5)
+                        )
                 }
             }
         }
     }
 
     private func actions(_ w: Warranty) -> some View {
-        HStack(spacing: 12) {
+        HStack(spacing: 10) {
             PrimaryButton(title: "File Claim", icon: "doc.badge.plus") {
                 presentingFileClaim = true
             }
@@ -263,14 +288,19 @@ struct WarrantyDetailView: View {
             } label: {
                 HStack(spacing: 6) {
                     Image(systemName: "pencil")
+                        .font(.system(size: 13, weight: .semibold))
                     Text("Edit")
+                        .font(AppTypography.button)
                 }
-                .font(.system(size: 15, weight: .semibold))
-                .foregroundStyle(AppColors.brandBlue)
-                .frame(maxWidth: .infinity, minHeight: 52)
+                .foregroundStyle(AppColors.textPrimary)
+                .frame(maxWidth: .infinity, minHeight: 50)
                 .background(
-                    RoundedRectangle(cornerRadius: 26, style: .continuous)
-                        .fill(AppColors.brandBlueSoft)
+                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                        .fill(Color.white)
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                        .stroke(AppColors.border, lineWidth: 0.5)
                 )
             }
             .buttonStyle(.plain)
@@ -280,13 +310,37 @@ struct WarrantyDetailView: View {
     private func notesCard(_ w: Warranty) -> some View {
         GlassCard {
             VStack(alignment: .leading, spacing: 10) {
-                Text("Notes".uppercased()).overlineStyle()
+                Text("Notes").overlineStyle()
                 Text(w.notes.isEmpty ? "No notes yet." : w.notes)
-                    .font(.system(size: 13))
+                    .font(AppTypography.body)
                     .foregroundStyle(AppColors.textPrimary)
+                    .lineSpacing(2)
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
+    }
+}
+
+// MARK: - Coverage bar
+
+/// Custom 4pt-tall coverage progress bar with a subtle background track.
+/// Replaces `ProgressView`'s default styling — looks bespoke instead of stock.
+struct CoverageBar: View {
+    let progress: Double
+    let tint: Color
+
+    var body: some View {
+        GeometryReader { geo in
+            ZStack(alignment: .leading) {
+                Capsule()
+                    .fill(AppColors.border)
+                    .frame(height: 4)
+                Capsule()
+                    .fill(tint)
+                    .frame(width: max(0, min(1, progress)) * geo.size.width, height: 4)
+            }
+        }
+        .frame(height: 4)
     }
 }
 

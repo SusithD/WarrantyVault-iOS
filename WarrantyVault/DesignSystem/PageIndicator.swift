@@ -2,7 +2,9 @@
 //  PageIndicator.swift
 //  WarrantyVault
 //
-//  Small dash/dot indicator for paged content (splash, onboarding).
+//  Refined: thin horizontal bars (3pt tall) instead of dots+capsule. Active
+//  bar widens; inactive bars stay short. Reads as a progress meter, not a
+//  collection of dots.
 //
 
 import SwiftUI
@@ -19,10 +21,10 @@ struct PageIndicator: View {
                 Capsule()
                     .fill(index == current ? activeColor : inactiveColor)
                     .frame(
-                        width: index == current ? 22 : 6,
-                        height: 6
+                        width: index == current ? 24 : 8,
+                        height: 3
                     )
-                    .animation(.easeInOut(duration: 0.25), value: current)
+                    .animation(.easeInOut(duration: 0.22), value: current)
             }
         }
     }

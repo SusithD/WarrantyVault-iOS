@@ -2,37 +2,58 @@
 //  AppColors.swift
 //  WarrantyVault
 //
-//  Centralised color tokens matching the Figma design system.
+//  Refined light palette. Brand blue retained; status colors muted from
+//  iOS-stock to deeper, more considered hues. Neutrals are slate-leaning
+//  with a hint of warmth on the surface tones (Stone-50/100), so the
+//  whole composition reads as "designed" rather than "default."
+//
+//  The `*Soft` variants stay around for status backgrounds (used sparingly)
+//  but the brand-blue soft tint is now meant for hover/selected states only,
+//  not as decoration on every icon background.
 //
 
 import SwiftUI
 
 enum AppColors {
-    // Backgrounds
-    static let bgGradientStart = Color(red: 0.933, green: 0.949, blue: 1.000) // #EEF2FF
-    static let bgGradientEnd   = Color(red: 0.969, green: 0.976, blue: 0.988) // #F7F9FC
+
+    // MARK: Backgrounds — warm whites, not cool blue-whites
+    static let bgGradientStart = Color(hex: "FAFAF9")  // Stone-50
+    static let bgGradientEnd   = Color(hex: "F5F5F4")  // Stone-100
     static let surface         = Color.white
-    static let surfaceMuted    = Color(red: 0.95, green: 0.95, blue: 0.97)    // card-muted / input
+    /// Muted surface used for input fields and inset blocks.
+    static let surfaceMuted    = Color(hex: "F8FAFC")  // Slate-50
 
-    // Text
-    static let textPrimary     = Color(red: 0.110, green: 0.110, blue: 0.118) // #1C1C1E
-    static let textSecondary   = Color(red: 0.557, green: 0.557, blue: 0.576) // #8E8E93
-    static let textTertiary    = Color(red: 0.714, green: 0.722, blue: 0.749) // #B6B8BF
+    // MARK: Text — slate scale, cooler than the previous greys
+    static let textPrimary     = Color(hex: "0F172A")  // Slate-900
+    static let textSecondary   = Color(hex: "64748B")  // Slate-500
+    static let textTertiary    = Color(hex: "94A3B8")  // Slate-400
 
-    // Borders
-    static let border          = Color(red: 0.898, green: 0.898, blue: 0.918) // #E5E5EA
+    // MARK: Borders / dividers
+    static let border          = Color(hex: "E2E8F0")  // Slate-200
+    static let borderStrong    = Color(hex: "CBD5E1")  // Slate-300 — used sparingly
 
-    // Accents
-    static let brandBlue       = Color(red: 0.039, green: 0.518, blue: 1.000) // #0A84FF
-    static let brandBlueSoft   = Color(red: 0.894, green: 0.937, blue: 1.000) // #E4EFFF
-    static let success         = Color(red: 0.204, green: 0.780, blue: 0.349) // #34C759
-    static let successSoft     = Color(red: 0.878, green: 0.965, blue: 0.894)
-    static let warning         = Color(red: 1.000, green: 0.584, blue: 0.000) // #FF9500
-    static let warningSoft     = Color(red: 1.000, green: 0.933, blue: 0.839)
-    static let danger          = Color(red: 1.000, green: 0.231, blue: 0.188) // #FF3B30
-    static let dangerSoft      = Color(red: 1.000, green: 0.898, blue: 0.886)
-    static let purple          = Color(red: 0.388, green: 0.400, blue: 0.945) // #6366F1
-    static let purpleSoft      = Color(red: 0.926, green: 0.929, blue: 1.000)
+    // MARK: Brand
+    /// Same iOS-blue we've always used. Recognisable; keep.
+    static let brandBlue       = Color(hex: "0A84FF")
+    /// Reserved for selected / pressed / focused states only — NOT decoration.
+    static let brandBlueSoft   = Color(hex: "EFF6FF")  // Blue-50, much softer than before
+
+    // MARK: Status — muted from iOS-stock to deeper, less playful hues
+    /// Success → emerald, deeper than iOS green.
+    static let success         = Color(hex: "16A34A")  // Green-600
+    static let successSoft     = Color(hex: "DCFCE7")  // Green-100
+
+    /// Warning → amber, less playful than iOS orange.
+    static let warning         = Color(hex: "D97706")  // Amber-600
+    static let warningSoft     = Color(hex: "FEF3C7")  // Amber-100
+
+    /// Danger → brick, less fire-engine than iOS red.
+    static let danger          = Color(hex: "DC2626")  // Red-600
+    static let dangerSoft      = Color(hex: "FEE2E2")  // Red-100
+
+    /// Accent → violet, for category badges only.
+    static let purple          = Color(hex: "7C3AED")  // Violet-600
+    static let purpleSoft      = Color(hex: "EDE9FE")  // Violet-100
 }
 
 extension Color {

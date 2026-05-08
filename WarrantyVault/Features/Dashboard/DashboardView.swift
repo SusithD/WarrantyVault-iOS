@@ -7,30 +7,27 @@ struct DashboardView: View {
         @Bindable var store = store
 
         ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment: .leading, spacing: 24) {
                 header
-
                 summaryStrip
-
                 searchField
-
                 categoryChips
 
                 VStack(alignment: .leading, spacing: 12) {
-                    HStack {
-                        Text("Your Warranties")
-                            .font(.system(size: 18, weight: .semibold))
+                    HStack(alignment: .firstTextBaseline) {
+                        Text("Your warranties")
+                            .font(AppTypography.headline)
                             .foregroundStyle(AppColors.textPrimary)
                         Spacer()
-                        Text("\(store.filteredWarranties.count)")
-                            .font(.system(size: 13, weight: .medium))
-                            .foregroundStyle(AppColors.textSecondary)
+                        Text("\(store.filteredWarranties.count) ITEMS")
+                            .font(AppTypography.mono)
+                            .foregroundStyle(AppColors.textTertiary)
                     }
 
                     if store.filteredWarranties.isEmpty {
                         emptyState
                     } else {
-                        LazyVStack(spacing: 12) {
+                        LazyVStack(spacing: 10) {
                             ForEach(store.filteredWarranties) { w in
                                 NavigationLink(value: w) {
                                     WarrantyRow(warranty: w)
@@ -42,7 +39,8 @@ struct DashboardView: View {
                 }
             }
             .padding(.horizontal, 20)
-            .padding(.top, 8)
+            .padding(.top, 4)
+            .padding(.bottom, 24)
         }
         .safeAreaInset(edge: .top, spacing: 0) { navBar }
         .navigationDestination(for: Warranty.self) { w in
@@ -54,66 +52,85 @@ struct DashboardView: View {
 
     private var navBar: some View {
         HStack {
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: 1) {
                 Text("Good morning")
-                    .font(.system(size: 13, weight: .medium))
+                    .font(AppTypography.caption)
                     .foregroundStyle(AppColors.textSecondary)
                 Text("WarrantyVault")
-                    .font(.system(size: 20, weight: .bold))
+                    .font(.system(size: 19, weight: .bold))
                     .foregroundStyle(AppColors.textPrimary)
+                    .tracking(-0.2)
             }
             Spacer()
             Button {
                 // placeholder notifications
             } label: {
-                Image(systemName: "bell.fill")
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundStyle(AppColors.brandBlue)
-                    .frame(width: 40, height: 40)
-                    .background(Circle().fill(AppColors.brandBlueSoft))
+                IconBadge(
+                    symbol: "bell",
+                    tint: AppColors.textPrimary,
+                    style: .outline,
+                    size: .medium
+                )
             }
+            .buttonStyle(.plain)
         }
         .padding(.horizontal, 20)
-        .padding(.vertical, 10)
+        .padding(.vertical, 12)
         .background(
-            GradientBackground().opacity(0.95).ignoresSafeArea(edges: .top)
+            GradientBackground().ignoresSafeArea(edges: .top)
         )
     }
 
     private var header: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text("Jamie".uppercased())
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Welcome back")
                 .overlineStyle(color: AppColors.brandBlue)
-            Text("Welcome back,\nlet's keep things covered.")
-                .font(.system(size: 24, weight: .bold))
+            Text("Your coverage,\nat a glance.")
+                .font(AppTypography.title)
+                .tracking(-0.4)
                 .foregroundStyle(AppColors.textPrimary)
                 .lineSpacing(2)
         }
-        .padding(.top, 4)
+        .padding(.top, 8)
     }
 
     private var summaryStrip: some View {
-        HStack(spacing: 12) {
-            summaryTile(title: "Active",       count: store.activeCount,        tint: AppColors.success,   symbol: "checkmark.seal.fill")
-            summaryTile(title: "Expiring",     count: store.expiringSoonCount,  tint: AppColors.warning,   symbol: "clock.badge.exclamationmark.fill")
-            summaryTile(title: "Open Claims",  count: store.openClaimsCount,    tint: AppColors.brandBlue, symbol: "doc.text.magnifyingglass")
+        HStack(spacing: 10) {
+            summaryTile(
+                title: "Active",
+                count: store.activeCount,
+                tint: AppColors.success,
+                symbol: "checkmark"
+            )
+            summaryTile(
+                title: "Expiring",
+                count: store.expiringSoonCount,
+                tint: AppColors.warning,
+                symbol: "clock"
+            )
+            summaryTile(
+                title: "Open Claims",
+                count: store.openClaimsCount,
+                tint: AppColors.brandBlue,
+                symbol: "doc.text"
+            )
         }
     }
 
     private func summaryTile(title: String, count: Int, tint: Color, symbol: String) -> some View {
-        GlassCard {
-            VStack(alignment: .leading, spacing: 8) {
-                ZStack {
-                    Circle().fill(tint.opacity(0.15)).frame(width: 34, height: 34)
-                    Image(systemName: symbol)
-                        .font(.system(size: 14, weight: .bold))
-                        .foregroundStyle(tint)
+        GlassCard(padding: 14, cornerRadius: 14) {
+            VStack(alignment: .leading, spacing: 14) {
+                IconBadge(symbol: symbol, tint: tint, style: .soft, size: .small)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("\(count)")
+                        .font(.system(size: 26, weight: .heavy))
+                        .tracking(-0.6)
+                        .foregroundStyle(AppColors.textPrimary)
+                    Text(title.uppercased())
+                        .font(.system(size: 9, weight: .heavy))
+                        .tracking(0.8)
+                        .foregroundStyle(AppColors.textTertiary)
                 }
-                Text("\(count)")
-                    .font(.system(size: 22, weight: .bold))
-                    .foregroundStyle(AppColors.textPrimary)
-                Text(title.uppercased())
-                    .overlineStyle()
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
@@ -121,34 +138,43 @@ struct DashboardView: View {
 
     private var searchField: some View {
         @Bindable var store = store
-        return HStack(spacing: 8) {
+        return HStack(spacing: 10) {
             Image(systemName: "magnifyingglass")
-                .foregroundStyle(AppColors.textSecondary)
-            TextField("Search warranties", text: $store.searchText)
-                .font(.system(size: 15))
+                .font(.system(size: 14, weight: .medium))
+                .foregroundStyle(AppColors.textTertiary)
+            TextField(
+                "",
+                text: $store.searchText,
+                prompt: Text("Search by product, brand, retailer")
+                    .foregroundColor(AppColors.textTertiary)
+            )
+            .font(AppTypography.body)
+            .foregroundStyle(AppColors.textPrimary)
             if !store.searchText.isEmpty {
                 Button { store.searchText = "" } label: {
                     Image(systemName: "xmark.circle.fill")
+                        .font(.system(size: 14))
                         .foregroundStyle(AppColors.textTertiary)
                 }
+                .buttonStyle(.plain)
             }
         }
         .padding(.horizontal, 14)
-        .padding(.vertical, 12)
+        .padding(.vertical, 11)
         .background(
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .fill(.white)
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .fill(AppColors.surfaceMuted)
         )
         .overlay(
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .stroke(AppColors.border, lineWidth: 1)
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .stroke(AppColors.border, lineWidth: 0.5)
         )
     }
 
     private var categoryChips: some View {
         @Bindable var store = store
         return ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 8) {
+            HStack(spacing: 6) {
                 chip(title: "All", isSelected: store.categoryFilter == nil) {
                     store.categoryFilter = nil
                 }
@@ -164,15 +190,17 @@ struct DashboardView: View {
     private func chip(title: String, isSelected: Bool, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Text(title)
-                .font(.system(size: 13, weight: .semibold))
-                .foregroundStyle(isSelected ? .white : AppColors.textPrimary)
-                .padding(.horizontal, 14)
-                .padding(.vertical, 8)
+                .font(AppTypography.chip)
+                .foregroundStyle(isSelected ? .white : AppColors.textSecondary)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 7)
                 .background(
-                    Capsule().fill(isSelected ? AppColors.brandBlue : Color.white)
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .fill(isSelected ? AppColors.brandBlue : Color.white)
                 )
                 .overlay(
-                    Capsule().stroke(isSelected ? .clear : AppColors.border, lineWidth: 1)
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .stroke(isSelected ? .clear : AppColors.border, lineWidth: 0.5)
                 )
         }
         .buttonStyle(.plain)
@@ -180,16 +208,18 @@ struct DashboardView: View {
 
     private var emptyState: some View {
         GlassCard {
-            VStack(spacing: 12) {
-                Image(systemName: "tray")
-                    .font(.system(size: 28, weight: .medium))
+            VStack(spacing: 10) {
+                IconBadge(symbol: "tray", tint: AppColors.textTertiary, style: .outline, size: .medium)
+                Text("Nothing matches those filters")
+                    .font(AppTypography.bodyStrong)
+                    .foregroundStyle(AppColors.textPrimary)
+                Text("Try a different search or clear the category filter.")
+                    .font(AppTypography.caption)
                     .foregroundStyle(AppColors.textSecondary)
-                Text("No warranties match your filters")
-                    .font(.system(size: 14, weight: .medium))
-                    .foregroundStyle(AppColors.textSecondary)
+                    .multilineTextAlignment(.center)
             }
             .frame(maxWidth: .infinity)
-            .padding(.vertical, 20)
+            .padding(.vertical, 24)
         }
     }
 }
@@ -200,61 +230,42 @@ struct WarrantyRow: View {
     let warranty: Warranty
 
     var body: some View {
-        GlassCard {
-            HStack(spacing: 14) {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .fill(warranty.category.tint.opacity(0.15))
-                        .frame(width: 48, height: 48)
-                    Image(systemName: warranty.category.symbolName)
-                        .font(.system(size: 18, weight: .semibold))
-                        .foregroundStyle(warranty.category.tint)
-                }
+        GlassCard(padding: 14, cornerRadius: 14) {
+            HStack(spacing: 12) {
+                IconBadge(
+                    symbol: warranty.category.symbolName,
+                    tint: warranty.category.tint,
+                    style: .soft,
+                    size: .medium
+                )
 
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: 5) {
                     Text(warranty.productName)
-                        .font(.system(size: 15, weight: .semibold))
+                        .font(AppTypography.bodyStrong)
                         .foregroundStyle(AppColors.textPrimary)
                         .lineLimit(1)
-                    Text("\(warranty.brand) · \(warranty.category.rawValue)")
-                        .font(.system(size: 12, weight: .medium))
-                        .foregroundStyle(AppColors.textSecondary)
-                        .lineLimit(1)
-                    StatusChip(status: warranty.status, daysRemaining: warranty.daysRemaining)
-                        .padding(.top, 2)
+                    HStack(spacing: 6) {
+                        Text(warranty.brand)
+                            .font(AppTypography.caption)
+                            .foregroundStyle(AppColors.textSecondary)
+                        Text("·")
+                            .font(AppTypography.caption)
+                            .foregroundStyle(AppColors.textTertiary)
+                        Text(warranty.category.rawValue)
+                            .font(AppTypography.caption)
+                            .foregroundStyle(AppColors.textSecondary)
+                    }
+                    .lineLimit(1)
+                    StatusTag(status: warranty.status, daysRemaining: warranty.daysRemaining)
+                        .padding(.top, 1)
                 }
 
                 Spacer()
 
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 13, weight: .bold))
+                    .font(.system(size: 12, weight: .semibold))
                     .foregroundStyle(AppColors.textTertiary)
             }
-        }
-    }
-}
-
-struct StatusChip: View {
-    let status: WarrantyStatus
-    let daysRemaining: Int
-
-    var body: some View {
-        HStack(spacing: 6) {
-            Circle().fill(status.tint).frame(width: 6, height: 6)
-            Text(label)
-                .font(.system(size: 11, weight: .semibold))
-        }
-        .foregroundStyle(status.tint)
-        .padding(.horizontal, 8)
-        .padding(.vertical, 4)
-        .background(Capsule().fill(status.softTint))
-    }
-
-    private var label: String {
-        switch status {
-        case .active:       return "Active · \(daysRemaining)d left"
-        case .expiringSoon: return "Expires in \(max(daysRemaining, 0))d"
-        case .expired:      return "Expired \(abs(daysRemaining))d ago"
         }
     }
 }
