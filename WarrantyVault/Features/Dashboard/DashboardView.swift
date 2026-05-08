@@ -73,6 +73,8 @@ struct DashboardView: View {
                 )
             }
             .buttonStyle(.plain)
+            .accessibilityLabel("Notifications")
+            .accessibilityHint("Double-tap to view recent alerts")
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 12)
@@ -90,8 +92,13 @@ struct DashboardView: View {
                 .tracking(-0.4)
                 .foregroundStyle(AppColors.textPrimary)
                 .lineSpacing(2)
+                // Allow the headline to shrink at AX5 instead of clipping —
+                // 80% retains legibility while keeping the layout intact.
+                .minimumScaleFactor(0.8)
         }
         .padding(.top, 8)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Welcome back. Your coverage, at a glance.")
     }
 
     private var summaryStrip: some View {
@@ -126,6 +133,7 @@ struct DashboardView: View {
                         .font(.system(size: 26, weight: .heavy))
                         .tracking(-0.6)
                         .foregroundStyle(AppColors.textPrimary)
+                        .minimumScaleFactor(0.7)
                     Text(title.uppercased())
                         .font(.system(size: 9, weight: .heavy))
                         .tracking(0.8)
@@ -134,6 +142,8 @@ struct DashboardView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(title): \(count)")
     }
 
     private var searchField: some View {
@@ -247,6 +257,7 @@ struct WarrantyRow: View {
                         Text("·")
                             .font(AppTypography.caption)
                             .foregroundStyle(AppColors.textTertiary)
+                            .accessibilityHidden(true)
                         Text(warranty.category.rawValue)
                             .font(AppTypography.caption)
                             .foregroundStyle(AppColors.textSecondary)
@@ -261,8 +272,15 @@ struct WarrantyRow: View {
                 Image(systemName: "chevron.right")
                     .font(.system(size: 12, weight: .semibold))
                     .foregroundStyle(AppColors.textTertiary)
+                    .accessibilityHidden(true)
             }
         }
+        // Combine the whole row into one VoiceOver element so the user hears
+        // "MacBook Pro, Apple, Electronics, Status: Active, 312 days remaining"
+        // as a single utterance, then can swipe to the next row.
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(warranty.productName), \(warranty.brand), \(warranty.category.rawValue)")
+        .accessibilityHint("Double-tap to view details")
     }
 }
 

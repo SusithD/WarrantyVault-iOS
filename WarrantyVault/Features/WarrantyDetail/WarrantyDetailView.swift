@@ -57,6 +57,8 @@ struct WarrantyDetailView: View {
                                 .stroke(AppColors.border, lineWidth: 0.5)
                         )
                 }
+                .accessibilityLabel("More actions")
+                .accessibilityHint("Edit or delete this warranty")
             }
         }
         .sheet(isPresented: $presentingEdit) {
@@ -320,6 +322,10 @@ struct WarrantyDetailView: View {
 
 /// Custom 4pt-tall coverage progress bar with a subtle background track.
 /// Replaces `ProgressView`'s default styling — looks bespoke instead of stock.
+///
+/// VoiceOver: announces as "Coverage progress, X percent" via the standard
+/// `.progressBar` trait so users with screen readers get the numerical value
+/// rather than just "image".
 struct CoverageBar: View {
     let progress: Double
     let tint: Color
@@ -336,6 +342,10 @@ struct CoverageBar: View {
             }
         }
         .frame(height: 4)
+        .accessibilityElement()
+        .accessibilityLabel("Coverage progress")
+        .accessibilityValue("\(Int(max(0, min(1, progress)) * 100)) percent used")
+        .accessibilityAddTraits(.updatesFrequently)
     }
 }
 

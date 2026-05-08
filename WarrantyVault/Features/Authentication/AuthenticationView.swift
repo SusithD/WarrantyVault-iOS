@@ -18,6 +18,11 @@ struct AuthenticationView: View {
     @State private var showPasscode = false
     @State private var errorMessage: String?
 
+    /// Honour the system "Reduce Motion" setting — when on, we drop the
+    /// scale-pulse animation on the Face-ID tile so users who get nauseous
+    /// from animation aren't forced to see it.
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     var body: some View {
         ZStack {
             AppColors.bgApp.ignoresSafeArea()
@@ -85,6 +90,8 @@ struct AuthenticationView: View {
                 .font(.system(size: 38, weight: .regular))
                 .foregroundStyle(AppColors.accent)
         }
+        // Decorative; the welcome copy below already names the screen.
+        .accessibilityHidden(true)
     }
 
     // MARK: - Welcome copy
@@ -112,15 +119,23 @@ struct AuthenticationView: View {
                     .fill(AppColors.bgSurface)
                     .frame(width: 132, height: 132)
                     .overlay(faceIDIcon)
-                    .scaleEffect(isScanning ? 0.96 : 1.0)
-                    .animation(.easeInOut(duration: 0.2), value: isScanning)
+                    // Skip the scale pulse when Reduce Motion is on.
+                    .scaleEffect(reduceMotion ? 1.0 : (isScanning ? 0.96 : 1.0))
+                    .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: isScanning)
             }
             .buttonStyle(.plain)
+            // The whole tile + label functions as one button. Combine into a
+            // single VoiceOver element with a clear action hint.
+            .accessibilityLabel(isScanning ? "Scanning your face" : "Authenticate with Face ID")
+            .accessibilityHint("Double-tap to scan and unlock your vault")
 
             Text(isScanning ? "SCANNING…" : "TAP TO SCAN")
                 .font(AppTypography.overline)
                 .tracking(1.6)
                 .foregroundStyle(AppColors.accent)
+                // The tile-button label already covers this state for
+                // VoiceOver — the visible text is decoration, hide it.
+                .accessibilityHidden(true)
         }
     }
 

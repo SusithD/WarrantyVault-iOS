@@ -41,6 +41,10 @@ struct IconBadge: View {
                 .foregroundStyle(iconColor)
         }
         .frame(width: size.tile, height: size.tile)
+        // Decorative by default — the parent row/button already carries a
+        // meaningful label so VoiceOver shouldn't say "tv inset filled icon"
+        // before reading the actual product name.
+        .accessibilityHidden(true)
     }
 
     @ViewBuilder

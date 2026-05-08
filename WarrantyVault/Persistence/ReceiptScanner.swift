@@ -46,6 +46,24 @@ final class ReceiptScanner {
         )
     }
 
+    /// Test seam — runs the heuristic parsers over already-OCR'd text so unit
+    /// tests don't need to spin up Vision. Each non-empty line becomes a
+    /// `Line` with synthesised high confidence (0.95) so the parsers see the
+    /// same shape they would in a real scan.
+    func parse(text: String) -> ReceiptScanResult {
+        let lines: [Line] = text
+            .split(separator: "\n", omittingEmptySubsequences: false)
+            .map { Line(text: String($0), confidence: 0.95) }
+
+        return ReceiptScanResult(
+            rawText: text,
+            productName: parseProductName(from: lines),
+            retailer:    parseRetailer(from: lines),
+            purchaseDate: parseDate(from: text),
+            totalPrice:  parseTotalPrice(from: lines)
+        )
+    }
+
     // MARK: - Vision
 
     private struct Line {

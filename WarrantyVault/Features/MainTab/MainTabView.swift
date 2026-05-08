@@ -101,6 +101,10 @@ struct BottomNavBar: View {
             .frame(maxWidth: .infinity)
         }
         .buttonStyle(.plain)
+        // Make this look like a tab to VoiceOver and announce its state.
+        .accessibilityLabel(title)
+        .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
+        .accessibilityHint(isSelected ? "" : "Double-tap to switch to \(title) tab")
     }
 
     /// Floating circular CTA. Lime fill, black plus icon. Wrapped in a
@@ -121,5 +125,9 @@ struct BottomNavBar: View {
                 )
         }
         .buttonStyle(.plain)
+        // The visible content is just a "+" — VoiceOver can't infer "Add new
+        // warranty" from that. Provide an explicit label.
+        .accessibilityLabel("Add new warranty")
+        .accessibilityHint("Double-tap to open the warranty creation form")
     }
 }
