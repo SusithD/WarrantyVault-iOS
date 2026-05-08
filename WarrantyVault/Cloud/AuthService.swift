@@ -77,6 +77,21 @@ final class AuthService {
         try? Auth.auth().signOut()
     }
 
+    /// Trigger Firebase to send a password-reset email. Returns true on
+    /// success so the caller can show a confirmation message; on failure
+    /// `lastError` carries a user-readable reason.
+    @discardableResult
+    func sendPasswordReset(email: String) async -> Bool {
+        lastError = nil
+        do {
+            try await Auth.auth().sendPasswordReset(withEmail: email)
+            return true
+        } catch {
+            lastError = friendlyMessage(for: error)
+            return false
+        }
+    }
+
     /// Map FirebaseAuth's NSError codes to copy a user can act on.
     private func friendlyMessage(for error: Error) -> String {
         let nsErr = error as NSError

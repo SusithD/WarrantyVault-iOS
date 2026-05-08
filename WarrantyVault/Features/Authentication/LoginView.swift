@@ -13,6 +13,10 @@ struct LoginView: View {
     @State private var password = ""
     @State private var isWorking = false
 
+    @State private var showResetAlert = false
+    @State private var resetEmail = ""
+    @State private var resetMessage: String?
+
     enum Mode: String, CaseIterable, Identifiable {
         case signIn = "Sign In"
         case signUp = "Sign Up"
@@ -118,13 +122,44 @@ struct LoginView: View {
                         .foregroundStyle(AppColors.danger)
                 }
 
+                if let info = resetMessage {
+                    Text(info)
+                        .font(.system(size: 12))
+                        .foregroundStyle(AppColors.accent)
+                }
+
                 PrimaryButton(
                     title: mode == .signIn
                         ? (isWorking ? "Signing in…" : "Sign In")
                         : (isWorking ? "Creating…" : "Create Account"),
                     isEnabled: canSubmit
                 ) { submit() }
+
+                if mode == .signIn {
+                    Button {
+                        resetEmail = email
+                        resetMessage = nil
+                        showResetAlert = true
+                    } label: {
+                        Text("Forgot password?")
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundStyle(AppColors.textSecondary)
+                            .frame(maxWidth: .infinity)
+                            .padding(.top, 2)
+                    }
+                    .buttonStyle(.plain)
+                }
             }
+        }
+        .alert("Reset password", isPresented: $showResetAlert) {
+            TextField("Email", text: $resetEmail)
+                .textContentType(.emailAddress)
+                .keyboardType(.emailAddress)
+                .textInputAutocapitalization(.never)
+            Button("Send reset link") { sendReset() }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("We'll email you a link to reset your password.")
         }
     }
 
@@ -168,6 +203,16 @@ struct LoginView: View {
         Text(text)
             .font(.system(size: 12, weight: .semibold))
             .foregroundStyle(AppColors.textSecondary)
+    }
+
+    private func sendReset() {
+        let target = resetEmail.trimmingCharacters(in: .whitespacesAndNewlines)
+        Task {
+            let ok = await auth.sendPasswordReset(email: target)
+            if ok {
+                resetMessage = "Password reset link sent to \(target). Check your inbox."
+            }
+        }
     }
 
     private func submit() {
