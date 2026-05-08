@@ -29,6 +29,8 @@ Pods/
 
 # Code generation / helper scripts
 generate_pbxproj.py
+train_classifier.swift
+training_data.csv
 
 # Local Claude Code working notes (not shared)
 .claude/

@@ -32,6 +32,7 @@ struct AddWarrantyView: View {
     @State private var calendarDeniedHint = false
     @State private var isScanningReceipt = false
     @State private var didAutoFillFromReceipt = false
+    @State private var categoryWasManuallyPicked: Bool
 
     private static let calendarSyncDefaultKey = "calendarSyncDefault"
 
@@ -58,6 +59,10 @@ struct AddWarrantyView: View {
         } else {
             _calendarSyncEnabled = State(initialValue: UserDefaults.standard.bool(forKey: Self.calendarSyncDefaultKey))
         }
+
+        // Treat the existing category as "manually picked" when editing so OCR
+        // never overrides a deliberate prior choice.
+        _categoryWasManuallyPicked = State(initialValue: editing != nil)
     }
 
     var body: some View {
@@ -167,6 +172,15 @@ struct AddWarrantyView: View {
             didFill = true
         }
 
+        // Core ML category prediction — only if the user hasn't picked a chip
+        // and the predictor produced a confident answer.
+        if !categoryWasManuallyPicked,
+           let predicted = CategoryPredictor.shared.predict(from: result.rawText),
+           predicted != category {
+            category = predicted
+            didFill = true
+        }
+
         didAutoFillFromReceipt = didFill
     }
 
@@ -197,6 +211,7 @@ struct AddWarrantyView: View {
                         ForEach(WarrantyCategory.allCases) { cat in
                             Button {
                                 category = cat
+                                categoryWasManuallyPicked = true
                             } label: {
                                 HStack(spacing: 6) {
                                     Image(systemName: cat.symbolName).font(.system(size: 12, weight: .bold))

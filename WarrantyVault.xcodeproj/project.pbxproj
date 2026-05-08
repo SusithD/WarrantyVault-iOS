@@ -44,6 +44,7 @@
 		4091E80973510EB7EDCA8D28 /* Claim+Bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06580A71FD35BFC9949114A /* Claim+Bridge.swift */; };
 		7E3B033B23443735025B73A5 /* Warranty+Bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C501E5261B4DDB5063E6AD /* Warranty+Bridge.swift */; };
 		8E84165FBA59C65C03B3409C /* CalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC325F5D55C9303B3E0E2C29 /* CalendarService.swift */; };
+		C5A49B89EAE25AE7D533F7FE /* CategoryPredictor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A0B88E4D8C3B42E33ADAD8 /* CategoryPredictor.swift */; };
 		3D56A0A5904BBB61177C5B32 /* ActivityEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAFC14F269EDBCF63BA1C54 /* ActivityEntity+CoreDataClass.swift */; };
 		E3D799E6CDCE0F0302038E34 /* ActivityEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6683EFCB65871313418473DD /* ActivityEntity+CoreDataProperties.swift */; };
 		1470AA848B0F828AD5F86463 /* ClaimEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7A2788E57165228D71ECD9 /* ClaimEntity+CoreDataClass.swift */; };
@@ -100,6 +101,7 @@
 		E06580A71FD35BFC9949114A /* Claim+Bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Claim+Bridge.swift"; sourceTree = "<group>"; };
 		61C501E5261B4DDB5063E6AD /* Warranty+Bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Warranty+Bridge.swift"; sourceTree = "<group>"; };
 		CC325F5D55C9303B3E0E2C29 /* CalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CalendarService.swift"; sourceTree = "<group>"; };
+		74A0B88E4D8C3B42E33ADAD8 /* CategoryPredictor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CategoryPredictor.swift"; sourceTree = "<group>"; };
 		8DAFC14F269EDBCF63BA1C54 /* ActivityEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivityEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		6683EFCB65871313418473DD /* ActivityEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivityEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		0B7A2788E57165228D71ECD9 /* ClaimEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClaimEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 				1C0D4DE3AA05F5F407F5F402 /* Bridging */,
 				0C846BAFF22516A808F23DDF /* Entities */,
 				CC325F5D55C9303B3E0E2C29 /* CalendarService.swift */,
+				74A0B88E4D8C3B42E33ADAD8 /* CategoryPredictor.swift */,
 				2ECDE40458958063EEA2BEEC /* ImageProcessing.swift */,
 				4CBA6CECEE989193FA10E3B5 /* LocationService.swift */,
 				A1742C9D25B10917F452469D /* NotificationService.swift */,
@@ -458,6 +461,7 @@
 				4091E80973510EB7EDCA8D28 /* Claim+Bridge.swift in Sources */,
 				7E3B033B23443735025B73A5 /* Warranty+Bridge.swift in Sources */,
 				8E84165FBA59C65C03B3409C /* CalendarService.swift in Sources */,
+				C5A49B89EAE25AE7D533F7FE /* CategoryPredictor.swift in Sources */,
 				3D56A0A5904BBB61177C5B32 /* ActivityEntity+CoreDataClass.swift in Sources */,
 				E3D799E6CDCE0F0302038E34 /* ActivityEntity+CoreDataProperties.swift in Sources */,
 				1470AA848B0F828AD5F86463 /* ClaimEntity+CoreDataClass.swift in Sources */,
