@@ -1,9 +1,12 @@
 import SwiftUI
+import PhotosUI
 
 struct ClaimStatusView: View {
     let claimID: UUID
     @Environment(AppStore.self) private var store
     @State private var presentingChat = false
+    @State private var evidencePickerItems: [PhotosPickerItem] = []
+    @State private var evidenceConfirmation: String?
 
     private var claim: Claim? {
         store.claims.first(where: { $0.id == claimID })
@@ -102,8 +105,34 @@ struct ClaimStatusView: View {
             PrimaryButton(title: "Chat with Support", icon: "bubble.left.and.bubble.right.fill") {
                 presentingChat = true
             }
-            SecondaryTextButton(title: "UPLOAD MORE EVIDENCE", color: AppColors.brandBlue) {}
+            PhotosPicker(
+                selection: $evidencePickerItems,
+                maxSelectionCount: 5,
+                matching: .images
+            ) {
+                Text("UPLOAD MORE EVIDENCE")
+                    .font(.system(size: 12, weight: .heavy))
+                    .tracking(1.4)
+                    .foregroundStyle(AppColors.brandBlue)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 14)
+            }
+            .onChange(of: evidencePickerItems) { _, items in
+                guard !items.isEmpty else { return }
+                _ = store.appendClaimEvidence(claimID: c.id, photoCount: items.count)
+                evidenceConfirmation = items.count == 1
+                    ? "Photo attached to claim."
+                    : "\(items.count) photos attached to claim."
+                evidencePickerItems = []
+            }
+            if let msg = evidenceConfirmation {
+                Text(msg)
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundStyle(AppColors.success)
+                    .transition(.opacity)
+            }
         }
+        .animation(.easeInOut(duration: 0.2), value: evidenceConfirmation)
     }
 }
 

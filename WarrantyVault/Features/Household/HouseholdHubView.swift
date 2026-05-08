@@ -3,6 +3,7 @@ import SwiftUI
 struct HouseholdHubView: View {
     @Environment(AppStore.self) private var store
     @State private var segment: Segment = .members
+    @State private var presentingSettings = false
 
     enum Segment: String, CaseIterable, Identifiable {
         case members  = "Members"
@@ -28,6 +29,10 @@ struct HouseholdHubView: View {
                     .padding(.top, 8)
                 }
                 .safeAreaInset(edge: .top, spacing: 0) { navBar }
+                .sheet(isPresented: $presentingSettings) {
+                    HouseholdSettingsSheet()
+                        .presentationDetents([.medium])
+                }
             }
         }
     }
@@ -43,10 +48,16 @@ struct HouseholdHubView: View {
                     .foregroundStyle(AppColors.textPrimary)
             }
             Spacer()
-            Image(systemName: "gearshape.fill")
-                .foregroundStyle(AppColors.brandBlue)
-                .frame(width: 40, height: 40)
-                .background(Circle().fill(AppColors.brandBlueSoft))
+            Button {
+                presentingSettings = true
+            } label: {
+                Image(systemName: "gearshape.fill")
+                    .foregroundStyle(AppColors.brandBlue)
+                    .frame(width: 40, height: 40)
+                    .background(Circle().fill(AppColors.brandBlueSoft))
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel("Household settings")
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
@@ -207,9 +218,29 @@ struct ActivitySection: View {
     @Environment(AppStore.self) private var store
 
     var body: some View {
-        LazyVStack(spacing: 12) {
-            ForEach(store.activity) { entry in
-                ActivityRow(entry: entry)
+        if store.activity.isEmpty {
+            GlassCard {
+                VStack(spacing: 10) {
+                    Image(systemName: "sparkles")
+                        .font(.system(size: 22, weight: .semibold))
+                        .foregroundStyle(AppColors.brandBlue)
+                    Text("No activity yet")
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundStyle(AppColors.textPrimary)
+                    Text("Adding warranties or filing claims shows up here so the household can keep track.")
+                        .font(.system(size: 12))
+                        .foregroundStyle(AppColors.textSecondary)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 16)
+            }
+        } else {
+            LazyVStack(spacing: 12) {
+                ForEach(store.activity) { entry in
+                    ActivityRow(entry: entry)
+                }
             }
         }
     }
@@ -251,6 +282,110 @@ struct ActivityRow: View {
                 Spacer()
             }
         }
+    }
+}
+
+private struct HouseholdSettingsSheet: View {
+    @Environment(AppStore.self) private var store
+    @Environment(\.dismiss) private var dismiss
+    @State private var draftName: String = ""
+    @State private var presentingLeaveConfirm = false
+
+    var body: some View {
+        NavigationStack {
+            ZStack {
+                AppColors.bgApp.ignoresSafeArea()
+                ScrollView {
+                    VStack(spacing: 16) {
+                        nameCard
+                        inviteCard
+                        leaveButton
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.top, 8)
+                }
+            }
+            .navigationTitle("Household Settings")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button("Done") { dismiss() }
+                        .foregroundStyle(AppColors.textSecondary)
+                }
+            }
+            .onAppear { draftName = store.household.name }
+            .alert("Leave this household?", isPresented: $presentingLeaveConfirm) {
+                Button("Cancel", role: .cancel) {}
+                Button("Leave", role: .destructive) {
+                    store.household.members.removeAll()
+                    dismiss()
+                }
+            } message: {
+                Text("You'll be returned to the create-or-join screen. Your warranties stay on this device.")
+            }
+        }
+    }
+
+    private var nameCard: some View {
+        GlassCard {
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Household name".uppercased()).overlineStyle()
+                TextField("Household name", text: $draftName)
+                    .textInputAutocapitalization(.words)
+                    .padding(.horizontal, 14).padding(.vertical, 12)
+                    .background(RoundedRectangle(cornerRadius: 12).fill(AppColors.bgSurface))
+                    .foregroundStyle(AppColors.textPrimary)
+                PrimaryButton(
+                    title: "Save name",
+                    isEnabled: !draftName.trimmingCharacters(in: .whitespaces).isEmpty
+                              && draftName != store.household.name
+                ) {
+                    store.household.name = draftName.trimmingCharacters(in: .whitespacesAndNewlines)
+                }
+            }
+        }
+    }
+
+    private var inviteCard: some View {
+        GlassCard {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Invite code".uppercased()).overlineStyle()
+                    Text(store.household.inviteCode)
+                        .font(.system(size: 18, weight: .bold, design: .monospaced))
+                        .foregroundStyle(AppColors.brandBlue)
+                }
+                Spacer()
+                Button {
+                    UIPasteboard.general.string = store.household.inviteCode
+                } label: {
+                    Image(systemName: "doc.on.doc")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(AppColors.textPrimary)
+                        .frame(width: 36, height: 36)
+                        .background(Circle().fill(AppColors.bgSurfaceHi))
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Copy invite code")
+            }
+        }
+    }
+
+    private var leaveButton: some View {
+        Button(role: .destructive) {
+            presentingLeaveConfirm = true
+        } label: {
+            HStack {
+                Image(systemName: "rectangle.portrait.and.arrow.right")
+                Text("Leave household")
+                    .font(.system(size: 15, weight: .semibold))
+            }
+            .foregroundStyle(AppColors.danger)
+            .frame(maxWidth: .infinity, minHeight: 52)
+            .background(RoundedRectangle(cornerRadius: 26, style: .continuous).fill(AppColors.dangerSoft))
+        }
+        .buttonStyle(.plain)
+        .padding(.top, 4)
     }
 }
 

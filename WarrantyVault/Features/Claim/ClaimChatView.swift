@@ -1,4 +1,5 @@
 import SwiftUI
+import PhotosUI
 
 struct ClaimChatView: View {
     let claimID: UUID
@@ -6,6 +7,7 @@ struct ClaimChatView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var draft: String = ""
     @FocusState private var focused: Bool
+    @State private var attachmentItems: [PhotosPickerItem] = []
 
     private var claim: Claim? { store.claims.first(where: { $0.id == claimID }) }
 
@@ -84,13 +86,25 @@ struct ClaimChatView: View {
 
     private var composer: some View {
         HStack(spacing: 10) {
-            Button {} label: {
+            PhotosPicker(
+                selection: $attachmentItems,
+                maxSelectionCount: 5,
+                matching: .images
+            ) {
                 Image(systemName: "paperclip")
                     .foregroundStyle(AppColors.textSecondary)
                     .frame(width: 40, height: 40)
                     .background(Circle().fill(AppColors.bgSurfaceHi))
             }
-            .buttonStyle(.plain)
+            .accessibilityLabel("Attach photo")
+            .onChange(of: attachmentItems) { _, items in
+                guard !items.isEmpty else { return }
+                let count = items.count
+                let label = count == 1 ? "📎 Photo attached" : "📎 \(count) photos attached"
+                store.appendMessage(label)
+                store.appendClaimEvidence(claimID: claimID, photoCount: count)
+                attachmentItems = []
+            }
 
             TextField(
                 "",

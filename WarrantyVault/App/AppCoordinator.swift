@@ -13,6 +13,7 @@ final class AppCoordinator {
     var stage: AppFlowStage = .splash
 
     private static let onboardingKey = "hasCompletedOnboarding"
+    private static let biometricsKey = "biometricsEnabled"
 
     /// Persisted in UserDefaults — onboarding runs only once per install.
     var hasCompletedOnboarding: Bool {
@@ -20,13 +21,20 @@ final class AppCoordinator {
         set { UserDefaults.standard.set(newValue, forKey: Self.onboardingKey) }
     }
 
+    /// Mirrors the Profile toggle. Defaults to true when never set, so a
+    /// fresh install gets the secure-by-default biometric re-lock.
+    private var biometricsEnabled: Bool {
+        UserDefaults.standard.object(forKey: Self.biometricsKey) as? Bool ?? true
+    }
+
     /// Called by `SplashView` after its animation finishes. A restored
     /// Firebase session sends the user through the biometric re-lock so a
-    /// stolen-but-unlocked phone doesn't expose the vault. A fresh sign-in
-    /// (no session yet) goes through the email login gate.
+    /// stolen-but-unlocked phone doesn't expose the vault — unless the user
+    /// has explicitly disabled it from Profile, in which case we skip
+    /// straight to the main app.
     func advanceFromSplash() {
         if AuthService.shared.isSignedIn {
-            stage = .biometricLock
+            stage = biometricsEnabled ? .biometricLock : .mainApp
         } else if hasCompletedOnboarding {
             stage = .authentication
         } else {

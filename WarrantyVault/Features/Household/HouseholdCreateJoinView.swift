@@ -2,6 +2,7 @@ import SwiftUI
 
 struct HouseholdCreateJoinView: View {
     @Environment(AppStore.self) private var store
+    @State private var auth = AuthService.shared
     @State private var mode: Mode = .create
     @State private var householdName: String = ""
     @State private var inviteCode: String = ""
@@ -154,22 +155,59 @@ struct HouseholdCreateJoinView: View {
                 ? !householdName.trimmingCharacters(in: .whitespaces).isEmpty
                 : inviteCode.count >= 6
         ) {
+            let me = currentUserAsMember()
             if mode == .create {
                 store.household = Household(
                     name: householdName.trimmingCharacters(in: .whitespaces),
                     inviteCode: generateCode(),
-                    members: MockData.household.members
+                    members: [me]
                 )
             } else {
-                store.household = MockData.household
+                store.household = Household(
+                    name: "Household \(inviteCode.suffix(4))",
+                    inviteCode: inviteCode.uppercased(),
+                    members: [me]
+                )
             }
         }
+    }
+
+    /// Build a `HouseholdMember` for the signed-in user. Falls back to a
+    /// generic "You" entry if Firebase has no profile yet (offline / signed
+    /// out) so the household always has at least one seat.
+    private func currentUserAsMember() -> HouseholdMember {
+        let name = auth.displayName?.trimmingCharacters(in: .whitespaces).nonEmptyOrNil
+                   ?? auth.email?.components(separatedBy: "@").first
+                   ?? "You"
+        let email = auth.email ?? ""
+        let initials = HouseholdMember.initials(from: name)
+        return HouseholdMember(
+            name: name,
+            email: email,
+            role: .owner,
+            avatarInitials: initials,
+            accentHex: "#0A84FF",
+            joinedDate: Date(),
+            itemCount: 0
+        )
     }
 
     private func generateCode() -> String {
         let letters = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"
         let part = { (n: Int) in String((0..<n).map { _ in letters.randomElement()! }) }
         return "WV-\(part(4))-\(part(3))"
+    }
+}
+
+private extension String {
+    var nonEmptyOrNil: String? { isEmpty ? nil : self }
+}
+
+private extension HouseholdMember {
+    static func initials(from name: String) -> String {
+        let words = name.split(whereSeparator: { !$0.isLetter })
+        let raw = words.prefix(2).compactMap { $0.first.map(String.init) }.joined().uppercased()
+        return raw.isEmpty ? "?" : raw
     }
 }
 

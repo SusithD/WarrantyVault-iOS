@@ -221,6 +221,32 @@ final class AppStore {
         WarrantySyncService.shared.pushClaim(c)
     }
 
+    /// Records that the user attached new evidence to a claim. Appends a
+    /// timeline event and bumps `updatedDate`; the actual photo is consumed
+    /// elsewhere (claim chat, support flow). Returns the timestamp used so
+    /// the caller can show a matching confirmation.
+    @discardableResult
+    func appendClaimEvidence(claimID: UUID, photoCount: Int = 1) -> Date? {
+        guard let idx = claims.firstIndex(where: { $0.id == claimID }) else { return nil }
+        var updated = claims[idx]
+        let now = Date()
+        let label = photoCount == 1 ? "Photo attached" : "\(photoCount) photos attached"
+        updated.timeline.append(
+            ClaimTimelineEvent(
+                title: "Evidence uploaded",
+                subtitle: "\(label) · \(now.formatted(date: .omitted, time: .shortened))",
+                date: now,
+                isDone: true
+            )
+        )
+        updated.updatedDate = now
+        ClaimEntity.upsert(from: updated, in: context)
+        save()
+        reloadClaims()
+        WarrantySyncService.shared.pushClaim(updated)
+        return now
+    }
+
     // MARK: Mutations — Chat / Household (in-memory only)
 
     func appendMessage(_ text: String) {

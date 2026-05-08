@@ -182,19 +182,6 @@ struct DashboardView: View {
                     .tracking(-0.2)
             }
             Spacer()
-            Button {
-                // placeholder notifications
-            } label: {
-                IconBadge(
-                    symbol: "bell",
-                    tint: AppColors.textPrimary,
-                    style: .outline,
-                    size: .medium
-                )
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel("Notifications")
-            .accessibilityHint("Double-tap to view recent alerts")
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 12)

@@ -1,11 +1,12 @@
 import SwiftUI
+import UserNotifications
 
 struct ProfileView: View {
     @Environment(AppStore.self) private var store
     @Environment(AppCoordinator.self) private var coordinator
     @State private var auth = AuthService.shared
-    @State private var notificationsOn = true
-    @State private var biometricsOn = true
+    @AppStorage("notificationsEnabled") private var notificationsOn = true
+    @AppStorage("biometricsEnabled")    private var biometricsOn = true
 
     @State private var verificationStatus: String?
     @State private var isWorkingOnVerification = false
@@ -18,7 +19,6 @@ struct ProfileView: View {
                     verificationBanner
                 }
                 preferencesCard
-                supportCard
                 signOutButton
             }
             .padding(.horizontal, 20)
@@ -127,11 +127,6 @@ struct ProfileView: View {
                     Text(displayEmail)
                         .font(.system(size: 12))
                         .foregroundStyle(AppColors.textSecondary)
-                    HStack(spacing: 6) {
-                        Image(systemName: "crown.fill").font(.system(size: 10)).foregroundStyle(.orange)
-                        Text("Plus member · renews Mar 2027").font(.system(size: 11, weight: .medium)).foregroundStyle(AppColors.textSecondary)
-                    }
-                    .padding(.top, 2)
                 }
                 Spacer()
             }
@@ -173,29 +168,32 @@ struct ProfileView: View {
                 }
                 .tint(AppColors.brandBlue)
                 .padding(.vertical, 8)
+                .onChange(of: notificationsOn) { _, isOn in
+                    Task { await applyNotificationToggle(isOn) }
+                }
                 Divider()
                 Toggle(isOn: $biometricsOn) {
                     settingLabel(symbol: "faceid", title: "Face ID unlock")
                 }
                 .tint(AppColors.brandBlue)
                 .padding(.vertical, 8)
-                Divider()
-                actionRow(symbol: "moon.stars.fill", title: "Appearance", trailing: "System")
-                Divider()
-                actionRow(symbol: "rectangle.and.text.magnifyingglass", title: "Receipts OCR", trailing: "Beta")
             }
         }
     }
 
-    private var supportCard: some View {
-        GlassCard {
-            VStack(spacing: 0) {
-                actionRow(symbol: "questionmark.circle.fill", title: "Help center")
-                Divider()
-                actionRow(symbol: "star.bubble.fill",         title: "Send feedback")
-                Divider()
-                actionRow(symbol: "doc.text.fill",            title: "Terms & privacy")
+    /// When notifications are turned off, drop every pending warranty
+    /// reminder so the user stops being interrupted. When turned back on,
+    /// re-request authorization and re-schedule reminders for everything
+    /// in the vault.
+    @MainActor
+    private func applyNotificationToggle(_ isOn: Bool) async {
+        if isOn {
+            _ = await NotificationService.shared.requestAuthorizationIfNeeded()
+            for w in store.warranties where w.reminderEnabled {
+                await NotificationService.shared.schedule(for: w)
             }
+        } else {
+            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         }
     }
 
@@ -230,20 +228,6 @@ struct ProfileView: View {
         }
     }
 
-    private func actionRow(symbol: String, title: String, trailing: String? = nil) -> some View {
-        HStack(spacing: 12) {
-            settingLabel(symbol: symbol, title: title)
-            Spacer()
-            if let trailing {
-                Text(trailing).font(.system(size: 12, weight: .medium)).foregroundStyle(AppColors.textSecondary)
-            }
-            Image(systemName: "chevron.right")
-                .font(.system(size: 12, weight: .semibold))
-                .foregroundStyle(AppColors.textTertiary)
-        }
-        .padding(.vertical, 10)
-        .contentShape(Rectangle())
-    }
 }
 
 #Preview {

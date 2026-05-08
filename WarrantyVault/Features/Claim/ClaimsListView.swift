@@ -12,12 +12,16 @@ struct ClaimsListView: View {
 
                 VStack(alignment: .leading, spacing: 12) {
                     Text("RECENT CLAIMS").overlineStyle()
-                    LazyVStack(spacing: 12) {
-                        ForEach(store.claims) { claim in
-                            NavigationLink(value: claim) {
-                                ClaimRow(claim: claim)
+                    if store.claims.isEmpty {
+                        emptyState
+                    } else {
+                        LazyVStack(spacing: 12) {
+                            ForEach(store.claims) { claim in
+                                NavigationLink(value: claim) {
+                                    ClaimRow(claim: claim)
+                                }
+                                .buttonStyle(.plain)
                             }
-                            .buttonStyle(.plain)
                         }
                     }
                 }
@@ -54,6 +58,42 @@ struct ClaimsListView: View {
             Text("Track every request in one place.")
                 .font(.system(size: 24, weight: .bold))
                 .foregroundStyle(AppColors.textPrimary)
+        }
+    }
+
+    private var emptyState: some View {
+        GlassCard {
+            VStack(spacing: 12) {
+                ZStack {
+                    Circle().fill(AppColors.brandBlueSoft).frame(width: 56, height: 56)
+                    Image(systemName: "doc.text.magnifyingglass")
+                        .font(.system(size: 22, weight: .semibold))
+                        .foregroundStyle(AppColors.brandBlue)
+                }
+                VStack(spacing: 4) {
+                    Text("No claims yet")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundStyle(AppColors.textPrimary)
+                    Text("Open a claim from any warranty if something goes wrong — we'll track it through to resolution.")
+                        .font(.system(size: 12))
+                        .foregroundStyle(AppColors.textSecondary)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Button {
+                    presentingFileClaim = true
+                } label: {
+                    Text("File your first claim")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(AppColors.textInverse)
+                        .padding(.horizontal, 18)
+                        .padding(.vertical, 10)
+                        .background(Capsule().fill(AppColors.accent))
+                }
+                .buttonStyle(.plain)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 16)
         }
     }
 
