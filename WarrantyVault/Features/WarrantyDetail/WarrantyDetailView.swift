@@ -255,7 +255,7 @@ struct WarrantyDetailView: View {
                         size: .medium
                     )
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(w.receiptAttached ? "Receipt" : "No receipt attached")
+                        Text(receiptHeadline(for: w))
                             .font(AppTypography.bodyStrong)
                             .foregroundStyle(AppColors.textPrimary)
                         Text(w.receiptAttached ? "Saved with this warranty" : "Edit to add one")
@@ -265,7 +265,29 @@ struct WarrantyDetailView: View {
                     Spacer()
                 }
 
-                if let data = w.receiptImage, let img = UIImage(data: data) {
+                receiptCarousel(for: w)
+            }
+        }
+    }
+
+    /// Renders the receipt page(s) — a single image fills the slot; multiple
+    /// pages become a paging TabView with dot indicators below.
+    @ViewBuilder
+    private func receiptCarousel(for w: Warranty) -> some View {
+        let pages = w.receiptImages.compactMap { UIImage(data: $0) }
+        if pages.count == 1 {
+            Image(uiImage: pages[0])
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: .infinity)
+                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .stroke(AppColors.border, lineWidth: 0.5)
+                )
+        } else if pages.count > 1 {
+            TabView {
+                ForEach(Array(pages.enumerated()), id: \.offset) { _, img in
                     Image(uiImage: img)
                         .resizable()
                         .scaledToFit()
@@ -275,8 +297,20 @@ struct WarrantyDetailView: View {
                             RoundedRectangle(cornerRadius: 10, style: .continuous)
                                 .stroke(AppColors.border, lineWidth: 0.5)
                         )
+                        .padding(.bottom, 28)  // breathing room above page dots
                 }
             }
+            .tabViewStyle(.page(indexDisplayMode: .always))
+            .indexViewStyle(.page(backgroundDisplayMode: .always))
+            .frame(height: 360)
+        }
+    }
+
+    private func receiptHeadline(for w: Warranty) -> String {
+        switch w.receiptImages.count {
+        case 0: return "No receipt attached"
+        case 1: return "Receipt"
+        default: return "Receipt · \(w.receiptImages.count) pages"
         }
     }
 

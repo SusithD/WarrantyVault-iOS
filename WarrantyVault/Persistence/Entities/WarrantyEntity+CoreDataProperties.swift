@@ -17,6 +17,12 @@ extension WarrantyEntity {
     @NSManaged public var price: Double
     @NSManaged public var serialNumber: String
     @NSManaged public var notes: String
+    /// Either:
+    ///   - JSON-encoded `[Data]` of compressed receipt pages (current format), or
+    ///   - raw JPEG bytes for a single-page receipt (legacy, pre-multi-page).
+    /// The bridging extension probes the bytes and wraps a legacy single
+    /// image in a one-element array transparently — no schema migration
+    /// needed.
     @NSManaged public var receiptImage: Data?
     @NSManaged public var reminderEnabled: Bool
     @NSManaged public var latitude: NSNumber?

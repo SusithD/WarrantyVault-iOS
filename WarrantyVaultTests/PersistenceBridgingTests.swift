@@ -51,7 +51,10 @@ final class PersistenceBridgingTests: XCTestCase {
             price: 2399.99,
             serialNumber: "C02ZL0AC-JK23",
             notes: "AppleCare+ included.",
-            receiptImage: Data([0xFF, 0xD8, 0xFF, 0xE0]),  // 4-byte JPEG-prefix as a stand-in
+            receiptImages: [
+                Data([0xFF, 0xD8, 0xFF, 0xE0]),  // 4-byte JPEG-prefix as a stand-in
+                Data([0xFF, 0xD8, 0xFF, 0xE1])   // second page — exercises the array path
+            ],
             reminderEnabled: true,
             latitude: 37.3349,
             longitude: -122.0090,
@@ -74,7 +77,7 @@ final class PersistenceBridgingTests: XCTestCase {
         XCTAssertEqual(roundTripped.price, original.price)
         XCTAssertEqual(roundTripped.serialNumber, original.serialNumber)
         XCTAssertEqual(roundTripped.notes, original.notes)
-        XCTAssertEqual(roundTripped.receiptImage, original.receiptImage)
+        XCTAssertEqual(roundTripped.receiptImages, original.receiptImages)
         XCTAssertEqual(roundTripped.reminderEnabled, original.reminderEnabled)
         XCTAssertEqual(roundTripped.latitude, original.latitude)
         XCTAssertEqual(roundTripped.longitude, original.longitude)

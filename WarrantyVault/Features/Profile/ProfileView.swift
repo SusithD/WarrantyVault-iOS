@@ -7,10 +7,16 @@ struct ProfileView: View {
     @State private var notificationsOn = true
     @State private var biometricsOn = true
 
+    @State private var verificationStatus: String?
+    @State private var isWorkingOnVerification = false
+
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
                 profileCard
+                if auth.isSignedIn && !auth.isEmailVerified {
+                    verificationBanner
+                }
                 preferencesCard
                 supportCard
                 signOutButton
@@ -19,6 +25,79 @@ struct ProfileView: View {
             .padding(.top, 8)
         }
         .safeAreaInset(edge: .top, spacing: 0) { navBar }
+        .task {
+            // Refresh on every appearance so the banner clears as soon as
+            // the user verifies in another tab.
+            if auth.isSignedIn && !auth.isEmailVerified {
+                await auth.refreshVerificationStatus()
+            }
+        }
+    }
+
+    private var verificationBanner: some View {
+        GlassCard {
+            VStack(alignment: .leading, spacing: 10) {
+                HStack(spacing: 10) {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(AppColors.warning)
+                    Text("Verify your email")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(AppColors.textPrimary)
+                    Spacer()
+                }
+                Text("We sent a link to \(auth.email ?? "your inbox"). Click it to verify your account.")
+                    .font(.system(size: 12))
+                    .foregroundStyle(AppColors.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+
+                if let status = verificationStatus {
+                    Text(status)
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundStyle(AppColors.accent)
+                }
+
+                HStack(spacing: 8) {
+                    Button {
+                        Task {
+                            isWorkingOnVerification = true
+                            let ok = await auth.resendEmailVerification()
+                            verificationStatus = ok ? "Verification email sent." : nil
+                            isWorkingOnVerification = false
+                        }
+                    } label: {
+                        Text(isWorkingOnVerification ? "Sending…" : "Resend email")
+                            .font(.system(size: 12, weight: .semibold))
+                            .foregroundStyle(AppColors.textInverse)
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(AppColors.accent))
+                    }
+                    .buttonStyle(.plain)
+                    .disabled(isWorkingOnVerification)
+
+                    Button {
+                        Task {
+                            isWorkingOnVerification = true
+                            await auth.refreshVerificationStatus()
+                            if !auth.isEmailVerified {
+                                verificationStatus = "Still not verified — check your inbox."
+                            }
+                            isWorkingOnVerification = false
+                        }
+                    } label: {
+                        Text("I've verified")
+                            .font(.system(size: 12, weight: .semibold))
+                            .foregroundStyle(AppColors.textPrimary)
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(AppColors.bgSurfaceHi))
+                    }
+                    .buttonStyle(.plain)
+                    .disabled(isWorkingOnVerification)
+                }
+            }
+        }
     }
 
     private var navBar: some View {

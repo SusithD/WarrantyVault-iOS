@@ -78,8 +78,8 @@ struct DashboardView: View {
         // Document scanner — VisionKit's edge-detecting, perspective-correcting
         // scanner. Hands back a pre-cropped page to the OCR pipeline.
         .fullScreenCover(isPresented: $presentingCameraPicker) {
-            DocumentScannerView { image in
-                Task { await processScannedImage(image) }
+            DocumentScannerView { images in
+                Task { await processScannedPages(images) }
             }
             .ignoresSafeArea()
         }
@@ -89,7 +89,7 @@ struct DashboardView: View {
             Task {
                 if let data = try? await item.loadTransferable(type: Data.self),
                    let image = UIImage(data: data) {
-                    await processScannedImage(image)
+                    await processScannedPages([image])
                 }
                 // Reset so re-picking the same image triggers `.onChange` again.
                 photosPickerItem = nil
@@ -129,20 +129,23 @@ struct DashboardView: View {
         .animation(.easeInOut(duration: 0.18), value: isScanning)
     }
 
-    /// Runs Vision OCR + the category predictor over a picked/captured image,
-    /// then opens the AddWarranty form with a pre-filled draft. The image
-    /// itself is encoded for storage so it round-trips into the receipt slot
-    /// on the warranty without a second pick.
+    /// Runs Vision OCR + the category predictor over the first scanned page,
+    /// then opens the AddWarranty form with a pre-filled draft. *All* pages
+    /// are encoded and attached so the warranty preserves the full proof
+    /// (long thermal-roll receipts often span multiple pages).
     @MainActor
-    private func processScannedImage(_ image: UIImage) async {
+    private func processScannedPages(_ images: [UIImage]) async {
+        guard let firstImage = images.first else { return }
         isScanning = true
         defer { isScanning = false }
 
+        let encodedPages = images.compactMap { $0.receiptEncoded() }
+
         // OCR + parse (already non-blocking inside the scanner).
-        guard let result = try? await ReceiptScanner.shared.scan(image) else {
+        guard let result = try? await ReceiptScanner.shared.scan(firstImage) else {
             // Even if OCR fails, drop the user into a blank form with the
-            // image attached so they can fill it in manually.
-            scannedDraft = blankDraft(with: image)
+            // images attached so they can fill it in manually.
+            scannedDraft = blankDraft(with: encodedPages)
             return
         }
 
@@ -163,13 +166,13 @@ struct DashboardView: View {
             expiryDate: expiry,
             retailer: result.retailer ?? "",
             price: result.totalPrice ?? 0,
-            receiptImage: image.receiptEncoded()
+            receiptImages: encodedPages
         )
     }
 
-    /// Fallback when OCR fails — empty draft, but with the image already
+    /// Fallback when OCR fails — empty draft, but with the pages already
     /// attached so the manual flow doesn't lose what the user picked.
-    private func blankDraft(with image: UIImage) -> Warranty {
+    private func blankDraft(with encodedPages: [Data]) -> Warranty {
         Warranty(
             productName: "",
             brand: "",
@@ -178,7 +181,7 @@ struct DashboardView: View {
             expiryDate: Calendar.current.date(byAdding: .year, value: 1, to: Date()) ?? Date(),
             retailer: "",
             price: 0,
-            receiptImage: image.receiptEncoded()
+            receiptImages: encodedPages
         )
     }
 

@@ -19,7 +19,7 @@ struct AddWarrantyView: View {
     @State private var priceText: String
     @State private var purchaseDate: Date
     @State private var expiryDate: Date
-    @State private var receiptImage: Data?
+    @State private var receiptImages: [Data]
     @State private var photosPickerItem: PhotosPickerItem?
     @State private var presentingCamera = false
     @State private var reminderEnabled: Bool
@@ -56,7 +56,7 @@ struct AddWarrantyView: View {
         _priceText     = State(initialValue: baseline.map { $0.price > 0 ? String(format: "%.2f", $0.price) : "" } ?? "")
         _purchaseDate  = State(initialValue: baseline?.purchaseDate ?? Date())
         _expiryDate    = State(initialValue: baseline?.expiryDate ?? Calendar.current.date(byAdding: .year, value: 1, to: Date()) ?? Date())
-        _receiptImage    = State(initialValue: baseline?.receiptImage)
+        _receiptImages   = State(initialValue: baseline?.receiptImages ?? [])
         _reminderEnabled = State(initialValue: baseline?.reminderEnabled ?? true)
         _latitude        = State(initialValue: baseline?.latitude)
         _longitude       = State(initialValue: baseline?.longitude)
@@ -109,8 +109,8 @@ struct AddWarrantyView: View {
             }
         }
         .fullScreenCover(isPresented: $presentingCamera) {
-            DocumentScannerView { image in
-                Task { await handlePickedReceipt(image) }
+            DocumentScannerView { images in
+                Task { await handlePickedReceipts(images) }
             }
             .ignoresSafeArea()
         }
@@ -126,7 +126,7 @@ struct AddWarrantyView: View {
             Task {
                 if let data = try? await item.loadTransferable(type: Data.self),
                    let image = UIImage(data: data) {
-                    await handlePickedReceipt(image)
+                    await handlePickedReceipts([image])
                 }
             }
         }
@@ -150,12 +150,16 @@ struct AddWarrantyView: View {
         .animation(.easeInOut(duration: 0.2), value: isScanningReceipt)
     }
 
-    /// Stores the picked image and runs OCR auto-fill. The image is downscaled
-    /// + JPEG-encoded for storage independent of the OCR pipeline.
+    /// Stores all picked / scanned pages and runs OCR auto-fill on the
+    /// first one. PhotosPicker calls this with a single-element array;
+    /// the document scanner can hand over multi-page receipts.
     @MainActor
-    private func handlePickedReceipt(_ image: UIImage) async {
-        receiptImage = image.receiptEncoded()
-        await scanAndAutoFill(image)
+    private func handlePickedReceipts(_ images: [UIImage]) async {
+        guard !images.isEmpty else { return }
+        receiptImages = images.compactMap { $0.receiptEncoded() }
+        if let first = images.first {
+            await scanAndAutoFill(first)
+        }
     }
 
     @MainActor
@@ -366,9 +370,9 @@ struct AddWarrantyView: View {
                         }
                     }
 
-                    if receiptImage != nil {
+                    if !receiptImages.isEmpty {
                         Button(role: .destructive) {
-                            receiptImage = nil
+                            receiptImages = []
                             photosPickerItem = nil
                             didAutoFillFromReceipt = false
                         } label: {
@@ -392,13 +396,23 @@ struct AddWarrantyView: View {
 
     @ViewBuilder
     private var receiptPreview: some View {
-        if let data = receiptImage, let img = UIImage(data: data) {
-            Image(uiImage: img)
-                .resizable()
-                .scaledToFill()
-                .frame(maxWidth: .infinity)
-                .frame(height: 180)
-                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+        if let data = receiptImages.first, let img = UIImage(data: data) {
+            ZStack(alignment: .topTrailing) {
+                Image(uiImage: img)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 180)
+                    .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                if receiptImages.count > 1 {
+                    Text("\(receiptImages.count) pages")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(AppColors.textInverse)
+                        .padding(.horizontal, 10).padding(.vertical, 5)
+                        .background(Capsule().fill(AppColors.accent))
+                        .padding(10)
+                }
+            }
         } else {
             ZStack {
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
@@ -515,7 +529,7 @@ struct AddWarrantyView: View {
             updated.price = price
             updated.purchaseDate = purchaseDate
             updated.expiryDate = expiryDate
-            updated.receiptImage    = receiptImage
+            updated.receiptImages   = receiptImages
             updated.reminderEnabled = reminderEnabled
             updated.latitude        = latitude
             updated.longitude       = longitude
@@ -532,7 +546,7 @@ struct AddWarrantyView: View {
                 price: price,
                 serialNumber: serial,
                 notes: notes,
-                receiptImage: receiptImage,
+                receiptImages: receiptImages,
                 reminderEnabled: reminderEnabled,
                 latitude: latitude,
                 longitude: longitude

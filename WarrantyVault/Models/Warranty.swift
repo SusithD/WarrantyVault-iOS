@@ -52,15 +52,20 @@ struct Warranty: Identifiable, Hashable, Codable {
     var price: Double
     var serialNumber: String
     var notes: String
-    var receiptImage: Data?
+    /// One entry per scanned receipt page. Empty when no receipt is attached.
+    /// `VNDocumentCameraScan` can return multiple pages (long thermal-roll
+    /// receipts, store-credit slips, etc.) which we keep all of rather than
+    /// dropping every page after the first.
+    var receiptImages: [Data]
     var reminderEnabled: Bool
     var latitude: Double?
     var longitude: Double?
     var eventIdentifier: String?
 
-    /// Derived from `receiptImage` — kept for one release so views that read
-    /// the legacy `receiptAttached` flag continue to compile unchanged.
-    var receiptAttached: Bool { receiptImage != nil }
+    var receiptAttached: Bool { !receiptImages.isEmpty }
+
+    /// Convenience for legacy callers that only care about the first page.
+    var receiptImage: Data? { receiptImages.first }
 
     /// Returns a coordinate when both lat/lon are present, else `nil`.
     var coordinate: CLLocationCoordinate2D? {
@@ -79,7 +84,7 @@ struct Warranty: Identifiable, Hashable, Codable {
         price: Double,
         serialNumber: String = "",
         notes: String = "",
-        receiptImage: Data? = nil,
+        receiptImages: [Data] = [],
         reminderEnabled: Bool = true,
         latitude: Double? = nil,
         longitude: Double? = nil,
@@ -95,7 +100,7 @@ struct Warranty: Identifiable, Hashable, Codable {
         self.price = price
         self.serialNumber = serialNumber
         self.notes = notes
-        self.receiptImage = receiptImage
+        self.receiptImages = receiptImages
         self.reminderEnabled = reminderEnabled
         self.latitude = latitude
         self.longitude = longitude

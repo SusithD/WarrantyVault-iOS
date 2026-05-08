@@ -13,6 +13,7 @@ final class AuthService {
     private(set) var uid: String?
     private(set) var email: String?
     private(set) var displayName: String?
+    private(set) var isEmailVerified: Bool = false
     private(set) var lastError: String?
 
     @ObservationIgnored private var listenerHandle: AuthStateDidChangeListenerHandle?
@@ -29,12 +30,14 @@ final class AuthService {
             self.uid = user.uid
             self.email = user.email
             self.displayName = user.displayName
+            self.isEmailVerified = user.isEmailVerified
         }
         listenerHandle = Auth.auth().addStateDidChangeListener { [weak self] _, user in
             guard let self else { return }
             self.uid = user?.uid
             self.email = user?.email
             self.displayName = user?.displayName
+            self.isEmailVerified = user?.isEmailVerified ?? false
             self.onAuthStateChanged?(user?.uid)
         }
     }
@@ -58,6 +61,9 @@ final class AuthService {
                 // so reflect the new name immediately for the UI.
                 self.displayName = trimmedName
             }
+            // Send the verification email automatically — the user can resend
+            // from the Profile banner if it didn't arrive.
+            try? await result.user.sendEmailVerification()
         } catch {
             lastError = friendlyMessage(for: error)
         }
@@ -89,6 +95,33 @@ final class AuthService {
         } catch {
             lastError = friendlyMessage(for: error)
             return false
+        }
+    }
+
+    /// Re-send the email-verification link to the current user.
+    @discardableResult
+    func resendEmailVerification() async -> Bool {
+        guard let user = Auth.auth().currentUser else { return false }
+        lastError = nil
+        do {
+            try await user.sendEmailVerification()
+            return true
+        } catch {
+            lastError = friendlyMessage(for: error)
+            return false
+        }
+    }
+
+    /// Pull the latest profile from Firebase. `isEmailVerified` is cached
+    /// locally and only refreshes when explicitly asked — call this after
+    /// the user clicks the verification link in their inbox.
+    func refreshVerificationStatus() async {
+        guard let user = Auth.auth().currentUser else { return }
+        do {
+            try await user.reload()
+            self.isEmailVerified = user.isEmailVerified
+        } catch {
+            lastError = friendlyMessage(for: error)
         }
     }
 

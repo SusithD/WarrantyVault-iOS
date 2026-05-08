@@ -19,11 +19,17 @@ struct WarrantyDTO: Codable {
     var price: Double
     var serialNumber: String
     var notes: String
-    var receiptImageBase64: String?
+    var receiptImagesBase64: [String]
     var reminderEnabled: Bool
     var latitude: Double?
     var longitude: Double?
     var updatedAt: Date
+
+    /// Firestore docs cap at ~1 MB. We trim trailing receipt pages until
+    /// the encoded payload fits comfortably below that ceiling rather than
+    /// refusing to sync the whole warranty. Local Core Data still holds the
+    /// full set of pages — only the cloud copy is capped.
+    private static let maxReceiptPayloadBytes = 850_000
 
     init(_ w: Warranty, updatedAt: Date = Date()) {
         self.id = w.id.uuidString
@@ -36,11 +42,26 @@ struct WarrantyDTO: Codable {
         self.price = w.price
         self.serialNumber = w.serialNumber
         self.notes = w.notes
-        self.receiptImageBase64 = w.receiptImage?.base64EncodedString()
+        self.receiptImagesBase64 = Self.encodePagesWithinDocLimit(w.receiptImages)
         self.reminderEnabled = w.reminderEnabled
         self.latitude = w.latitude
         self.longitude = w.longitude
         self.updatedAt = updatedAt
+    }
+
+    /// Encode pages to base64, dropping pages from the end until the total
+    /// fits within Firestore's 1 MB document budget. Drops everything if
+    /// even the first page is too large.
+    private static func encodePagesWithinDocLimit(_ pages: [Data]) -> [String] {
+        var encoded: [String] = []
+        var runningBytes = 0
+        for page in pages {
+            let b64 = page.base64EncodedString()
+            if runningBytes + b64.utf8.count > maxReceiptPayloadBytes { break }
+            encoded.append(b64)
+            runningBytes += b64.utf8.count
+        }
+        return encoded
     }
 
     var asWarranty: Warranty? {
@@ -56,7 +77,7 @@ struct WarrantyDTO: Codable {
             price: price,
             serialNumber: serialNumber,
             notes: notes,
-            receiptImage: receiptImageBase64.flatMap { Data(base64Encoded: $0) },
+            receiptImages: receiptImagesBase64.compactMap { Data(base64Encoded: $0) },
             reminderEnabled: reminderEnabled,
             latitude: latitude,
             longitude: longitude,

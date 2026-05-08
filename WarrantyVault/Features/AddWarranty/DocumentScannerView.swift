@@ -5,8 +5,13 @@ import UIKit
 /// SwiftUI wrapper around `VNDocumentCameraViewController` — the same scanner
 /// used by Notes / Files. Receipts come back pre-cropped and perspective-
 /// corrected, which materially improves OCR over a raw camera frame.
+///
+/// Returns *all* scanned pages — long thermal-roll receipts and store-credit
+/// slips often span 2–4 pages. The first page drives the OCR pre-fill; the
+/// remainder is stored alongside it so the warranty detail can show the full
+/// proof.
 struct DocumentScannerView: UIViewControllerRepresentable {
-    var onScanned: (UIImage) -> Void
+    var onScanned: ([UIImage]) -> Void
     var onCancel: () -> Void = {}
 
     static var isAvailable: Bool {
@@ -26,10 +31,10 @@ struct DocumentScannerView: UIViewControllerRepresentable {
     func updateUIViewController(_ controller: VNDocumentCameraViewController, context: Context) {}
 
     final class Coordinator: NSObject, VNDocumentCameraViewControllerDelegate {
-        let onScanned: (UIImage) -> Void
+        let onScanned: ([UIImage]) -> Void
         let onCancel: () -> Void
 
-        init(onScanned: @escaping (UIImage) -> Void, onCancel: @escaping () -> Void) {
+        init(onScanned: @escaping ([UIImage]) -> Void, onCancel: @escaping () -> Void) {
             self.onScanned = onScanned
             self.onCancel = onCancel
         }
@@ -38,8 +43,9 @@ struct DocumentScannerView: UIViewControllerRepresentable {
             _ controller: VNDocumentCameraViewController,
             didFinishWith scan: VNDocumentCameraScan
         ) {
-            if scan.pageCount > 0 {
-                onScanned(scan.imageOfPage(at: 0))
+            let pages = (0..<scan.pageCount).map { scan.imageOfPage(at: $0) }
+            if !pages.isEmpty {
+                onScanned(pages)
             }
             controller.dismiss(animated: true)
         }

@@ -27,7 +27,7 @@ final class WarrantyTests: XCTestCase {
     private func makeWarranty(
         purchase: Date = Date().addingTimeInterval(-86400 * 30),
         expiry: Date,
-        receiptImage: Data? = nil,
+        receiptImages: [Data] = [],
         latitude: Double? = nil,
         longitude: Double? = nil
     ) -> Warranty {
@@ -39,7 +39,7 @@ final class WarrantyTests: XCTestCase {
             expiryDate: expiry,
             retailer: "Test retailer",
             price: 0,
-            receiptImage: receiptImage,
+            receiptImages: receiptImages,
             latitude: latitude,
             longitude: longitude
         )
@@ -125,12 +125,12 @@ final class WarrantyTests: XCTestCase {
     // MARK: - receiptAttached (derived)
 
     func test_receiptAttached_isTrueWhenImageDataPresent() {
-        let w = makeWarranty(expiry: date(daysFromNow: 30), receiptImage: Data([0xFF, 0xD8, 0xFF, 0xE0]))
+        let w = makeWarranty(expiry: date(daysFromNow: 30), receiptImages: [Data([0xFF, 0xD8, 0xFF, 0xE0])])
         XCTAssertTrue(w.receiptAttached)
     }
 
     func test_receiptAttached_isFalseWhenImageDataNil() {
-        let w = makeWarranty(expiry: date(daysFromNow: 30), receiptImage: nil)
+        let w = makeWarranty(expiry: date(daysFromNow: 30), receiptImages: [])
         XCTAssertFalse(w.receiptAttached)
     }
 
