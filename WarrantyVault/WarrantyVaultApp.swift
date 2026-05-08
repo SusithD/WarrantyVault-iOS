@@ -26,7 +26,7 @@ struct WarrantyVaultApp: App {
                 .environment(\.managedObjectContext, persistence.viewContext)
                 .environment(coordinator)
                 .environment(store)
-                .preferredColorScheme(.light)
+                .preferredColorScheme(.dark)
         }
     }
 }

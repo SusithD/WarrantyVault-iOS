@@ -2,9 +2,8 @@
 //  PageIndicator.swift
 //  WarrantyVault
 //
-//  Refined: thin horizontal bars (3pt tall) instead of dots+capsule. Active
-//  bar widens; inactive bars stay short. Reads as a progress meter, not a
-//  collection of dots.
+//  Thin lime-accented bar indicators. Active bar is lime and wider;
+//  inactive bars are dim grey, short.
 //
 
 import SwiftUI
@@ -12,8 +11,8 @@ import SwiftUI
 struct PageIndicator: View {
     let total: Int
     let current: Int
-    var activeColor: Color = AppColors.brandBlue
-    var inactiveColor: Color = AppColors.border
+    var activeColor: Color = AppColors.accent
+    var inactiveColor: Color = AppColors.bgSurfaceHi
 
     var body: some View {
         HStack(spacing: 6) {

@@ -2,57 +2,33 @@
 //  IconBadge.swift
 //  WarrantyVault
 //
-//  Unified "icon in a rounded tile" component. Replaces the dozens of
-//  one-off ZStack-with-Circle/RoundedRectangle blocks scattered through the
-//  views. Keeps icon size, weight, and tile geometry consistent across the
-//  app so badges in the dashboard, detail page, profile rows, and category
-//  pickers all read at the same visual weight.
+//  Dark-theme icon-in-tile. Three styles:
+//   - .soft   → dark grey tile, tinted icon (default — used for category badges)
+//   - .solid  → tinted fill, contrasting icon (rare — feature highlights)
+//   - .outline→ transparent tile, hairline border, tinted icon (chrome buttons)
+//
+//  Three sizes (small/medium/large) and two shapes (rounded/circle).
 //
 
 import SwiftUI
 
 struct IconBadge: View {
     let symbol: String
-    var tint: Color = AppColors.brandBlue
+    var tint: Color = AppColors.accent
     var style: Style = .soft
     var size: Size = .medium
     var shape: Shape = .rounded
 
-    enum Style {
-        /// Soft tinted background, full-saturation icon. The default.
-        case soft
-        /// Solid tint background, white icon.
-        case solid
-        /// Hairline-bordered, transparent background, tinted icon.
-        case outline
-    }
+    enum Style { case soft, solid, outline }
 
     enum Size {
         case small   // 32 tile, 13 icon
         case medium  // 40 tile, 15 icon
         case large   // 56 tile, 22 icon
 
-        var tile: CGFloat {
-            switch self {
-            case .small: 32
-            case .medium: 40
-            case .large: 56
-            }
-        }
-        var icon: CGFloat {
-            switch self {
-            case .small: 13
-            case .medium: 15
-            case .large: 22
-            }
-        }
-        var radius: CGFloat {
-            switch self {
-            case .small: 8
-            case .medium: 10
-            case .large: 14
-            }
-        }
+        var tile: CGFloat { self == .small ? 32 : self == .medium ? 40 : 56 }
+        var icon: CGFloat { self == .small ? 13 : self == .medium ? 15 : 22 }
+        var radius: CGFloat { self == .small ? 8 : self == .medium ? 10 : 14 }
     }
 
     enum Shape { case rounded, circle }
@@ -85,7 +61,7 @@ struct IconBadge: View {
 
     private var backgroundFill: Color {
         switch style {
-        case .soft:    return tint.opacity(0.10)
+        case .soft:    return AppColors.bgSurfaceHi
         case .solid:   return tint
         case .outline: return Color.clear
         }
@@ -94,33 +70,29 @@ struct IconBadge: View {
     private var iconColor: Color {
         switch style {
         case .soft, .outline: return tint
-        case .solid:          return .white
+        case .solid:          return AppColors.textInverse
         }
     }
 
     private var borderStroke: Color {
-        style == .outline ? AppColors.border : .clear
+        style == .outline ? AppColors.borderSubtle : .clear
     }
     private var borderWidth: CGFloat {
-        style == .outline ? 0.5 : 0
+        style == .outline ? 1 : 0
     }
 }
 
 #Preview {
     VStack(spacing: 20) {
         HStack(spacing: 12) {
-            IconBadge(symbol: "tv.inset.filled", tint: AppColors.brandBlue, style: .soft)
-            IconBadge(symbol: "checkmark", tint: AppColors.success, style: .solid)
-            IconBadge(symbol: "bell", tint: AppColors.textSecondary, style: .outline)
+            IconBadge(symbol: "tv.inset.filled", tint: Color(hex: "60A5FA"), style: .soft)
+            IconBadge(symbol: "checkmark", tint: AppColors.accent, style: .solid)
+            IconBadge(symbol: "bell", tint: AppColors.textPrimary, style: .outline)
         }
         HStack(spacing: 12) {
             IconBadge(symbol: "tv.inset.filled", size: .small)
             IconBadge(symbol: "tv.inset.filled", size: .medium)
             IconBadge(symbol: "tv.inset.filled", size: .large)
-        }
-        HStack(spacing: 12) {
-            IconBadge(symbol: "person.crop.circle", style: .soft, shape: .circle)
-            IconBadge(symbol: "person.crop.circle", style: .solid, shape: .circle)
         }
     }
     .padding()

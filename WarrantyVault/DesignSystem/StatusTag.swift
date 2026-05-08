@@ -2,10 +2,9 @@
 //  StatusTag.swift
 //  WarrantyVault
 //
-//  Refined status indicator. Replaces the previous filled-pastel pill
-//  (`StatusChip`) with a quieter hairline-bordered tag carrying a small
-//  colored dot and status-tinted text. The whole tag reads as data, not
-//  decoration — list rows look composed instead of like badge collections.
+//  Dark-theme status indicator. Each status reads as a small chip with a
+//  colored dot + status-tinted text on a soft dark surface. The whole tag
+//  sits flat on a dark card without competing with the lime brand accent.
 //
 
 import SwiftUI
@@ -15,7 +14,7 @@ struct StatusTag: View {
     let daysRemaining: Int
 
     var body: some View {
-        HStack(spacing: 5) {
+        HStack(spacing: 6) {
             Circle()
                 .fill(status.tint)
                 .frame(width: 5, height: 5)
@@ -28,11 +27,7 @@ struct StatusTag: View {
         .padding(.vertical, 4)
         .background(
             RoundedRectangle(cornerRadius: 6, style: .continuous)
-                .fill(status.softTint)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 6, style: .continuous)
-                .stroke(status.tint.opacity(0.18), lineWidth: 0.5)
+                .fill(AppColors.bgSurfaceHi)
         )
     }
 

@@ -2,21 +2,20 @@
 //  GradientBackground.swift
 //  WarrantyVault
 //
-//  The subtle top-left → bottom-right light gradient used on every screen.
+//  Pure black background. No gradient — the type name is kept so callsites
+//  don't need to change. `SolidBackground` is the preferred name in new code.
 //
 
 import SwiftUI
 
 struct GradientBackground: View {
     var body: some View {
-        LinearGradient(
-            colors: [AppColors.bgGradientStart, AppColors.bgGradientEnd],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-        .ignoresSafeArea()
+        AppColors.bgApp
+            .ignoresSafeArea()
     }
 }
+
+typealias SolidBackground = GradientBackground
 
 #Preview {
     GradientBackground()

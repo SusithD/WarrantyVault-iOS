@@ -72,15 +72,9 @@ struct BottomNavBar: View {
         .padding(.top, 12)
         .padding(.bottom, 8)
         .background(
-            Color.white
+            AppColors.bgSurface
                 .ignoresSafeArea(edges: .bottom)
         )
-        .overlay(alignment: .top) {
-            // Hairline that sits exactly on the top edge of the bar.
-            Rectangle()
-                .fill(AppColors.border)
-                .frame(height: 0.5)
-        }
         .overlay(alignment: .top) {
             addButton
                 .offset(y: -(addSize / 2))
@@ -103,28 +97,27 @@ struct BottomNavBar: View {
                     .font(.system(size: 10, weight: .semibold))
                     .tracking(0.2)
             }
-            .foregroundStyle(isSelected ? AppColors.brandBlue : AppColors.textSecondary)
+            .foregroundStyle(isSelected ? AppColors.accent : AppColors.textSecondary)
             .frame(maxWidth: .infinity)
         }
         .buttonStyle(.plain)
     }
 
-    /// Floating circular CTA. Single solid fill (no gradient), wrapped in a
-    /// 3pt white ring so it reads cleanly when it overlaps the tab bar's top
-    /// edge. Shadow is short and accent-tinted, not generic black.
+    /// Floating circular CTA. Lime fill, black plus icon. Wrapped in a
+    /// 3pt black ring so it reads as a separate "lozenge" against the
+    /// dark grey tab bar.
     private var addButton: some View {
         Button(action: onAddTapped) {
             Circle()
-                .fill(AppColors.brandBlue)
+                .fill(AppColors.accent)
                 .frame(width: addSize, height: addSize)
                 .overlay(
-                    Circle().stroke(Color.white, lineWidth: 3)
+                    Circle().stroke(AppColors.bgApp, lineWidth: 3)
                 )
-                .shadow(color: AppColors.brandBlue.opacity(0.28), radius: 8, y: 4)
                 .overlay(
                     Image(systemName: "plus")
                         .font(.system(size: 22, weight: .bold))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(AppColors.textInverse)
                 )
         }
         .buttonStyle(.plain)

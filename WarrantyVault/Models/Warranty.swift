@@ -25,15 +25,18 @@ enum WarrantyCategory: String, CaseIterable, Identifiable, Codable {
         }
     }
 
+    /// De-saturated tints chosen for the dark palette. Each is bright enough
+    /// to read on a dark grey surface but cool enough not to compete with
+    /// the lime brand accent.
     var tint: Color {
         switch self {
-        case .electronics: return .blue
-        case .appliance:   return .purple
-        case .vehicle:     return .orange
-        case .furniture:   return .pink
-        case .jewelry:     return .yellow
-        case .tools:       return .green
-        case .other:       return .gray
+        case .electronics: return Color(hex: "60A5FA")  // Sky-400
+        case .appliance:   return Color(hex: "A78BFA")  // Violet-400
+        case .vehicle:     return Color(hex: "FB923C")  // Orange-400
+        case .furniture:   return Color(hex: "F472B6")  // Pink-400
+        case .jewelry:     return Color(hex: "FCD34D")  // Yellow-300
+        case .tools:       return Color(hex: "5EEAD4")  // Teal-300
+        case .other:       return Color(hex: "9CA3AF")  // Gray-400
         }
     }
 }

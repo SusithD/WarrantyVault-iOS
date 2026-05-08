@@ -2,10 +2,11 @@
 //  GlassCard.swift
 //  WarrantyVault
 //
-//  Refined card container. Subtler shadow, hairline (0.5pt) border, and a
-//  smaller default corner radius (16pt) — the previous 24pt felt soft and
-//  iOS-default. The default padding is also 16pt so cards feel composed
-//  rather than over-padded.
+//  Dark-theme card. Solid `bgSurface` fill on the black app background,
+//  no shadow (it's already on black), no visible border by default.
+//  Hierarchy comes from background-surface contrast, not from chrome.
+//
+//  The legacy type name is kept; `Panel` is the preferred name in new code.
 //
 
 import SwiftUI
@@ -21,13 +22,40 @@ struct GlassCard<Content: View>: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(
                 RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                    .fill(Color.white)
-                    .shadow(color: .black.opacity(0.04), radius: 12, x: 0, y: 4)
+                    .fill(AppColors.bgSurface)
             )
-            .overlay(
-                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                    .stroke(AppColors.border, lineWidth: 0.5)
-            )
+    }
+}
+
+typealias Panel = GlassCard
+
+/// 1px hairline used inside dark cards for separating internal sections.
+struct HairlineDivider: View {
+    var color: Color = AppColors.borderSubtle
+    var body: some View {
+        Rectangle().fill(color).frame(height: 1)
+    }
+}
+
+/// ALL-CAPS overline + small bottom padding, used at the top of any
+/// section/card: "WARRANTY", "COVERAGE", "RECEIPT".
+struct SectionHeader: View {
+    let title: String
+    var trailing: AnyView? = nil
+
+    init(_ title: String, trailing: AnyView? = nil) {
+        self.title = title
+        self.trailing = trailing
+    }
+
+    var body: some View {
+        HStack(alignment: .firstTextBaseline) {
+            Text(title.uppercased())
+                .overlineStyle()
+            Spacer()
+            if let trailing { trailing }
+        }
+        .padding(.bottom, 4)
     }
 }
 
@@ -36,16 +64,13 @@ struct GlassCard<Content: View>: View {
         GradientBackground()
         VStack(spacing: 16) {
             GlassCard {
-                Text("Refined card")
-                    .font(AppTypography.headline)
-                    .foregroundStyle(AppColors.textPrimary)
-            }
-            GlassCard(padding: 20, cornerRadius: 20) {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Larger card with custom radius")
-                        .font(AppTypography.bodyStrong)
+                    SectionHeader("Warranty")
+                    Text("MacBook Pro 14\" M3")
+                        .font(AppTypography.headline)
                         .foregroundStyle(AppColors.textPrimary)
-                    Text("Caption text")
+                    HairlineDivider()
+                    Text("AppleCare+ included")
                         .font(AppTypography.caption)
                         .foregroundStyle(AppColors.textSecondary)
                 }

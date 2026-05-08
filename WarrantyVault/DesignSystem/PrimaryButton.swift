@@ -2,9 +2,10 @@
 //  PrimaryButton.swift
 //  WarrantyVault
 //
-//  Refined: single solid fill (no gradient), 14pt corner radius (was 26 — too
-//  pill-shaped), 12pt-blur shadow at 20% accent (was 12pt @ 25% — slightly
-//  shorter elevation reads more "considered"). Touch state dims to 90%.
+//  Lime pill. Generous corner radius (= height/2 — fully rounded), solid
+//  electric-lime fill, black text. No gradient. No shadow (lime on black
+//  pops on its own). Pressed state dims to a darker lime via `accentDim`
+//  with a quick 90% opacity fade.
 //
 
 import SwiftUI
@@ -14,6 +15,8 @@ struct PrimaryButton: View {
     var icon: String? = nil
     var isEnabled: Bool = true
     var action: () -> Void
+
+    private let height: CGFloat = 52
 
     var body: some View {
         Button(action: action) {
@@ -26,26 +29,53 @@ struct PrimaryButton: View {
                 }
             }
             .frame(maxWidth: .infinity)
-            .frame(height: 50)
-            .foregroundStyle(.white)
+            .frame(height: height)
+            .foregroundStyle(isEnabled ? AppColors.textInverse : AppColors.textTertiary)
             .background(
-                RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .fill(AppColors.brandBlue)
+                Capsule()
+                    .fill(isEnabled ? AppColors.accent : AppColors.bgSurfaceHi)
             )
-            .shadow(color: AppColors.brandBlue.opacity(0.20), radius: 10, x: 0, y: 4)
-            .opacity(isEnabled ? 1 : 0.45)
         }
         .disabled(!isEnabled)
         .buttonStyle(PressDimStyle())
     }
 }
 
-/// Press feedback: 90% opacity on touch-down. Subtler than a scale animation,
-/// reads as "I felt your tap" without bouncing.
+/// Secondary pill. Dark grey fill, white text. Used as a "not the primary
+/// action" companion — e.g. "Edit" next to "File Claim".
+struct SecondaryButton: View {
+    let title: String
+    var icon: String? = nil
+    var action: () -> Void
+
+    private let height: CGFloat = 52
+
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 8) {
+                if let icon {
+                    Image(systemName: icon)
+                        .font(.system(size: 15, weight: .semibold))
+                }
+                Text(title)
+                    .font(AppTypography.button)
+            }
+            .frame(maxWidth: .infinity)
+            .frame(height: height)
+            .foregroundStyle(AppColors.textPrimary)
+            .background(
+                Capsule()
+                    .fill(AppColors.bgSurface)
+            )
+        }
+        .buttonStyle(PressDimStyle())
+    }
+}
+
 private struct PressDimStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .opacity(configuration.isPressed ? 0.9 : 1.0)
+            .opacity(configuration.isPressed ? 0.85 : 1.0)
             .animation(.easeOut(duration: 0.10), value: configuration.isPressed)
     }
 }
@@ -59,7 +89,7 @@ struct SecondaryTextButton: View {
         Button(action: action) {
             Text(title.uppercased())
                 .font(.system(size: 12, weight: .heavy))
-                .tracking(1.2)
+                .tracking(1.4)
                 .foregroundStyle(color)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 14)
@@ -70,10 +100,11 @@ struct SecondaryTextButton: View {
 
 #Preview {
     VStack(spacing: 16) {
-        PrimaryButton(title: "Get Started", icon: "arrow.right") { }
-        PrimaryButton(title: "Save Warranty") { }
+        PrimaryButton(title: "Log in") { }
+        PrimaryButton(title: "File Claim", icon: "doc.badge.plus") { }
         PrimaryButton(title: "Disabled", isEnabled: false) { }
-        SecondaryTextButton(title: "SKIP") { }
+        SecondaryButton(title: "Edit", icon: "pencil") { }
+        SecondaryTextButton(title: "Forgot Passcode?") { }
     }
     .padding()
     .background(GradientBackground())

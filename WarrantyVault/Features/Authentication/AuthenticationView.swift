@@ -2,8 +2,10 @@
 //  AuthenticationView.swift
 //  WarrantyVault
 //
-//  Biometric unlock screen. Stubs Face ID via LocalAuthentication and falls
-//  back to a passcode prompt.
+//  Dark + lime auth screen. Pure black canvas, content sits directly on
+//  the background (no card chrome) — matches the "A Phone" reference DNA.
+//  Biometric tap target is a dark grey rounded tile with the lime FaceID
+//  icon; press it to start the system biometric flow.
 //
 
 import SwiftUI
@@ -18,18 +20,39 @@ struct AuthenticationView: View {
 
     var body: some View {
         ZStack {
-            GradientBackground()
+            AppColors.bgApp.ignoresSafeArea()
 
-            VStack(spacing: 20) {
+            VStack(spacing: 0) {
+                Spacer().frame(height: 24)
                 brandHeader
-                card
+
+                Spacer().frame(height: 32)
+                avatarBadge
+
+                Spacer().frame(height: 20)
+                copyBlock
+
+                Spacer().frame(height: 28)
+                scanBlock
+
+                if let errorMessage {
+                    Spacer().frame(height: 14)
+                    Text(errorMessage)
+                        .font(AppTypography.caption)
+                        .foregroundStyle(AppColors.danger)
+                        .multilineTextAlignment(.center)
+                }
+
+                Spacer()
                 familyVaultChip
-                Spacer(minLength: 16)
+                Spacer().frame(height: 14)
+                encryptedFooter
+
+                Spacer().frame(height: 24)
                 footer
+                Spacer().frame(height: 16)
             }
-            .padding(.horizontal, 24)
-            .padding(.top, 40)
-            .padding(.bottom, 24)
+            .padding(.horizontal, 28)
         }
         .sheet(isPresented: $showPasscode) {
             PasscodeEntrySheet(onUnlock: onAuthenticated)
@@ -39,53 +62,37 @@ struct AuthenticationView: View {
     // MARK: - Brand header
 
     private var brandHeader: some View {
-        VStack(spacing: 6) {
+        VStack(spacing: 8) {
             Text("WarrantyVault")
-                .font(.system(size: 24, weight: .bold))
-                .tracking(-0.2)
+                .font(.system(size: 26, weight: .bold))
+                .tracking(-0.3)
                 .foregroundStyle(AppColors.textPrimary)
             Text("SECURE INFRASTRUCTURE")
                 .font(AppTypography.overline)
                 .tracking(2.0)
-                .foregroundStyle(AppColors.brandBlue)
+                .foregroundStyle(AppColors.accent)
         }
     }
 
-    // MARK: - Main card
-
-    private var card: some View {
-        GlassCard(padding: 28, cornerRadius: 20) {
-            VStack(spacing: 20) {
-                avatarBadge
-                copyBlock
-                scanBlock
-                if let errorMessage {
-                    Text(errorMessage)
-                        .font(AppTypography.caption)
-                        .foregroundStyle(AppColors.danger)
-                        .multilineTextAlignment(.center)
-                }
-                encryptedFooter
-            }
-            .frame(maxWidth: .infinity)
-        }
-    }
+    // MARK: - Avatar
 
     private var avatarBadge: some View {
         ZStack {
             Circle()
-                .fill(AppColors.brandBlueSoft)
-                .frame(width: 72, height: 72)
+                .fill(AppColors.bgSurface)
+                .frame(width: 76, height: 76)
             Image(systemName: "person.crop.circle.fill")
-                .font(.system(size: 36, weight: .regular))
-                .foregroundStyle(AppColors.brandBlue)
+                .font(.system(size: 38, weight: .regular))
+                .foregroundStyle(AppColors.accent)
         }
     }
 
+    // MARK: - Welcome copy
+
     private var copyBlock: some View {
-        VStack(spacing: 6) {
+        VStack(spacing: 8) {
             Text("Welcome Back")
-                .font(AppTypography.title)
+                .font(.system(size: 28, weight: .bold))
                 .tracking(-0.3)
                 .foregroundStyle(AppColors.textPrimary)
             Text("Verify your identity to access your vault")
@@ -96,13 +103,13 @@ struct AuthenticationView: View {
         }
     }
 
-    /// Face-ID tap target. The card itself is the affordance; "TAP TO SCAN"
-    /// sits below it as a label, not as a pill that clips the card edge.
+    // MARK: - Face-ID scan
+
     private var scanBlock: some View {
         VStack(spacing: 14) {
             Button(action: beginBiometricAuth) {
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .fill(AppColors.brandBlueSoft)
+                RoundedRectangle(cornerRadius: 24, style: .continuous)
+                    .fill(AppColors.bgSurface)
                     .frame(width: 132, height: 132)
                     .overlay(faceIDIcon)
                     .scaleEffect(isScanning ? 0.96 : 1.0)
@@ -113,20 +120,26 @@ struct AuthenticationView: View {
             Text(isScanning ? "SCANNING…" : "TAP TO SCAN")
                 .font(AppTypography.overline)
                 .tracking(1.6)
-                .foregroundStyle(AppColors.brandBlue)
+                .foregroundStyle(AppColors.accent)
         }
     }
 
-    private var encryptedFooter: some View {
-        HStack(spacing: 6) {
-            Image(systemName: "lock.fill")
-                .font(.system(size: 10, weight: .semibold))
-            Text("END-TO-END ENCRYPTED")
-                .font(AppTypography.overline)
-                .tracking(1.4)
+    private var faceIDIcon: some View {
+        ZStack {
+            Circle()
+                .stroke(AppColors.accent, lineWidth: 2.5)
+                .frame(width: 68, height: 68)
+
+            VStack(spacing: 6) {
+                HStack(spacing: 12) {
+                    Circle().fill(AppColors.accent).frame(width: 6, height: 6)
+                    Circle().fill(AppColors.accent).frame(width: 6, height: 6)
+                }
+                RoundedRectangle(cornerRadius: 1)
+                    .fill(AppColors.accent)
+                    .frame(width: 22, height: 2)
+            }
         }
-        .foregroundStyle(AppColors.textTertiary)
-        .padding(.top, 4)
     }
 
     // MARK: - Family vault chip
@@ -137,20 +150,20 @@ struct AuthenticationView: View {
                 Circle()
                     .fill(AppColors.purple)
                     .frame(width: 22, height: 22)
-                    .overlay(Circle().stroke(.white, lineWidth: 2))
+                    .overlay(Circle().stroke(AppColors.bgApp, lineWidth: 2))
                 Circle()
                     .fill(AppColors.warning)
                     .frame(width: 22, height: 22)
-                    .overlay(Circle().stroke(.white, lineWidth: 2))
+                    .overlay(Circle().stroke(AppColors.bgApp, lineWidth: 2))
                 Circle()
-                    .fill(AppColors.textPrimary)
+                    .fill(AppColors.accent)
                     .frame(width: 22, height: 22)
                     .overlay(
                         Text("+2")
                             .font(.system(size: 9, weight: .bold))
-                            .foregroundStyle(.white)
+                            .foregroundStyle(AppColors.textInverse)
                     )
-                    .overlay(Circle().stroke(.white, lineWidth: 2))
+                    .overlay(Circle().stroke(AppColors.bgApp, lineWidth: 2))
             }
             Text("FAMILY VAULT ACTIVE")
                 .font(AppTypography.overline)
@@ -159,14 +172,20 @@ struct AuthenticationView: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 9)
-        .background(
-            Capsule()
-                .fill(Color.white)
-        )
-        .overlay(
-            Capsule()
-                .stroke(AppColors.border, lineWidth: 0.5)
-        )
+        .background(Capsule().fill(AppColors.bgSurface))
+    }
+
+    // MARK: - Encrypted footer line
+
+    private var encryptedFooter: some View {
+        HStack(spacing: 6) {
+            Image(systemName: "lock.fill")
+                .font(.system(size: 10, weight: .semibold))
+            Text("END-TO-END ENCRYPTED")
+                .font(AppTypography.overline)
+                .tracking(1.4)
+        }
+        .foregroundStyle(AppColors.textTertiary)
     }
 
     // MARK: - Footer (passcode + forgot)
@@ -175,32 +194,12 @@ struct AuthenticationView: View {
         VStack(spacing: 12) {
             Button("Enter Passcode Instead") { showPasscode = true }
                 .font(AppTypography.bodyStrong)
-                .foregroundStyle(AppColors.brandBlue)
+                .foregroundStyle(AppColors.accent)
 
             Button("FORGOT PASSCODE?") { }
                 .font(AppTypography.overline)
                 .tracking(1.4)
                 .foregroundStyle(AppColors.textSecondary)
-        }
-    }
-
-    // MARK: - Face ID icon
-
-    private var faceIDIcon: some View {
-        ZStack {
-            Circle()
-                .stroke(AppColors.brandBlue, lineWidth: 2.5)
-                .frame(width: 68, height: 68)
-
-            VStack(spacing: 6) {
-                HStack(spacing: 12) {
-                    Circle().fill(AppColors.brandBlue).frame(width: 6, height: 6)
-                    Circle().fill(AppColors.brandBlue).frame(width: 6, height: 6)
-                }
-                RoundedRectangle(cornerRadius: 1)
-                    .fill(AppColors.brandBlue)
-                    .frame(width: 22, height: 2)
-            }
         }
     }
 
@@ -247,17 +246,25 @@ private struct PasscodeEntrySheet: View {
     var body: some View {
         VStack(spacing: 24) {
             Capsule()
-                .fill(AppColors.border)
+                .fill(AppColors.borderSubtle)
                 .frame(width: 40, height: 4)
                 .padding(.top, 12)
 
             Text("Enter Passcode")
                 .font(AppTypography.title)
+                .foregroundStyle(AppColors.textPrimary)
 
-            SecureField("••••••", text: $passcode)
-                .textFieldStyle(.roundedBorder)
+            SecureField("", text: $passcode,
+                        prompt: Text("••••••")
+                            .foregroundColor(AppColors.textTertiary))
                 .multilineTextAlignment(.center)
                 .keyboardType(.numberPad)
+                .padding(14)
+                .background(
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .fill(AppColors.bgSurface)
+                )
+                .foregroundStyle(AppColors.textPrimary)
                 .padding(.horizontal, 40)
 
             PrimaryButton(title: "Unlock", isEnabled: passcode.count >= 4) {
@@ -268,7 +275,9 @@ private struct PasscodeEntrySheet: View {
 
             Spacer()
         }
-        .presentationDetents([.height(320)])
+        .background(AppColors.bgSurfaceMax)
+        .presentationDetents([.height(340)])
+        .presentationBackground(AppColors.bgSurfaceMax)
     }
 }
 
