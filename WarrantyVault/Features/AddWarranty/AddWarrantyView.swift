@@ -105,7 +105,7 @@ struct AddWarrantyView: View {
             }
             .ignoresSafeArea()
         }
-        .sheet(isPresented: $presentingLocationPicker) {
+        .fullScreenCover(isPresented: $presentingLocationPicker) {
             LocationPickerView(initial: currentCoordinate) { coord in
                 latitude  = coord.latitude
                 longitude = coord.longitude

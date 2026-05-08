@@ -87,8 +87,6 @@ struct DashboardView: View {
             NavigationStack {
                 AddWarrantyView(prefilled: draft)
             }
-            .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
         }
         .overlay {
             if isScanning {
