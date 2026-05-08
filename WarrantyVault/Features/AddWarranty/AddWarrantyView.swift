@@ -217,10 +217,11 @@ struct AddWarrantyView: View {
                                     Image(systemName: cat.symbolName).font(.system(size: 12, weight: .bold))
                                     Text(cat.rawValue).font(.system(size: 13, weight: .semibold))
                                 }
-                                .foregroundStyle(category == cat ? .white : AppColors.textPrimary)
+                                .foregroundStyle(category == cat ? AppColors.textInverse : AppColors.textSecondary)
                                 .padding(.horizontal, 14).padding(.vertical, 8)
-                                .background(Capsule().fill(category == cat ? cat.tint : Color.white))
-                                .overlay(Capsule().stroke(category == cat ? .clear : AppColors.border, lineWidth: 1))
+                                .background(
+                                    Capsule().fill(category == cat ? cat.tint : AppColors.bgSurfaceHi)
+                                )
                             }
                             .buttonStyle(.plain)
                         }
@@ -386,7 +387,7 @@ struct AddWarrantyView: View {
         } else {
             ZStack {
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(AppColors.surfaceMuted.opacity(0.6))
+                    .fill(AppColors.bgSurfaceHi)
                     .frame(height: 120)
                 VStack(spacing: 6) {
                     Image(systemName: "doc.text")
@@ -406,11 +407,11 @@ struct AddWarrantyView: View {
             Text(text)
         }
         .font(.system(size: 13, weight: .semibold))
-        .foregroundStyle(AppColors.brandBlue)
+        .foregroundStyle(AppColors.textPrimary)
         .frame(maxWidth: .infinity, minHeight: 38)
         .background(
             RoundedRectangle(cornerRadius: 10, style: .continuous)
-                .fill(AppColors.brandBlueSoft)
+                .fill(AppColors.bgSurfaceHi)
         )
     }
 
@@ -462,12 +463,14 @@ struct AddWarrantyView: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text("Notes".uppercased()).overlineStyle()
                 TextEditor(text: $notes)
-                    .font(.system(size: 14))
+                    .font(AppTypography.body)
+                    .foregroundStyle(AppColors.textPrimary)
                     .frame(minHeight: 80)
                     .scrollContentBackground(.hidden)
+                    .padding(8)
                     .background(
                         RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .fill(AppColors.surfaceMuted.opacity(0.4))
+                            .fill(AppColors.bgSurfaceHi)
                     )
             }
         }
@@ -551,18 +554,20 @@ struct LabeledTextField: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(label.uppercased()).overlineStyle()
-            TextField(placeholder, text: $text)
-                .font(.system(size: 15))
-                .keyboardType(keyboard)
-                .padding(.horizontal, 14).padding(.vertical, 12)
-                .background(
-                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .fill(Color.white)
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .stroke(AppColors.border, lineWidth: 1)
-                )
+            TextField(
+                "",
+                text: $text,
+                prompt: Text(placeholder)
+                    .foregroundColor(AppColors.textTertiary)
+            )
+            .font(AppTypography.body)
+            .foregroundStyle(AppColors.textPrimary)
+            .keyboardType(keyboard)
+            .padding(.horizontal, 14).padding(.vertical, 12)
+            .background(
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(AppColors.bgSurfaceHi)
+            )
         }
     }
 }
