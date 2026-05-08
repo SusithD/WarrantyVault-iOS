@@ -40,3 +40,6 @@ training_data.csv
 # Local Claude Code working notes (not shared)
 .claude/
 
+# Firebase config (contains API keys / project identifiers — provision locally)
+GoogleService-Info.plist
+
