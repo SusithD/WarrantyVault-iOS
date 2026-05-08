@@ -1,11 +1,3 @@
-//
-//  OnboardingIllustrationView.swift
-//  WarrantyVault
-//
-//  Three SF-Symbol-based illustrations for the onboarding pages.
-//  Designed to be easily replaced with real artwork later.
-//
-
 import SwiftUI
 
 struct OnboardingIllustrationView: View {
@@ -25,7 +17,6 @@ struct OnboardingIllustrationView: View {
 private struct VaultIllustration: View {
     var body: some View {
         ZStack {
-            // Dashed circular guide
             Circle()
                 .stroke(
                     AppColors.border,
@@ -33,10 +24,8 @@ private struct VaultIllustration: View {
                 )
                 .frame(width: 280, height: 280)
 
-            // Document card
             GlassCard(padding: 20, cornerRadius: 28) {
                 VStack(alignment: .leading, spacing: 12) {
-                    // Lock badge
                     HStack {
                         ZStack {
                             Circle().fill(AppColors.brandBlue)
@@ -70,7 +59,6 @@ private struct VaultIllustration: View {
                 .frame(width: 160)
             }
 
-            // QR badge (top-right)
             ZStack {
                 RoundedRectangle(cornerRadius: 14, style: .continuous)
                     .fill(.white)
@@ -93,14 +81,12 @@ private struct NotificationIllustration: View {
         ZStack {
             GlassCard(padding: 24, cornerRadius: 28) {
                 ZStack {
-                    // Back card
                     RoundedRectangle(cornerRadius: 16, style: .continuous)
                         .fill(AppColors.surfaceMuted)
                         .frame(width: 160, height: 100)
                         .rotationEffect(.degrees(-4))
                         .offset(x: -8, y: -8)
 
-                    // Front card with alert
                     RoundedRectangle(cornerRadius: 16, style: .continuous)
                         .fill(.white)
                         .frame(width: 160, height: 100)
@@ -127,7 +113,6 @@ private struct NotificationIllustration: View {
                         )
                         .shadow(color: .black.opacity(0.08), radius: 10, x: 0, y: 4)
 
-                    // Bell
                     ZStack {
                         Circle().fill(AppColors.brandBlue)
                             .frame(width: 56, height: 56)
@@ -156,7 +141,6 @@ private struct BiometricIllustration: View {
                         .stroke(AppColors.brandBlue, lineWidth: 2.5)
                         .frame(width: 80, height: 80)
 
-                    // Face icon
                     VStack(spacing: 4) {
                         HStack(spacing: 10) {
                             Circle().fill(AppColors.brandBlue).frame(width: 6, height: 6)
@@ -170,7 +154,6 @@ private struct BiometricIllustration: View {
                 .frame(width: 200, height: 160)
             }
 
-            // Shield badge
             ZStack {
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
                     .fill(.white)
@@ -182,7 +165,6 @@ private struct BiometricIllustration: View {
             }
             .offset(x: 96, y: -86)
 
-            // Lock badge
             ZStack {
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
                     .fill(.white)

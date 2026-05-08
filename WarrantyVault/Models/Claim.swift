@@ -47,7 +47,7 @@ struct ClaimTimelineEvent: Identifiable, Hashable, Codable {
 
 struct Claim: Identifiable, Hashable, Codable {
     let id: UUID
-    var referenceCode: String            // e.g. "#CLM-2026-0412"
+    var referenceCode: String
     var warrantyID: UUID
     var productName: String
     var issueSummary: String

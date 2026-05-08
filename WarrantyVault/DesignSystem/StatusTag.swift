@@ -1,12 +1,3 @@
-//
-//  StatusTag.swift
-//  WarrantyVault
-//
-//  Dark-theme status indicator. Each status reads as a small chip with a
-//  colored dot + status-tinted text on a soft dark surface. The whole tag
-//  sits flat on a dark card without competing with the lime brand accent.
-//
-
 import SwiftUI
 
 struct StatusTag: View {

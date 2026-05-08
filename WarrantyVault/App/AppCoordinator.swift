@@ -1,14 +1,3 @@
-//
-//  AppCoordinator.swift
-//  WarrantyVault
-//
-//  Drives the top-level flow: Splash → Onboarding → Login → MainApp.
-//
-//  Authentication is provided by Firebase email/password. The session
-//  persists across launches via the FirebaseAuth keychain, so signed-in
-//  users skip onboarding/login on subsequent launches.
-//
-
 import SwiftUI
 
 enum AppFlowStage: Hashable {
@@ -52,7 +41,6 @@ final class AppCoordinator {
         stage = AuthService.shared.isSignedIn ? .mainApp : .authentication
     }
 
-    /// Called by `AuthenticationView` once Face ID succeeds.
     func biometricsUnlocked() {
         stage = .mainApp
     }

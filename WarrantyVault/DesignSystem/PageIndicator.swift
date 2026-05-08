@@ -1,11 +1,3 @@
-//
-//  PageIndicator.swift
-//  WarrantyVault
-//
-//  Thin lime-accented bar indicators. Active bar is lime and wider;
-//  inactive bars are dim grey, short.
-//
-
 import SwiftUI
 
 struct PageIndicator: View {

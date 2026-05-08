@@ -1,7 +1,5 @@
 import SwiftUI
 
-/// Top-level household screen. Routes to the Create/Join flow if there are no members,
-/// otherwise shows Members + Activity in a segmented layout.
 struct HouseholdHubView: View {
     @Environment(AppStore.self) private var store
     @State private var segment: Segment = .members

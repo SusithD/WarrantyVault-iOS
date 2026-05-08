@@ -1,17 +1,3 @@
-//
-//  AppTypography.swift
-//  WarrantyVault
-//
-//  Refined typography. Two families:
-//   - SF Pro for everything readable.
-//   - SF Mono — used sparingly for data values that benefit from the
-//     ledger-y feel: serial numbers, claim references, dates, prices.
-//
-//  Tracking is tight on the display end (-0.5/-0.3) for a more set,
-//  composed feel. Overlines push to Heavy + +1.0 tracking for an
-//  "engraved label" treatment used as section headers.
-//
-
 import SwiftUI
 
 enum AppTypography {

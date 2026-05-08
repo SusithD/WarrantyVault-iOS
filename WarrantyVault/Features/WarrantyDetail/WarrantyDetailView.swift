@@ -270,8 +270,6 @@ struct WarrantyDetailView: View {
         }
     }
 
-    /// Renders the receipt page(s) — a single image fills the slot; multiple
-    /// pages become a paging TabView with dot indicators below.
     @ViewBuilder
     private func receiptCarousel(for w: Warranty) -> some View {
         let pages = w.receiptImages.compactMap { UIImage(data: $0) }

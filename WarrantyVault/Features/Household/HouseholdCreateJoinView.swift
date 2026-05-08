@@ -1,6 +1,5 @@
 import SwiftUI
 
-/// Shown when the user has no household yet. Offers to create one or join with a code.
 struct HouseholdCreateJoinView: View {
     @Environment(AppStore.self) private var store
     @State private var mode: Mode = .create

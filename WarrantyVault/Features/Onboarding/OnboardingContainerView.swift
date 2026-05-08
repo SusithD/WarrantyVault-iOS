@@ -1,10 +1,3 @@
-//
-//  OnboardingContainerView.swift
-//  WarrantyVault
-//
-//  Paged container that swipes between onboarding pages.
-//
-
 import SwiftUI
 
 struct OnboardingContainerView: View {

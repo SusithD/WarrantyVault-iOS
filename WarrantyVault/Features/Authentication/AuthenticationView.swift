@@ -1,13 +1,3 @@
-//
-//  AuthenticationView.swift
-//  WarrantyVault
-//
-//  Dark + lime auth screen. Pure black canvas, content sits directly on
-//  the background (no card chrome) — matches the "A Phone" reference DNA.
-//  Biometric tap target is a dark grey rounded tile with the lime FaceID
-//  icon; press it to start the system biometric flow.
-//
-
 import SwiftUI
 import LocalAuthentication
 

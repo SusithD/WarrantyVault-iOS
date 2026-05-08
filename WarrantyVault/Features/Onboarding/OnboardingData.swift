@@ -1,10 +1,3 @@
-//
-//  OnboardingData.swift
-//  WarrantyVault
-//
-//  Content + illustration config for the 3 onboarding pages.
-//
-
 import SwiftUI
 
 struct OnboardingPage: Identifiable {

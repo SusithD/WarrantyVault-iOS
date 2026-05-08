@@ -1,11 +1,3 @@
-//
-//  MainAppPlaceholderView.swift
-//  WarrantyVault
-//
-//  Placeholder for the main app — hit once authentication succeeds.
-//  Will be replaced by the real Dashboard in a later sprint.
-//
-
 import SwiftUI
 
 struct MainAppPlaceholderView: View {

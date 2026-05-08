@@ -1,13 +1,3 @@
-//
-//  PrimaryButton.swift
-//  WarrantyVault
-//
-//  Lime pill. Generous corner radius (= height/2 — fully rounded), solid
-//  electric-lime fill, black text. No gradient. No shadow (lime on black
-//  pops on its own). Pressed state dims to a darker lime via `accentDim`
-//  with a quick 90% opacity fade.
-//
-
 import SwiftUI
 
 struct PrimaryButton: View {

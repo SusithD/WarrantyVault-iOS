@@ -1,10 +1,3 @@
-//
-//  SplashView.swift
-//  WarrantyVault
-//
-//  Initial branding screen shown while the app boots.
-//
-
 import SwiftUI
 
 struct SplashView: View {
@@ -19,7 +12,6 @@ struct SplashView: View {
             VStack(spacing: 0) {
                 Spacer()
 
-                // App icon badge
                 ZStack {
                     RoundedRectangle(cornerRadius: 24, style: .continuous)
                         .fill(.white)
@@ -37,7 +29,6 @@ struct SplashView: View {
                 .scaleEffect(isVisible ? 1 : 0.9)
                 .opacity(isVisible ? 1 : 0)
 
-                // Brand wordmark
                 Text("WarrantyVault")
                     .font(.system(size: 32, weight: .bold))
                     .foregroundStyle(AppColors.textPrimary)
@@ -54,7 +45,6 @@ struct SplashView: View {
                 PageIndicator(total: 3, current: 0)
                     .padding(.bottom, 48)
 
-                // Footer
                 VStack(spacing: 8) {
                     HStack(spacing: 6) {
                         Image(systemName: "lock.fill")

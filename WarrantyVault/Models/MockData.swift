@@ -1,7 +1,5 @@
 import Foundation
 
-/// Static sample data used to populate screens in previews and the first build of the app.
-/// Swap this file out for real persistence / networking later.
 enum MockData {
 
     // MARK: Helpers

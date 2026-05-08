@@ -3,10 +3,6 @@ import Observation
 import CoreData
 import WidgetKit
 
-/// Core Data-backed observable store. Views still read `warranties`, `claims`,
-/// `activity` etc. as struct arrays — the store keeps them in sync with the
-/// underlying `NSManagedObjectContext`.
-///
 /// `household` and `messages` remain in-memory; only the three persisted
 /// entities (Warranty / Claim / Activity) round-trip through Core Data.
 @Observable
@@ -18,7 +14,7 @@ final class AppStore {
     var claims:     [Claim]    = []
     var activity:   [ActivityEntry] = []
 
-    // MARK: In-memory only (not persisted in this step)
+    // MARK: In-memory only
 
     var household: Household
     var messages:  [ChatMessage]
@@ -60,12 +56,10 @@ final class AppStore {
             self?.reloadClaims()
         }
 
-        // Start immediately if a session was restored at boot.
         if let uid = AuthService.shared.uid {
             sync.start(uid: uid, context: context)
         }
 
-        // React to subsequent sign-ins / sign-outs.
         AuthService.shared.onAuthStateChanged = { [weak self] uid in
             guard let self else { return }
             if let uid {
@@ -76,9 +70,6 @@ final class AppStore {
         }
     }
 
-    /// Convenience init used by SwiftUI previews. Spins up an in-memory Core Data
-    /// stack, seeds it with the supplied struct arrays, and exposes them as the
-    /// initial published state. The on-disk store is not touched.
     convenience init(
         warranties: [Warranty],
         claims: [Claim],

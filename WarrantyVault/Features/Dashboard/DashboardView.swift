@@ -5,17 +5,11 @@ struct DashboardView: View {
     @Environment(AppStore.self) private var store
 
     // MARK: - Scan flow state
-    /// True while the source-picker confirmation dialog is on screen.
     @State private var presentingScanSourcePicker = false
-    /// True while the system Photos sheet is open.
     @State private var presentingPhotosPicker = false
-    /// True while the camera capture sheet is open (real device only).
     @State private var presentingCameraPicker = false
-    /// Photos picker output — observed via `.onChange` to start the OCR flow.
     @State private var photosPickerItem: PhotosPickerItem?
-    /// True while OCR + prediction are running. Drives the full-screen overlay.
     @State private var isScanning = false
-    /// When set, the AddWarrantyView sheet opens with these fields pre-filled.
     /// Using `Identifiable item:` binding so the sheet only opens after a
     /// successful scan — never with a stale empty draft.
     @State private var scannedDraft: Warranty?
@@ -64,8 +58,6 @@ struct DashboardView: View {
         .navigationDestination(for: Warranty.self) { w in
             WarrantyDetailView(warrantyID: w.id)
         }
-        // -- Scan flow plumbing -----------------------------------------------
-        // Source-picker dialog: lets the user choose Library or Camera.
         .confirmationDialog("Scan a receipt", isPresented: $presentingScanSourcePicker, titleVisibility: .visible) {
             Button("Choose from Library") { presentingPhotosPicker = true }
             if DocumentScannerView.isAvailable {
@@ -73,17 +65,13 @@ struct DashboardView: View {
             }
             Button("Cancel", role: .cancel) {}
         }
-        // System Photos picker — `.images` filter restricts to image assets.
         .photosPicker(isPresented: $presentingPhotosPicker, selection: $photosPickerItem, matching: .images)
-        // Document scanner — VisionKit's edge-detecting, perspective-correcting
-        // scanner. Hands back a pre-cropped page to the OCR pipeline.
         .fullScreenCover(isPresented: $presentingCameraPicker) {
             DocumentScannerView { images in
                 Task { await processScannedPages(images) }
             }
             .ignoresSafeArea()
         }
-        // When a Photos asset is loaded, kick off the scan pipeline.
         .onChange(of: photosPickerItem) { _, item in
             guard let item else { return }
             Task {
@@ -95,8 +83,6 @@ struct DashboardView: View {
                 photosPickerItem = nil
             }
         }
-        // Once OCR finishes successfully, present the AddWarranty form
-        // with the parsed fields pre-filled.
         .sheet(item: $scannedDraft) { draft in
             NavigationStack {
                 AddWarrantyView(prefilled: draft)
@@ -104,7 +90,6 @@ struct DashboardView: View {
             .presentationDetents([.large])
             .presentationDragIndicator(.visible)
         }
-        // Full-screen "Scanning…" overlay during OCR.
         .overlay {
             if isScanning {
                 ZStack {
@@ -129,10 +114,8 @@ struct DashboardView: View {
         .animation(.easeInOut(duration: 0.18), value: isScanning)
     }
 
-    /// Runs Vision OCR + the category predictor over the first scanned page,
-    /// then opens the AddWarranty form with a pre-filled draft. *All* pages
-    /// are encoded and attached so the warranty preserves the full proof
-    /// (long thermal-roll receipts often span multiple pages).
+    /// All pages are encoded and attached — long thermal-roll receipts often
+    /// span multiple pages and we want to preserve the full proof.
     @MainActor
     private func processScannedPages(_ images: [UIImage]) async {
         guard let firstImage = images.first else { return }
@@ -238,10 +221,8 @@ struct DashboardView: View {
         .accessibilityLabel("Welcome back. Your coverage, at a glance.")
     }
 
-    /// Hero CTA card: opens a Library/Camera dialog and runs OCR + category
-    /// prediction on the picked image, then drops the user into a pre-filled
-    /// AddWarranty form. Lime fill so it reads as a primary action; sits just
-    /// below the welcome header where the eye lands first.
+    /// Lime fill so it reads as a primary action; sits just below the welcome
+    /// header where the eye lands first.
     private var scanCard: some View {
         Button {
             presentingScanSourcePicker = true

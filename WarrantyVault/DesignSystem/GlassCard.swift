@@ -1,14 +1,3 @@
-//
-//  GlassCard.swift
-//  WarrantyVault
-//
-//  Dark-theme card. Solid `bgSurface` fill on the black app background,
-//  no shadow (it's already on black), no visible border by default.
-//  Hierarchy comes from background-surface contrast, not from chrome.
-//
-//  The legacy type name is kept; `Panel` is the preferred name in new code.
-//
-
 import SwiftUI
 
 struct GlassCard<Content: View>: View {

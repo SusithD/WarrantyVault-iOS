@@ -25,7 +25,7 @@ struct HouseholdMember: Identifiable, Hashable, Codable {
     var email: String
     var role: HouseholdRole
     var avatarInitials: String
-    var accentHex: String        // e.g. "#FFC4A3"
+    var accentHex: String
     var joinedDate: Date
     var itemCount: Int
 

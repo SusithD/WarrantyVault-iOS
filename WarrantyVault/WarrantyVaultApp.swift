@@ -1,11 +1,3 @@
-//
-//  WarrantyVaultApp.swift
-//  WarrantyVault
-//
-//  App entry point. Hosts the AppCoordinator and switches between
-//  splash, onboarding, auth and main app based on current stage.
-//
-
 import SwiftUI
 import CoreData
 

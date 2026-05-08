@@ -1,17 +1,3 @@
-//
-//  AppColors.swift
-//  WarrantyVault
-//
-//  Dark + Electric-Lime palette. Pure black background, dark grey surfaces,
-//  bright lime accent. Status hierarchy: lime is `success` (and the brand
-//  itself), warning is amber, danger is hot pink-red.
-//
-//  The legacy token name `brandBlue` is retained for callsite compatibility
-//  but now resolves to the lime accent — a future rename pass can clean
-//  this up. The `*Soft` variants resolve to neutral dark surfaces; they're
-//  no longer pastel tints of their parent color.
-//
-
 import SwiftUI
 
 enum AppColors {

@@ -1,10 +1,3 @@
-//
-//  OnboardingPageView.swift
-//  WarrantyVault
-//
-//  Renders a single page of the onboarding carousel.
-//
-
 import SwiftUI
 
 struct OnboardingPageView: View {
@@ -16,7 +9,6 @@ struct OnboardingPageView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Top bar: brand header or SKIP, whichever applies
             topBar
                 .padding(.horizontal, 24)
                 .padding(.top, 12)

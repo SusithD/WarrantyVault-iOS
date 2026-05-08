@@ -1,15 +1,3 @@
-//
-//  IconBadge.swift
-//  WarrantyVault
-//
-//  Dark-theme icon-in-tile. Three styles:
-//   - .soft   → dark grey tile, tinted icon (default — used for category badges)
-//   - .solid  → tinted fill, contrasting icon (rare — feature highlights)
-//   - .outline→ transparent tile, hairline border, tinted icon (chrome buttons)
-//
-//  Three sizes (small/medium/large) and two shapes (rounded/circle).
-//
-
 import SwiftUI
 
 struct IconBadge: View {
