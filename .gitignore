@@ -32,6 +32,11 @@ generate_pbxproj.py
 train_classifier.swift
 training_data.csv
 
+# Local-only build config (read by generate_pbxproj.py)
+.dev_team
+.bundle_id
+.app_group
+
 # Local Claude Code working notes (not shared)
 .claude/
 

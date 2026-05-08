@@ -4,7 +4,7 @@ import Foundation
 /// — the App Group identifier, the snapshot filename, and the JSON layout.
 enum WidgetSharedConstants {
     /// Must match the App Group capability declared in both `.entitlements` files.
-    static let appGroupID = "group.com.warrantyvault.app"
+    static let appGroupID = "group.com.salwis.warrantyvault"
     static let snapshotFilename = "widget_snapshot.json"
 }
 
