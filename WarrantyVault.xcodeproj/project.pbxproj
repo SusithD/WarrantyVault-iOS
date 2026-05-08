@@ -11,6 +11,7 @@
 		01A3D1E36A60117D828A6FE4 /* OnboardingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902DD5128FE982DF03E147BF /* OnboardingData.swift */; };
 		01FB16D811014FF1B39EB58D /* WidgetSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893508FDE97718C78B7994B7 /* WidgetSnapshotTests.swift */; };
 		02AA677129B1DBEFC6548781 /* ReceiptScannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87171539BAC9C42B0994A447 /* ReceiptScannerTests.swift */; };
+		04D149A19049ECE1524B0060 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AF4D86BCEF1A54D4AB469A /* LoginView.swift */; };
 		04FEEABFB2BBDE5DEEC5A9E7 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D5D193ADA4627FFCE621E /* AppStore.swift */; };
 		07B2FB8DFCF304231F73AF47 /* WarrantyVault.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8A33099F64A214C051F2B74C /* WarrantyVault.xcdatamodeld */; };
 		0A61EE1ABC9A4EFA1C5DD637 /* Household.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEABCA8C5DFDBD2A5000D4C1 /* Household.swift */; };
@@ -139,6 +140,7 @@
 		2C44CDB6A511F95BBEE288B2 /* FileClaimView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileClaimView.swift; sourceTree = "<group>"; };
 		2ECDE40458958063EEA2BEEC /* ImageProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessing.swift; sourceTree = "<group>"; };
 		3026624B700D80D11A6A490B /* StatusTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusTag.swift; sourceTree = "<group>"; };
+		42AF4D86BCEF1A54D4AB469A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginView.swift; path = WarrantyVault/Features/Authentication/LoginView.swift; sourceTree = SOURCE_ROOT; };
 		42DBB6488DBB39D2383AE76B /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		4A31431D99C07FC0C8D0E346 /* SyncDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SyncDTO.swift; path = WarrantyVault/Cloud/SyncDTO.swift; sourceTree = SOURCE_ROOT; };
 		4CBA6CECEE989193FA10E3B5 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 				4A31431D99C07FC0C8D0E346 /* SyncDTO.swift */,
 				0DBA4F278CFCE95BE7E5F92D /* WarrantySyncService.swift */,
 				0C8041E382C147CEAFBFFF80 /* CloudSyncView.swift */,
+				42AF4D86BCEF1A54D4AB469A /* LoginView.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -701,6 +704,7 @@
 				6FB6480B8867A4751E83983A /* SyncDTO.swift in Sources */,
 				B53C4CDB8976A444E69FF80D /* WarrantySyncService.swift in Sources */,
 				3A4E40E987DE97E33F9B2E2E /* CloudSyncView.swift in Sources */,
+				04D149A19049ECE1524B0060 /* LoginView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

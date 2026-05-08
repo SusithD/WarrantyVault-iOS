@@ -6,13 +6,11 @@ struct ProfileView: View {
     @State private var auth = AuthService.shared
     @State private var notificationsOn = true
     @State private var biometricsOn = true
-    @State private var presentingCloudSync = false
 
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
                 profileCard
-                cloudSyncCard
                 preferencesCard
                 supportCard
                 signOutButton
@@ -21,39 +19,6 @@ struct ProfileView: View {
             .padding(.top, 8)
         }
         .safeAreaInset(edge: .top, spacing: 0) { navBar }
-        .sheet(isPresented: $presentingCloudSync) { CloudSyncView() }
-    }
-
-    private var cloudSyncCard: some View {
-        Button {
-            presentingCloudSync = true
-        } label: {
-            GlassCard {
-                HStack(spacing: 12) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 9, style: .continuous)
-                            .fill(auth.isSignedIn ? AppColors.accent.opacity(0.15) : AppColors.bgSurfaceHi)
-                            .frame(width: 30, height: 30)
-                        Image(systemName: auth.isSignedIn ? "checkmark.icloud.fill" : "icloud.slash")
-                            .font(.system(size: 13, weight: .semibold))
-                            .foregroundStyle(auth.isSignedIn ? AppColors.accent : AppColors.textSecondary)
-                    }
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Cloud Sync")
-                            .font(.system(size: 14, weight: .medium))
-                            .foregroundStyle(AppColors.textPrimary)
-                        Text(auth.isSignedIn ? (auth.email ?? "Signed in") : "Sign in to sync across devices")
-                            .font(.system(size: 11))
-                            .foregroundStyle(AppColors.textSecondary)
-                    }
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .font(.system(size: 12, weight: .semibold))
-                        .foregroundStyle(AppColors.textTertiary)
-                }
-            }
-        }
-        .buttonStyle(.plain)
     }
 
     private var navBar: some View {

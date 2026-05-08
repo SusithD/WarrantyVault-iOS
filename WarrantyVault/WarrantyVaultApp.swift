@@ -34,6 +34,7 @@ struct WarrantyVaultApp: App {
 
 struct RootView: View {
     @Environment(AppCoordinator.self) private var coordinator
+    @State private var auth = AuthService.shared
 
     var body: some View {
         ZStack {
@@ -47,7 +48,7 @@ struct RootView: View {
                     .transition(.opacity)
 
             case .authentication:
-                AuthenticationView(onAuthenticated: { coordinator.authenticated() })
+                LoginView()
                     .transition(.opacity)
 
             case .mainApp:
@@ -58,6 +59,11 @@ struct RootView: View {
         .animation(.easeInOut(duration: 0.3), value: coordinator.stage)
         .task {
             await NotificationService.shared.requestAuthorizationIfNeeded()
+        }
+        // React to FirebaseAuth state changes — sign-in advances past the
+        // gate; sign-out bounces back to it.
+        .onChange(of: auth.isSignedIn) { _, signedIn in
+            coordinator.applyAuthState(isSignedIn: signedIn)
         }
     }
 }
