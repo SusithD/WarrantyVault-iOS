@@ -21,6 +21,7 @@ extension WarrantyEntity {
     @NSManaged public var reminderEnabled: Bool
     @NSManaged public var latitude: NSNumber?
     @NSManaged public var longitude: NSNumber?
+    @NSManaged public var eventIdentifier: String?
     @NSManaged public var createdAt: Date
     @NSManaged public var updatedAt: Date
 }

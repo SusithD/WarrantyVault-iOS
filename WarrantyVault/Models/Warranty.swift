@@ -53,6 +53,7 @@ struct Warranty: Identifiable, Hashable, Codable {
     var reminderEnabled: Bool
     var latitude: Double?
     var longitude: Double?
+    var eventIdentifier: String?
 
     /// Derived from `receiptImage` — kept for one release so views that read
     /// the legacy `receiptAttached` flag continue to compile unchanged.
@@ -78,7 +79,8 @@ struct Warranty: Identifiable, Hashable, Codable {
         receiptImage: Data? = nil,
         reminderEnabled: Bool = true,
         latitude: Double? = nil,
-        longitude: Double? = nil
+        longitude: Double? = nil,
+        eventIdentifier: String? = nil
     ) {
         self.id = id
         self.productName = productName
@@ -94,6 +96,7 @@ struct Warranty: Identifiable, Hashable, Codable {
         self.reminderEnabled = reminderEnabled
         self.latitude = latitude
         self.longitude = longitude
+        self.eventIdentifier = eventIdentifier
     }
 
     var daysRemaining: Int {

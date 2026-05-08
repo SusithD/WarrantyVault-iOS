@@ -43,6 +43,7 @@
 		810EBA880308D9227B6EDBF6 /* ActivityEntry+Bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD921B5B7D139EF8D6A0829 /* ActivityEntry+Bridge.swift */; };
 		4091E80973510EB7EDCA8D28 /* Claim+Bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06580A71FD35BFC9949114A /* Claim+Bridge.swift */; };
 		7E3B033B23443735025B73A5 /* Warranty+Bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C501E5261B4DDB5063E6AD /* Warranty+Bridge.swift */; };
+		8E84165FBA59C65C03B3409C /* CalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC325F5D55C9303B3E0E2C29 /* CalendarService.swift */; };
 		3D56A0A5904BBB61177C5B32 /* ActivityEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAFC14F269EDBCF63BA1C54 /* ActivityEntity+CoreDataClass.swift */; };
 		E3D799E6CDCE0F0302038E34 /* ActivityEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6683EFCB65871313418473DD /* ActivityEntity+CoreDataProperties.swift */; };
 		1470AA848B0F828AD5F86463 /* ClaimEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7A2788E57165228D71ECD9 /* ClaimEntity+CoreDataClass.swift */; };
@@ -97,6 +98,7 @@
 		4FD921B5B7D139EF8D6A0829 /* ActivityEntry+Bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivityEntry+Bridge.swift"; sourceTree = "<group>"; };
 		E06580A71FD35BFC9949114A /* Claim+Bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Claim+Bridge.swift"; sourceTree = "<group>"; };
 		61C501E5261B4DDB5063E6AD /* Warranty+Bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Warranty+Bridge.swift"; sourceTree = "<group>"; };
+		CC325F5D55C9303B3E0E2C29 /* CalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CalendarService.swift"; sourceTree = "<group>"; };
 		8DAFC14F269EDBCF63BA1C54 /* ActivityEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivityEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		6683EFCB65871313418473DD /* ActivityEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivityEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		0B7A2788E57165228D71ECD9 /* ClaimEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClaimEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 		A76F63FEB525BAB2DC000E15 /* WarrantyVault 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WarrantyVault 2.xcdatamodel"; sourceTree = "<group>"; };
 		E78A845584175F04D717E134 /* WarrantyVault 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WarrantyVault 3.xcdatamodel"; sourceTree = "<group>"; };
 		8B241F3F735E85EE0A4C7A95 /* WarrantyVault 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WarrantyVault 4.xcdatamodel"; sourceTree = "<group>"; };
+		211E0E3500BECD7248EC6A15 /* WarrantyVault 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WarrantyVault 5.xcdatamodel"; sourceTree = "<group>"; };
 		EE093E46BBB7A5A72250A01C /* WarrantyVault.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WarrantyVault.xcdatamodel"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -304,6 +307,7 @@
 			children = (
 				1C0D4DE3AA05F5F407F5F402 /* Bridging */,
 				0C846BAFF22516A808F23DDF /* Entities */,
+				CC325F5D55C9303B3E0E2C29 /* CalendarService.swift */,
 				2ECDE40458958063EEA2BEEC /* ImageProcessing.swift */,
 				4CBA6CECEE989193FA10E3B5 /* LocationService.swift */,
 				A1742C9D25B10917F452469D /* NotificationService.swift */,
@@ -450,6 +454,7 @@
 				810EBA880308D9227B6EDBF6 /* ActivityEntry+Bridge.swift in Sources */,
 				4091E80973510EB7EDCA8D28 /* Claim+Bridge.swift in Sources */,
 				7E3B033B23443735025B73A5 /* Warranty+Bridge.swift in Sources */,
+				8E84165FBA59C65C03B3409C /* CalendarService.swift in Sources */,
 				3D56A0A5904BBB61177C5B32 /* ActivityEntity+CoreDataClass.swift in Sources */,
 				E3D799E6CDCE0F0302038E34 /* ActivityEntity+CoreDataProperties.swift in Sources */,
 				1470AA848B0F828AD5F86463 /* ClaimEntity+CoreDataClass.swift in Sources */,
@@ -474,9 +479,10 @@
 				A76F63FEB525BAB2DC000E15 /* WarrantyVault 2.xcdatamodel */,
 				E78A845584175F04D717E134 /* WarrantyVault 3.xcdatamodel */,
 				8B241F3F735E85EE0A4C7A95 /* WarrantyVault 4.xcdatamodel */,
+				211E0E3500BECD7248EC6A15 /* WarrantyVault 5.xcdatamodel */,
 				EE093E46BBB7A5A72250A01C /* WarrantyVault.xcdatamodel */,
 			);
-			currentVersion = 8B241F3F735E85EE0A4C7A95 /* WarrantyVault 4.xcdatamodel */;
+			currentVersion = 211E0E3500BECD7248EC6A15 /* WarrantyVault 5.xcdatamodel */;
 			path = "WarrantyVault.xcdatamodeld";
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
@@ -617,6 +623,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"WarrantyVault/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Used to add warranty expiry dates to your calendar.";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Used to add warranty expiry dates to your calendar.";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Used to capture receipt images of your purchases.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "WarrantyVault uses Face ID to unlock your vault.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Used to remember where you bought your warranties.";
@@ -649,6 +657,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"WarrantyVault/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Used to add warranty expiry dates to your calendar.";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Used to add warranty expiry dates to your calendar.";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Used to capture receipt images of your purchases.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "WarrantyVault uses Face ID to unlock your vault.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Used to remember where you bought your warranties.";

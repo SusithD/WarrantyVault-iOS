@@ -126,13 +126,46 @@ final class AppStore {
         let request = WarrantyEntity.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
 
+        var calendarEventId: String?
         if let entity = try? context.fetch(request).first {
+            calendarEventId = entity.eventIdentifier
             context.delete(entity)
             save()
         }
         reloadWarranties()
 
         Task.detached { NotificationService.shared.cancel(for: id) }
+        if let calendarEventId {
+            Task.detached { try? CalendarService.shared.deleteEvent(identifier: calendarEventId) }
+        }
+    }
+
+    /// Reconciles a warranty's calendar event with the user's intent.
+    /// Call after `addWarranty` or `updateWarranty` whenever the form's
+    /// "Add to Calendar" toggle could differ from the persisted state.
+    /// - When `enabled` is true: creates or updates the event, persists the
+    ///   resulting identifier back on the warranty entity.
+    /// - When `enabled` is false: deletes any existing event and clears
+    ///   the identifier.
+    func applyCalendarSync(for warrantyId: UUID, enabled: Bool) async {
+        let request = WarrantyEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", warrantyId as CVarArg)
+        guard let entity = try? context.fetch(request).first else { return }
+        let warranty = Warranty(entity)
+
+        if enabled {
+            let newId = try? await CalendarService.shared.upsertEvent(for: warranty)
+            if let newId, newId != entity.eventIdentifier {
+                entity.eventIdentifier = newId
+                save()
+                reloadWarranties()
+            }
+        } else if let existingId = entity.eventIdentifier {
+            try? CalendarService.shared.deleteEvent(identifier: existingId)
+            entity.eventIdentifier = nil
+            save()
+            reloadWarranties()
+        }
     }
 
     // MARK: Mutations — Claim

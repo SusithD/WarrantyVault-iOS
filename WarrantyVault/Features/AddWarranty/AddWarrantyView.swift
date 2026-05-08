@@ -1,6 +1,7 @@
 import SwiftUI
 import PhotosUI
 import CoreLocation
+import EventKit
 
 struct AddWarrantyView: View {
     @Environment(AppStore.self) private var store
@@ -27,6 +28,10 @@ struct AddWarrantyView: View {
     @State private var locationLabel: String = ""
     @State private var presentingLocationPicker = false
     @State private var locationDeniedHint = false
+    @State private var calendarSyncEnabled: Bool
+    @State private var calendarDeniedHint = false
+
+    private static let calendarSyncDefaultKey = "calendarSyncDefault"
 
     init(editing: Warranty? = nil) {
         self.editing = editing
@@ -43,6 +48,14 @@ struct AddWarrantyView: View {
         _reminderEnabled = State(initialValue: editing?.reminderEnabled ?? true)
         _latitude        = State(initialValue: editing?.latitude)
         _longitude       = State(initialValue: editing?.longitude)
+
+        // Editing existing warranty: derive calendar toggle from whether an event exists.
+        // New warranty: read the user's saved default from UserDefaults (off until opted in once).
+        if let editing {
+            _calendarSyncEnabled = State(initialValue: editing.eventIdentifier != nil)
+        } else {
+            _calendarSyncEnabled = State(initialValue: UserDefaults.standard.bool(forKey: Self.calendarSyncDefaultKey))
+        }
     }
 
     var body: some View {
@@ -57,6 +70,7 @@ struct AddWarrantyView: View {
                     locationCard
                     receiptCard
                     reminderToggle
+                    calendarToggle
                     notesField
                     savingButton
                 }
@@ -331,6 +345,33 @@ struct AddWarrantyView: View {
         }
     }
 
+    private var calendarToggle: some View {
+        GlassCard {
+            VStack(alignment: .leading, spacing: 8) {
+                Toggle(isOn: $calendarSyncEnabled) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Add to Calendar")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundStyle(AppColors.textPrimary)
+                        Text("All-day event with a 9 AM alert.")
+                            .font(.system(size: 12))
+                            .foregroundStyle(AppColors.textSecondary)
+                    }
+                }
+                .tint(AppColors.brandBlue)
+                .onChange(of: calendarSyncEnabled) { _, new in
+                    UserDefaults.standard.set(new, forKey: Self.calendarSyncDefaultKey)
+                }
+
+                if calendarDeniedHint {
+                    Text("Calendar is off. Enable it in Settings → Privacy → Calendars → WarrantyVault.")
+                        .font(.system(size: 11))
+                        .foregroundStyle(AppColors.danger)
+                }
+            }
+        }
+    }
+
     private var notesField: some View {
         GlassCard {
             VStack(alignment: .leading, spacing: 8) {
@@ -353,12 +394,13 @@ struct AddWarrantyView: View {
             icon: "checkmark",
             isEnabled: !productName.trimmingCharacters(in: .whitespaces).isEmpty
         ) {
-            save()
+            Task { await save() }
         }
     }
 
-    private func save() {
+    private func save() async {
         let price = Double(priceText.replacingOccurrences(of: ",", with: ".")) ?? 0
+        let savedId: UUID
         if let old = editing {
             var updated = old
             updated.productName = productName
@@ -375,6 +417,7 @@ struct AddWarrantyView: View {
             updated.latitude        = latitude
             updated.longitude       = longitude
             store.updateWarranty(updated)
+            savedId = updated.id
         } else {
             let w = Warranty(
                 productName: productName,
@@ -392,7 +435,22 @@ struct AddWarrantyView: View {
                 longitude: longitude
             )
             store.addWarranty(w)
+            savedId = w.id
         }
+
+        // Reconcile calendar sync. Surface a denied hint if the user wants
+        // the event but hasn't granted access — in that case we keep the
+        // form open so the user can read the hint instead of dismissing.
+        if calendarSyncEnabled, EKEventStore.authorizationStatus(for: .event) == .denied {
+            calendarDeniedHint = true
+            return
+        }
+        await store.applyCalendarSync(for: savedId, enabled: calendarSyncEnabled)
+        if calendarSyncEnabled, EKEventStore.authorizationStatus(for: .event) == .denied {
+            calendarDeniedHint = true
+            return
+        }
+
         dismiss()
     }
 }

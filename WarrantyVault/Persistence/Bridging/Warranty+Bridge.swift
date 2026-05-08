@@ -19,7 +19,8 @@ extension Warranty {
             receiptImage: entity.receiptImage,
             reminderEnabled: entity.reminderEnabled,
             latitude: entity.latitude?.doubleValue,
-            longitude: entity.longitude?.doubleValue
+            longitude: entity.longitude?.doubleValue,
+            eventIdentifier: entity.eventIdentifier
         )
     }
 }
@@ -42,6 +43,7 @@ extension WarrantyEntity {
         self.reminderEnabled = value.reminderEnabled
         self.latitude        = value.latitude.map { NSNumber(value: $0) }
         self.longitude       = value.longitude.map { NSNumber(value: $0) }
+        self.eventIdentifier = value.eventIdentifier
         self.updatedAt       = Date()
     }
 
