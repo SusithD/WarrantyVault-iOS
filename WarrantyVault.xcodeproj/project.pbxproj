@@ -47,7 +47,6 @@
 		9E17C879FF720695CBBCDE78 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08084EE98332C5F6E69FC871 /* AppColors.swift */; };
 		AA560F0103904C164BFA401B /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A574EE65BEC3076702D270F /* SplashView.swift */; };
 		B2141EB1B751C1B9E806E112 /* HouseholdCreateJoinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F822488B1123A47CDD3358 /* HouseholdCreateJoinView.swift */; };
-		BA908B9693FBEF402A153535 /* CameraPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395416B988E7894C920EE8F6 /* CameraPicker.swift */; };
 		BE35B77492A9228CCAD2F873 /* InviteMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96AC6A7293978C458ABEBF4D /* InviteMemberView.swift */; };
 		C6CE87D75F9F44E0155CE95D /* WarrantyVaultApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2855521D3CECE57610385E92 /* WarrantyVaultApp.swift */; };
 		C7BBFE5F51800976754A5AD3 /* WarrantyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0ED24D14C9F9D973339652 /* WarrantyTests.swift */; };
@@ -59,6 +58,7 @@
 		D225A5C94ED2E6E060167D70 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E97D67F3238351114B404D4 /* PersistenceController.swift */; };
 		D39CB6AD305A8FC4D5A59C48 /* Warranty+Bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C501E5261B4DDB5063E6AD /* Warranty+Bridge.swift */; };
 		D656FE799778C1D74C7FF325 /* LocationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDFC5EF569FED8CE46AB3E2 /* LocationPickerView.swift */; };
+		D79F9007F6445C64C1A741DC /* DocumentScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C303C49D1CC5FACB30B5ACF0 /* DocumentScannerView.swift */; };
 		DDF3855DA9395A7B024F7C81 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8939F9C4055C8C84F2C1B3E /* MainTabView.swift */; };
 		E33CDB8A6EB51113B24EA0CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B45634CEEE3EB39F8AD6FF61 /* Assets.xcassets */; };
 		E4A75844BA60685A520404EA /* GradientBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB60067025EEE78B7AF22FC /* GradientBackground.swift */; };
@@ -127,7 +127,6 @@
 		2C44CDB6A511F95BBEE288B2 /* FileClaimView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileClaimView.swift; sourceTree = "<group>"; };
 		2ECDE40458958063EEA2BEEC /* ImageProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessing.swift; sourceTree = "<group>"; };
 		3026624B700D80D11A6A490B /* StatusTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusTag.swift; sourceTree = "<group>"; };
-		395416B988E7894C920EE8F6 /* CameraPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPicker.swift; sourceTree = "<group>"; };
 		42DBB6488DBB39D2383AE76B /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		4CBA6CECEE989193FA10E3B5 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		4FD921B5B7D139EF8D6A0829 /* ActivityEntry+Bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivityEntry+Bridge.swift"; sourceTree = "<group>"; };
@@ -165,6 +164,7 @@
 		B51D5D193ADA4627FFCE621E /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
 		B8939F9C4055C8C84F2C1B3E /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		BBC031472AAA1EC74D75E279 /* AppTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTypography.swift; sourceTree = "<group>"; };
+		C303C49D1CC5FACB30B5ACF0 /* DocumentScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentScannerView.swift; sourceTree = "<group>"; };
 		C64991FC42A1B066F1802CF8 /* WarrantyVaultTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WarrantyVaultTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB0ED24D14C9F9D973339652 /* WarrantyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantyTests.swift; sourceTree = "<group>"; };
 		CC325F5D55C9303B3E0E2C29 /* CalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarService.swift; sourceTree = "<group>"; };
@@ -433,7 +433,7 @@
 			isa = PBXGroup;
 			children = (
 				E0CE25BDF9BBE41D2254BBD8 /* AddWarrantyView.swift */,
-				395416B988E7894C920EE8F6 /* CameraPicker.swift */,
+				C303C49D1CC5FACB30B5ACF0 /* DocumentScannerView.swift */,
 				1CDFC5EF569FED8CE46AB3E2 /* LocationPickerView.swift */,
 			);
 			path = AddWarranty;
@@ -619,7 +619,7 @@
 				5ABDF74399BE704F1A81772C /* PrimaryButton.swift in Sources */,
 				7B488B60A9D067FEFFFF72B0 /* StatusTag.swift in Sources */,
 				4B0777BCE34C55114D41B1D5 /* AddWarrantyView.swift in Sources */,
-				BA908B9693FBEF402A153535 /* CameraPicker.swift in Sources */,
+				D79F9007F6445C64C1A741DC /* DocumentScannerView.swift in Sources */,
 				D656FE799778C1D74C7FF325 /* LocationPickerView.swift in Sources */,
 				EAF6F7AE9956ABDF6F2A9C5A /* AuthenticationView.swift in Sources */,
 				E7D329FFDF18BADD48AAC9DB /* MainAppPlaceholderView.swift in Sources */,

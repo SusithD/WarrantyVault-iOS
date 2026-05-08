@@ -68,17 +68,17 @@ struct DashboardView: View {
         // Source-picker dialog: lets the user choose Library or Camera.
         .confirmationDialog("Scan a receipt", isPresented: $presentingScanSourcePicker, titleVisibility: .visible) {
             Button("Choose from Library") { presentingPhotosPicker = true }
-            if CameraPicker.isAvailable {
-                Button("Capture with Camera") { presentingCameraPicker = true }
+            if DocumentScannerView.isAvailable {
+                Button("Scan with Camera") { presentingCameraPicker = true }
             }
             Button("Cancel", role: .cancel) {}
         }
         // System Photos picker — `.images` filter restricts to image assets.
         .photosPicker(isPresented: $presentingPhotosPicker, selection: $photosPickerItem, matching: .images)
-        // Camera sheet — only effective on real devices (CameraPicker guards
-        // `isAvailable` via UIImagePickerController.isSourceTypeAvailable).
+        // Document scanner — VisionKit's edge-detecting, perspective-correcting
+        // scanner. Hands back a pre-cropped page to the OCR pipeline.
         .fullScreenCover(isPresented: $presentingCameraPicker) {
-            CameraPicker { image in
+            DocumentScannerView { image in
                 Task { await processScannedImage(image) }
             }
             .ignoresSafeArea()

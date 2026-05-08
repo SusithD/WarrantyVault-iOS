@@ -64,7 +64,10 @@ final class ReceiptScanner {
             .split(separator: "\n", omittingEmptySubsequences: false)
             .enumerated()
             .map { idx, raw in
-                Line(text: cleanText(String(raw)), confidence: 0.95, index: idx)
+                Line(text: cleanText(String(raw)),
+                     confidence: 0.95,
+                     index: idx,
+                     boundingBox: nil)
             }
 
         return ReceiptScanResult(
@@ -78,13 +81,17 @@ final class ReceiptScanner {
 
     // MARK: - Vision
 
-    /// One line of recognised text plus its confidence and its position in
-    /// the receipt (0-indexed from the top). Most heuristics weight by index
-    /// — retailer near the top, totals near the bottom.
+    /// One line of recognised text plus its confidence, position in the
+    /// receipt (0-indexed from the top), and — when available — its
+    /// bounding box in normalised Vision coordinates (origin bottom-left,
+    /// y=0 at the bottom of the image, y=1 at the top). The `parse(text:)`
+    /// test seam can't supply geometry so this stays optional; layout-aware
+    /// heuristics fall back to keyword-only behaviour when it's nil.
     private struct Line {
         let text: String
         let confidence: Float
         let index: Int
+        let boundingBox: CGRect?
     }
 
     private func recognizeText(in cgImage: CGImage) async throws -> [Line] {
@@ -99,7 +106,10 @@ final class ReceiptScanner {
                     guard let candidate = obs.topCandidates(1).first else { return nil }
                     let cleaned = self.cleanText(candidate.string)
                     guard !cleaned.isEmpty else { return nil }
-                    return Line(text: cleaned, confidence: candidate.confidence, index: idx)
+                    return Line(text: cleaned,
+                                confidence: candidate.confidence,
+                                index: idx,
+                                boundingBox: obs.boundingBox)
                 }
                 cont.resume(returning: lines)
             }
@@ -298,14 +308,151 @@ final class ReceiptScanner {
 
     // MARK: - Total price
 
-    /// Two-pass extraction:
+    /// Try the layout-aware parser first (uses bounding-box geometry to find
+    /// the labelled, right-aligned grand total). Fall back to the keyword-only
+    /// pipeline when geometry is unavailable (e.g. the `parse(text:)` test
+    /// seam) or when no row scored well enough to be confidently picked.
+    private func parseTotalPrice(from lines: [Line]) -> Double? {
+        if let layoutTotal = parseTotalPriceWithLayout(from: lines) {
+            return layoutTotal
+        }
+        return parseTotalPriceByKeyword(from: lines)
+    }
+
+    /// Layout-aware total extraction. Two facts about receipts that the
+    /// line-by-line parser can't see:
+    ///   - The label and the value are on the *same row* but Vision often
+    ///     splits them into separate observations ("TOTAL" left, "$42.50"
+    ///     right). Re-clustering by y-coordinate stitches them back together.
+    ///   - The grand total is right-aligned and sits near the bottom of the
+    ///     receipt. Geometry-based scoring lets us prefer those rows over
+    ///     coincidental right-aligned numbers higher up (item prices).
+    /// Returns nil when no row scores well enough — the caller falls back to
+    /// the keyword-only parser.
+    private func parseTotalPriceWithLayout(from lines: [Line]) -> Double? {
+        let strongKeywords = [
+            "grand total", "total due", "amount due", "balance due",
+            "total payment", "you paid", "total to pay", "net total",
+            "order total", "total amount"
+        ]
+        let weakKeywords = ["total", "amount", "balance"]
+        let exclusionKeywords = [
+            "subtotal", "sub total", "sub-total",
+            "cash tendered", "cash tender", "tendered", "cash given",
+            "change", "change due", "change given", "change tendered",
+            "tax", "vat", "gst", "hst", "pst",
+            "qty", "quantity", "items count", "total items", "total qty",
+            "discount", "savings", "promo",
+            "tip", "gratuity",
+            "loyalty", "rewards earned",
+            "card", "visa", "mastercard", "amex"
+        ]
+
+        // Only consider lines with geometry. The test seam supplies nil.
+        let geo = lines.compactMap { line -> (Line, CGRect)? in
+            guard let bb = line.boundingBox, line.confidence > 0.4 else { return nil }
+            return (line, bb)
+        }
+        guard geo.count >= 2 else { return nil }
+
+        // Cluster by y-center proximity. Tolerance is half the average line
+        // height so it scales with receipt size in the frame.
+        let avgHeight = geo.map(\.1.height).reduce(0, +) / CGFloat(geo.count)
+        let tolerance = max(avgHeight * 0.5, 0.005)
+
+        // Sort top → bottom (Vision y=1 is the top of the image).
+        let sorted = geo.sorted { $0.1.midY > $1.1.midY }
+
+        var rows: [[(Line, CGRect)]] = []
+        for entry in sorted {
+            if let last = rows.last?.last,
+               abs(last.1.midY - entry.1.midY) < tolerance {
+                rows[rows.count - 1].append(entry)
+            } else {
+                rows.append([entry])
+            }
+        }
+
+        struct Scored { let value: Double; let score: Int; let rowIndex: Int }
+        var scored: [Scored] = []
+
+        for (rIdx, row) in rows.enumerated() {
+            let leftToRight = row.sorted { $0.1.minX < $1.1.minX }
+            let rowText = leftToRight.map(\.0.text).joined(separator: " ")
+            let lower = rowText.lowercased()
+
+            // Skip exclusion rows entirely — never let "Cash Tendered" win.
+            if exclusionKeywords.contains(where: { lower.contains($0) }) { continue }
+
+            // Right-aligned currency value: pick the rightmost line that
+            // contains a valid price.
+            var bestPrice: (value: Double, maxX: CGFloat)? = nil
+            for (line, bb) in leftToRight {
+                let prices = pricesIn(line.text).filter(validPrice)
+                guard let v = prices.last else { continue }
+                if bestPrice == nil || bb.maxX > bestPrice!.maxX {
+                    bestPrice = (v, bb.maxX)
+                }
+            }
+            guard let priceInfo = bestPrice else { continue }
+            // Reject left-aligned numbers — those are item prices in the
+            // "qty × price" column, not the labelled total.
+            guard priceInfo.maxX > 0.55 else { continue }
+
+            var score = 0
+            let hasStrong = strongKeywords.contains { lower.contains($0) }
+            let hasWeak = weakKeywords.contains { lower.contains($0) }
+            if hasStrong { score += 20 }
+            else if hasWeak { score += 8 }
+
+            // Position bias: bottom of receipt (Vision y → 0) is where the
+            // grand total lives.
+            let rowMidY = row.map(\.1.midY).reduce(0, +) / CGFloat(row.count)
+            if rowMidY < 0.3 { score += 6 }
+            else if rowMidY < 0.5 { score += 3 }
+
+            // Neighbour-row keyword check. Some receipts put "TOTAL" on its
+            // own row above the value. Look one row above and one below.
+            if !hasStrong && !hasWeak {
+                for offset in [-1, 1] {
+                    let nIdx = rIdx + offset
+                    guard rows.indices.contains(nIdx) else { continue }
+                    let neighbourLower = rows[nIdx].map(\.0.text)
+                        .joined(separator: " ").lowercased()
+                    if exclusionKeywords.contains(where: { neighbourLower.contains($0) }) { continue }
+                    if strongKeywords.contains(where: { neighbourLower.contains($0) }) {
+                        score += 12
+                        break
+                    } else if weakKeywords.contains(where: { neighbourLower.contains($0) }) {
+                        score += 4
+                    }
+                }
+            }
+
+            // Tiny tiebreaker: among same-keyword rows, prefer the larger
+            // value (grand total beats line items). Capped so a misread
+            // four-figure value can't outrank a properly-keyworded total.
+            score += min(Int(priceInfo.value / 10), 6)
+
+            scored.append(Scored(value: priceInfo.value, score: score, rowIndex: rIdx))
+        }
+
+        // Confidence floor — without it we'd return any right-aligned price
+        // when nothing was clearly labelled. 10 means at least one solid
+        // signal (weak keyword + position, or a strong-keyword neighbour).
+        guard let best = scored.max(by: { $0.score < $1.score }),
+              best.score >= 10 else { return nil }
+        return best.value
+    }
+
+    /// Keyword-only fallback. Three-pass extraction:
     ///   1. Strong-keyword pass ("grand total", "amount due", etc.) — a
     ///      labelled total is the highest-quality signal.
     ///   2. Weak-keyword pass ("total", "balance") — *with explicit exclusions*
     ///      so "subtotal" / "cash tendered" / "change" don't slip in.
     ///   3. Fallback: largest number on a non-excluded line.
     /// Each pass validates the parsed value sits in a sane range.
-    private func parseTotalPrice(from lines: [Line]) -> Double? {
+    private func parseTotalPriceByKeyword(from lines: [Line]) -> Double? {
         // Strongest signals — labelled, unambiguous totals.
         let strongKeywords = [
             "grand total", "total due", "amount due", "balance due",
@@ -372,10 +519,12 @@ final class ReceiptScanner {
         let context: String   // the line it was found on, lowercased
     }
 
-    /// Extracts every reasonable date candidate, then picks the highest-scored
-    /// one based on keyword proximity ("date", "purchased" → boost; "due",
-    /// "expires" → penalise). Dates more than 10 years old or in the future
-    /// are rejected outright as implausible for warranty receipts.
+    /// Extracts every reasonable date candidate via `NSDataDetector`, then
+    /// picks the highest-scored one by keyword proximity ("purchased" → boost,
+    /// "due"/"expires" → penalise). Apple's detector covers locale variants,
+    /// ordinal suffixes ("the 15th"), abbreviations ("Sept"), and plain
+    /// numeric forms — replacing a brittle regex+DateFormatter cascade with
+    /// a maintained system parser.
     private func parseDate(from lines: [Line]) -> Date? {
         let purchaseKeywords = [
             "purchased", "purchase date", "sold", "sold on",
@@ -385,15 +534,24 @@ final class ReceiptScanner {
         let neutralKeywords = ["date", "order", "receipt", "invoice"]
         let avoidKeywords = ["due", "expires", "expiry", "valid until", "valid through"]
 
+        guard let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.date.rawValue) else {
+            return nil
+        }
+
         var scored: [(date: Date, score: Int)] = []
 
         for line in lines where line.confidence > 0.4 {
-            let lower = line.text.lowercased()
+            let text = line.text
+            let lower = text.lowercased()
             let purchaseHit = purchaseKeywords.contains { lower.contains($0) }
             let neutralHit = neutralKeywords.contains { lower.contains($0) }
             let avoidHit = avoidKeywords.contains { lower.contains($0) }
 
-            for date in collectDates(in: line.text) where isReasonablePurchaseDate(date) {
+            let nsText = text as NSString
+            let range = NSRange(location: 0, length: nsText.length)
+            for match in detector.matches(in: text, range: range) {
+                guard let date = match.date else { continue }
+                guard isReasonablePurchaseDate(date) else { continue }
                 var score = 0
                 if purchaseHit { score += 10 }
                 if neutralHit  { score += 4 }
@@ -411,87 +569,6 @@ final class ReceiptScanner {
             return best.date
         }
         return scored.first?.date
-    }
-
-    /// Try every supported format on the input string and return the dates
-    /// we successfully parsed. Patterns searched:
-    ///   - Numeric: MM/DD/YYYY, M/D/YY, DD-MM-YYYY, YYYY-MM-DD, dot variants
-    ///   - Written month: "Jan 15, 2024", "January 15 2024", "15 Jan 2024",
-    ///     "15 January 2024", "2024 Jan 15"
-    private func collectDates(in text: String) -> [Date] {
-        var dates: [Date] = []
-
-        // --- Numeric patterns
-        let numericPattern = #"\b(\d{1,4}[/.\-]\d{1,2}[/.\-]\d{1,4})\b"#
-        if let regex = try? NSRegularExpression(pattern: numericPattern) {
-            let nsText = text as NSString
-            let range = NSRange(location: 0, length: nsText.length)
-            for match in regex.matches(in: text, range: range) {
-                let raw = nsText.substring(with: match.range(at: 1))
-                if let d = parseNumericDate(raw) { dates.append(d) }
-            }
-        }
-
-        // --- Written-month patterns
-        // Match either "Jan 15, 2024" / "January 15 2024" or "15 Jan 2024" /
-        // "15 January 2024", with year either before or after the day.
-        let writtenPattern = #"""
-        \b(
-            (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)[a-z]*\.?\s+\d{1,2},?\s+\d{2,4}
-            |
-            \d{1,2}\s+(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)[a-z]*\.?\s+\d{2,4}
-        )\b
-        """#
-        if let regex = try? NSRegularExpression(pattern: writtenPattern,
-                                                options: [.allowCommentsAndWhitespace, .caseInsensitive]) {
-            let nsText = text as NSString
-            let range = NSRange(location: 0, length: nsText.length)
-            for match in regex.matches(in: text, range: range) {
-                let raw = nsText.substring(with: match.range(at: 1))
-                if let d = parseWrittenDate(raw) { dates.append(d) }
-            }
-        }
-
-        return dates
-    }
-
-    /// Try every numeric date format we support. Returns the first that parses.
-    private func parseNumericDate(_ raw: String) -> Date? {
-        let formats = [
-            "MM/dd/yyyy", "M/d/yyyy", "MM/dd/yy", "M/d/yy",
-            "MM-dd-yyyy", "M-d-yyyy",
-            "MM.dd.yyyy", "M.d.yyyy",
-            "yyyy-MM-dd", "yyyy.MM.dd", "yyyy/MM/dd",
-            "dd/MM/yyyy", "d/M/yyyy",
-            "dd-MM-yyyy", "d-M-yyyy",
-            "dd.MM.yyyy", "d.M.yyyy",
-        ]
-        for pattern in formats {
-            let f = DateFormatter()
-            f.locale = Locale(identifier: "en_US_POSIX")
-            f.timeZone = .current
-            f.dateFormat = pattern
-            if let d = f.date(from: raw) { return d }
-        }
-        return nil
-    }
-
-    /// Parse "Jan 15, 2024" / "15 January 2024" etc.
-    private func parseWrittenDate(_ raw: String) -> Date? {
-        let normalized = raw.replacingOccurrences(of: ",", with: "")
-        let formats = [
-            "MMM d yyyy", "MMM dd yyyy", "MMMM d yyyy", "MMMM dd yyyy",
-            "d MMM yyyy", "dd MMM yyyy", "d MMMM yyyy", "dd MMMM yyyy",
-            "MMM d yy",   "d MMM yy",
-        ]
-        for pattern in formats {
-            let f = DateFormatter()
-            f.locale = Locale(identifier: "en_US_POSIX")
-            f.timeZone = .current
-            f.dateFormat = pattern
-            if let d = f.date(from: normalized) { return d }
-        }
-        return nil
     }
 
     /// Reject dates more than 10 years old (warranty receipts that old are

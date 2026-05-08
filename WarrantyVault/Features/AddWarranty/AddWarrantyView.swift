@@ -108,8 +108,8 @@ struct AddWarrantyView: View {
                     .foregroundStyle(AppColors.textSecondary)
             }
         }
-        .sheet(isPresented: $presentingCamera) {
-            CameraPicker { image in
+        .fullScreenCover(isPresented: $presentingCamera) {
+            DocumentScannerView { image in
                 Task { await handlePickedReceipt(image) }
             }
             .ignoresSafeArea()
@@ -358,11 +358,11 @@ struct AddWarrantyView: View {
                         receiptActionLabel(symbol: "photo.on.rectangle.angled", text: "Library")
                     }
 
-                    if CameraPicker.isAvailable {
+                    if DocumentScannerView.isAvailable {
                         Button {
                             presentingCamera = true
                         } label: {
-                            receiptActionLabel(symbol: "camera.fill", text: "Camera")
+                            receiptActionLabel(symbol: "doc.viewfinder", text: "Scan")
                         }
                     }
 
