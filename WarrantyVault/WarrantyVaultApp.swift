@@ -7,15 +7,23 @@
 //
 
 import SwiftUI
+import CoreData
 
 @main
 struct WarrantyVaultApp: App {
+    private let persistence = PersistenceController.shared
+
     @State private var coordinator = AppCoordinator()
-    @State private var store       = AppStore()
+    @State private var store: AppStore
+
+    init() {
+        _store = State(initialValue: AppStore(context: PersistenceController.shared.viewContext))
+    }
 
     var body: some Scene {
         WindowGroup {
             RootView()
+                .environment(\.managedObjectContext, persistence.viewContext)
                 .environment(coordinator)
                 .environment(store)
                 .preferredColorScheme(.light)

@@ -29,3 +29,7 @@ Pods/
 
 # Code generation / helper scripts
 generate_pbxproj.py
+
+# Local Claude Code working notes (not shared)
+.claude/
+
