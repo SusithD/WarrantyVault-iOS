@@ -7,71 +7,71 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		11FBB95D5C7B7AD0E717FCF4 /* AppCoordinator.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 6B5025D03E8BC208A38D405D /* AppCoordinator.swift */; };
-		04FEEABFB2BBDE5DEEC5A9E7 /* AppStore.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = B51D5D193ADA4627FFCE621E /* AppStore.swift */; };
-		9E17C879FF720695CBBCDE78 /* AppColors.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 08084EE98332C5F6E69FC871 /* AppColors.swift */; };
-		CC0627CB05AFD4DCA33ECD3A /* AppTypography.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = BBC031472AAA1EC74D75E279 /* AppTypography.swift */; };
-		97203B43A0412C913BB3B8DB /* GlassCard.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = E505FC6938F78F58D5111BF2 /* GlassCard.swift */; };
-		E4A75844BA60685A520404EA /* GradientBackground.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = AEB60067025EEE78B7AF22FC /* GradientBackground.swift */; };
-		1924FEEF938E6C85BAC1FF8F /* IconBadge.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = F1ED3A53108876BD01D6D10C /* IconBadge.swift */; };
-		999BCF4DB55832BE25E084BD /* PageIndicator.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 887BC54B61BCA96E23839BA0 /* PageIndicator.swift */; };
-		5ABDF74399BE704F1A81772C /* PrimaryButton.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 2AA7CFCF6984A6BD29D9B7D5 /* PrimaryButton.swift */; };
-		7B488B60A9D067FEFFFF72B0 /* StatusTag.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 3026624B700D80D11A6A490B /* StatusTag.swift */; };
-		4B0777BCE34C55114D41B1D5 /* AddWarrantyView.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = E0CE25BDF9BBE41D2254BBD8 /* AddWarrantyView.swift */; };
-		BA908B9693FBEF402A153535 /* CameraPicker.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 395416B988E7894C920EE8F6 /* CameraPicker.swift */; };
-		D656FE799778C1D74C7FF325 /* LocationPickerView.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 1CDFC5EF569FED8CE46AB3E2 /* LocationPickerView.swift */; };
-		EAF6F7AE9956ABDF6F2A9C5A /* AuthenticationView.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 42DBB6488DBB39D2383AE76B /* AuthenticationView.swift */; };
-		E7D329FFDF18BADD48AAC9DB /* MainAppPlaceholderView.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 095254A4332EF34AFA688196 /* MainAppPlaceholderView.swift */; };
-		CC6502A62C6F171F21A8B5A1 /* ClaimChatView.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 95A47CEA66A2F6C68CAC6243 /* ClaimChatView.swift */; };
-		E835BAA96A9108A0707A85C6 /* ClaimsListView.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 08336CB9A2B2301A0574C44B /* ClaimsListView.swift */; };
-		3F28EB1F44ED9EE85EB46F52 /* ClaimStatusView.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = F2D9BB87D4EF8DC3D04C48C4 /* ClaimStatusView.swift */; };
-		2CDF4034AAFB934314C6C0A0 /* FileClaimView.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 2C44CDB6A511F95BBEE288B2 /* FileClaimView.swift */; };
-		CD5058253C8C3985E63A2E4E /* DashboardView.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 201496A8EB94AF1DA1AA1E02 /* DashboardView.swift */; };
-		B2141EB1B751C1B9E806E112 /* HouseholdCreateJoinView.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = E0F822488B1123A47CDD3358 /* HouseholdCreateJoinView.swift */; };
-		FE64C9A6E9B1B8C3E7694B81 /* HouseholdHubView.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 80902AB9904C5C9462ECF0F9 /* HouseholdHubView.swift */; };
-		BE35B77492A9228CCAD2F873 /* InviteMemberView.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 96AC6A7293978C458ABEBF4D /* InviteMemberView.swift */; };
-		DDF3855DA9395A7B024F7C81 /* MainTabView.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = B8939F9C4055C8C84F2C1B3E /* MainTabView.swift */; };
-		14A8465A9977354AE3918A58 /* OnboardingContainerView.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 79A6FD4962999E1ABDA2D0E6 /* OnboardingContainerView.swift */; };
-		01A3D1E36A60117D828A6FE4 /* OnboardingData.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 902DD5128FE982DF03E147BF /* OnboardingData.swift */; };
-		8951B8224B48764275A1EB61 /* OnboardingIllustrationView.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 6B84FE987CFD544215D02529 /* OnboardingIllustrationView.swift */; };
-		6A8C5CC6E8347B19FCE35504 /* OnboardingPageView.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 14302FE240598CD2938ADE56 /* OnboardingPageView.swift */; };
-		8D921DC19381E8CD79C10C55 /* ProfileView.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = DABDF9F4D19DFE43FB93D3D2 /* ProfileView.swift */; };
-		AA560F0103904C164BFA401B /* SplashView.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 0A574EE65BEC3076702D270F /* SplashView.swift */; };
-		9DC20F76AB8E6A7597486DB4 /* WarrantyDetailView.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = A62449098787AC125A5B7092 /* WarrantyDetailView.swift */; };
-		23BDA1E47BE382D7E3488D0C /* Claim.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 0BFCF47C94865CCCA1C7C67D /* Claim.swift */; };
-		0A61EE1ABC9A4EFA1C5DD637 /* Household.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = EEABCA8C5DFDBD2A5000D4C1 /* Household.swift */; };
-		CED91255FB0881B64681D1D9 /* MockData.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 84587C2D80F1CAF473030EBD /* MockData.swift */; };
-		0153C9B01CCFD5605ABFA4E2 /* Warranty.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = DA25800BB215D55C4CCF1857 /* Warranty.swift */; };
-		9D3601B219DCA15D3D318EE5 /* ActivityEntry+Bridge.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 4FD921B5B7D139EF8D6A0829 /* ActivityEntry+Bridge.swift */; };
-		FE40D797EC44A7CDFF9C3627 /* Claim+Bridge.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = E06580A71FD35BFC9949114A /* Claim+Bridge.swift */; };
-		D39CB6AD305A8FC4D5A59C48 /* Warranty+Bridge.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 61C501E5261B4DDB5063E6AD /* Warranty+Bridge.swift */; };
-		3A9C1E31E2BD80C801CDF0D8 /* CalendarService.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = CC325F5D55C9303B3E0E2C29 /* CalendarService.swift */; };
-		2ECBE9CD5F5C0D62836D2D4F /* CategoryPredictor.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 74A0B88E4D8C3B42E33ADAD8 /* CategoryPredictor.swift */; };
-		FC4D46C981A30B32FE7C832B /* ActivityEntity+CoreDataClass.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 8DAFC14F269EDBCF63BA1C54 /* ActivityEntity+CoreDataClass.swift */; };
-		F001CAFDD78398ABA4866A66 /* ActivityEntity+CoreDataProperties.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 6683EFCB65871313418473DD /* ActivityEntity+CoreDataProperties.swift */; };
-		8188759A2D80595F320D6BED /* ClaimEntity+CoreDataClass.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 0B7A2788E57165228D71ECD9 /* ClaimEntity+CoreDataClass.swift */; };
-		6C9AD36B66AC5A733B0FC1C4 /* ClaimEntity+CoreDataProperties.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 289A7F013E6181ECDF8AB5DC /* ClaimEntity+CoreDataProperties.swift */; };
-		F63F04771FC80165962D5E88 /* WarrantyEntity+CoreDataClass.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 9D60B2675D348951D4CE1505 /* WarrantyEntity+CoreDataClass.swift */; };
-		CA89D169764ACBB3E0183AF2 /* WarrantyEntity+CoreDataProperties.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = B24AEE743D783631FEBFA450 /* WarrantyEntity+CoreDataProperties.swift */; };
-		1397BC8936E1DEDDB564C827 /* ImageProcessing.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 2ECDE40458958063EEA2BEEC /* ImageProcessing.swift */; };
-		3A9824F97FE7FC09FE5E924F /* LocationService.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 4CBA6CECEE989193FA10E3B5 /* LocationService.swift */; };
-		44FA3CCD62BABBE54A6F41EA /* NotificationService.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = A1742C9D25B10917F452469D /* NotificationService.swift */; };
-		D225A5C94ED2E6E060167D70 /* PersistenceController.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 5E97D67F3238351114B404D4 /* PersistenceController.swift */; };
-		93652C56C5AD01D6986A6E2B /* ReceiptScanner.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 0605DE40290970C2D42A6772 /* ReceiptScanner.swift */; };
-		6AD8AF935DB6FAD6A9ECB0C9 /* WidgetSnapshot.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = A8EA15AD0732484AEFC07568 /* WidgetSnapshot.swift */; };
-		C6CE87D75F9F44E0155CE95D /* WarrantyVaultApp.swift in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 2855521D3CECE57610385E92 /* WarrantyVaultApp.swift */; };
-		07B2FB8DFCF304231F73AF47 /* WarrantyVault.xcdatamodeld in Sources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 8A33099F64A214C051F2B74C /* WarrantyVault.xcdatamodeld */; };
-		E33CDB8A6EB51113B24EA0CA /* Assets.xcassets in Resources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = B45634CEEE3EB39F8AD6FF61 /* Assets.xcassets */; };
-		335A207BE1E1BE37DEB5B684 /* Preview Assets.xcassets in Resources (WarrantyVault) */ = {isa = PBXBuildFile; fileRef = 757D7FD6E847403B72ECD838 /* Preview Assets.xcassets */; };
+		0153C9B01CCFD5605ABFA4E2 /* Warranty.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA25800BB215D55C4CCF1857 /* Warranty.swift */; };
+		01A3D1E36A60117D828A6FE4 /* OnboardingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902DD5128FE982DF03E147BF /* OnboardingData.swift */; };
+		01FB16D811014FF1B39EB58D /* WidgetSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893508FDE97718C78B7994B7 /* WidgetSnapshotTests.swift */; };
+		02AA677129B1DBEFC6548781 /* ReceiptScannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87171539BAC9C42B0994A447 /* ReceiptScannerTests.swift */; };
+		04FEEABFB2BBDE5DEEC5A9E7 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51D5D193ADA4627FFCE621E /* AppStore.swift */; };
+		07B2FB8DFCF304231F73AF47 /* WarrantyVault.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8A33099F64A214C051F2B74C /* WarrantyVault.xcdatamodeld */; };
+		0A61EE1ABC9A4EFA1C5DD637 /* Household.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEABCA8C5DFDBD2A5000D4C1 /* Household.swift */; };
+		11FBB95D5C7B7AD0E717FCF4 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5025D03E8BC208A38D405D /* AppCoordinator.swift */; };
+		1397BC8936E1DEDDB564C827 /* ImageProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECDE40458958063EEA2BEEC /* ImageProcessing.swift */; };
+		14A8465A9977354AE3918A58 /* OnboardingContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A6FD4962999E1ABDA2D0E6 /* OnboardingContainerView.swift */; };
+		15B3EA5043A44D0616D249AC /* PersistenceBridgingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD76C58304D4FA951A3C0FA /* PersistenceBridgingTests.swift */; };
+		1924FEEF938E6C85BAC1FF8F /* IconBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1ED3A53108876BD01D6D10C /* IconBadge.swift */; };
+		23BDA1E47BE382D7E3488D0C /* Claim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFCF47C94865CCCA1C7C67D /* Claim.swift */; };
+		2CDF4034AAFB934314C6C0A0 /* FileClaimView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C44CDB6A511F95BBEE288B2 /* FileClaimView.swift */; };
 		2D6D099AB8BB4A748FFA403D /* WarrantyVaultWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 84288769D97076435D0A184C /* WarrantyVaultWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		56723835FFEEEAA88D79C24B /* WidgetSnapshot.swift in Sources (WarrantyVaultWidget) */ = {isa = PBXBuildFile; fileRef = A8EA15AD0732484AEFC07568 /* WidgetSnapshot.swift */; };
-		FE37144E8DF5E9E14F46965D /* WarrantyVaultWidget.swift in Sources (WarrantyVaultWidget) */ = {isa = PBXBuildFile; fileRef = 26F3595DA10CBCD352575781 /* WarrantyVaultWidget.swift */; };
-		76694E81399C3A1475A2151C /* AppStoreTests.swift in Sources (WarrantyVaultTests) */ = {isa = PBXBuildFile; fileRef = 5DA9F4E3758FC8FF0FCB6190 /* AppStoreTests.swift */; };
-		F967692DF517A1DA80FDB1AE /* CategoryPredictorTests.swift in Sources (WarrantyVaultTests) */ = {isa = PBXBuildFile; fileRef = 0F0E7B63B9F4A1200ACDEF11 /* CategoryPredictorTests.swift */; };
-		15B3EA5043A44D0616D249AC /* PersistenceBridgingTests.swift in Sources (WarrantyVaultTests) */ = {isa = PBXBuildFile; fileRef = 5FD76C58304D4FA951A3C0FA /* PersistenceBridgingTests.swift */; };
-		02AA677129B1DBEFC6548781 /* ReceiptScannerTests.swift in Sources (WarrantyVaultTests) */ = {isa = PBXBuildFile; fileRef = 87171539BAC9C42B0994A447 /* ReceiptScannerTests.swift */; };
-		C7BBFE5F51800976754A5AD3 /* WarrantyTests.swift in Sources (WarrantyVaultTests) */ = {isa = PBXBuildFile; fileRef = CB0ED24D14C9F9D973339652 /* WarrantyTests.swift */; };
-		01FB16D811014FF1B39EB58D /* WidgetSnapshotTests.swift in Sources (WarrantyVaultTests) */ = {isa = PBXBuildFile; fileRef = 893508FDE97718C78B7994B7 /* WidgetSnapshotTests.swift */; };
+		2ECBE9CD5F5C0D62836D2D4F /* CategoryPredictor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A0B88E4D8C3B42E33ADAD8 /* CategoryPredictor.swift */; };
+		335A207BE1E1BE37DEB5B684 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 757D7FD6E847403B72ECD838 /* Preview Assets.xcassets */; };
+		3A9824F97FE7FC09FE5E924F /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA6CECEE989193FA10E3B5 /* LocationService.swift */; };
+		3A9C1E31E2BD80C801CDF0D8 /* CalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC325F5D55C9303B3E0E2C29 /* CalendarService.swift */; };
+		3F28EB1F44ED9EE85EB46F52 /* ClaimStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D9BB87D4EF8DC3D04C48C4 /* ClaimStatusView.swift */; };
+		44FA3CCD62BABBE54A6F41EA /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1742C9D25B10917F452469D /* NotificationService.swift */; };
+		4B0777BCE34C55114D41B1D5 /* AddWarrantyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0CE25BDF9BBE41D2254BBD8 /* AddWarrantyView.swift */; };
+		56723835FFEEEAA88D79C24B /* WidgetSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EA15AD0732484AEFC07568 /* WidgetSnapshot.swift */; };
+		5ABDF74399BE704F1A81772C /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA7CFCF6984A6BD29D9B7D5 /* PrimaryButton.swift */; };
+		6A8C5CC6E8347B19FCE35504 /* OnboardingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14302FE240598CD2938ADE56 /* OnboardingPageView.swift */; };
+		6AD8AF935DB6FAD6A9ECB0C9 /* WidgetSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EA15AD0732484AEFC07568 /* WidgetSnapshot.swift */; };
+		6C9AD36B66AC5A733B0FC1C4 /* ClaimEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 289A7F013E6181ECDF8AB5DC /* ClaimEntity+CoreDataProperties.swift */; };
+		76694E81399C3A1475A2151C /* AppStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA9F4E3758FC8FF0FCB6190 /* AppStoreTests.swift */; };
+		7B488B60A9D067FEFFFF72B0 /* StatusTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3026624B700D80D11A6A490B /* StatusTag.swift */; };
+		8188759A2D80595F320D6BED /* ClaimEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7A2788E57165228D71ECD9 /* ClaimEntity+CoreDataClass.swift */; };
+		8951B8224B48764275A1EB61 /* OnboardingIllustrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84FE987CFD544215D02529 /* OnboardingIllustrationView.swift */; };
+		8D921DC19381E8CD79C10C55 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABDF9F4D19DFE43FB93D3D2 /* ProfileView.swift */; };
+		93652C56C5AD01D6986A6E2B /* ReceiptScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0605DE40290970C2D42A6772 /* ReceiptScanner.swift */; };
+		97203B43A0412C913BB3B8DB /* GlassCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E505FC6938F78F58D5111BF2 /* GlassCard.swift */; };
+		999BCF4DB55832BE25E084BD /* PageIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887BC54B61BCA96E23839BA0 /* PageIndicator.swift */; };
+		9D3601B219DCA15D3D318EE5 /* ActivityEntry+Bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD921B5B7D139EF8D6A0829 /* ActivityEntry+Bridge.swift */; };
+		9DC20F76AB8E6A7597486DB4 /* WarrantyDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A62449098787AC125A5B7092 /* WarrantyDetailView.swift */; };
+		9E17C879FF720695CBBCDE78 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08084EE98332C5F6E69FC871 /* AppColors.swift */; };
+		AA560F0103904C164BFA401B /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A574EE65BEC3076702D270F /* SplashView.swift */; };
+		B2141EB1B751C1B9E806E112 /* HouseholdCreateJoinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F822488B1123A47CDD3358 /* HouseholdCreateJoinView.swift */; };
+		BA908B9693FBEF402A153535 /* CameraPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395416B988E7894C920EE8F6 /* CameraPicker.swift */; };
+		BE35B77492A9228CCAD2F873 /* InviteMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96AC6A7293978C458ABEBF4D /* InviteMemberView.swift */; };
+		C6CE87D75F9F44E0155CE95D /* WarrantyVaultApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2855521D3CECE57610385E92 /* WarrantyVaultApp.swift */; };
+		C7BBFE5F51800976754A5AD3 /* WarrantyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0ED24D14C9F9D973339652 /* WarrantyTests.swift */; };
+		CA89D169764ACBB3E0183AF2 /* WarrantyEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24AEE743D783631FEBFA450 /* WarrantyEntity+CoreDataProperties.swift */; };
+		CC0627CB05AFD4DCA33ECD3A /* AppTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC031472AAA1EC74D75E279 /* AppTypography.swift */; };
+		CC6502A62C6F171F21A8B5A1 /* ClaimChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A47CEA66A2F6C68CAC6243 /* ClaimChatView.swift */; };
+		CD5058253C8C3985E63A2E4E /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201496A8EB94AF1DA1AA1E02 /* DashboardView.swift */; };
+		CED91255FB0881B64681D1D9 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84587C2D80F1CAF473030EBD /* MockData.swift */; };
+		D225A5C94ED2E6E060167D70 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E97D67F3238351114B404D4 /* PersistenceController.swift */; };
+		D39CB6AD305A8FC4D5A59C48 /* Warranty+Bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C501E5261B4DDB5063E6AD /* Warranty+Bridge.swift */; };
+		D656FE799778C1D74C7FF325 /* LocationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDFC5EF569FED8CE46AB3E2 /* LocationPickerView.swift */; };
+		DDF3855DA9395A7B024F7C81 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8939F9C4055C8C84F2C1B3E /* MainTabView.swift */; };
+		E33CDB8A6EB51113B24EA0CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B45634CEEE3EB39F8AD6FF61 /* Assets.xcassets */; };
+		E4A75844BA60685A520404EA /* GradientBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB60067025EEE78B7AF22FC /* GradientBackground.swift */; };
+		E7D329FFDF18BADD48AAC9DB /* MainAppPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095254A4332EF34AFA688196 /* MainAppPlaceholderView.swift */; };
+		E835BAA96A9108A0707A85C6 /* ClaimsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08336CB9A2B2301A0574C44B /* ClaimsListView.swift */; };
+		EAF6F7AE9956ABDF6F2A9C5A /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DBB6488DBB39D2383AE76B /* AuthenticationView.swift */; };
+		F001CAFDD78398ABA4866A66 /* ActivityEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6683EFCB65871313418473DD /* ActivityEntity+CoreDataProperties.swift */; };
+		F63F04771FC80165962D5E88 /* WarrantyEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D60B2675D348951D4CE1505 /* WarrantyEntity+CoreDataClass.swift */; };
+		F967692DF517A1DA80FDB1AE /* CategoryPredictorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0E7B63B9F4A1200ACDEF11 /* CategoryPredictorTests.swift */; };
+		FC4D46C981A30B32FE7C832B /* ActivityEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAFC14F269EDBCF63BA1C54 /* ActivityEntity+CoreDataClass.swift */; };
+		FE37144E8DF5E9E14F46965D /* WarrantyVaultWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F3595DA10CBCD352575781 /* WarrantyVaultWidget.swift */; };
+		FE40D797EC44A7CDFF9C3627 /* Claim+Bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06580A71FD35BFC9949114A /* Claim+Bridge.swift */; };
+		FE64C9A6E9B1B8C3E7694B81 /* HouseholdHubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80902AB9904C5C9462ECF0F9 /* HouseholdHubView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,97 +106,97 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0D0322E2CAA4266464DEAC9F /* WarrantyVault.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WarrantyVault.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		84288769D97076435D0A184C /* WarrantyVaultWidget.appex */ = {isa = PBXFileReference; explicitFileType = wrapper.app-extension; includeInIndex = 0; path = WarrantyVaultWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		C64991FC42A1B066F1802CF8 /* WarrantyVaultTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WarrantyVaultTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		6B5025D03E8BC208A38D405D /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppCoordinator.swift"; sourceTree = "<group>"; };
-		B51D5D193ADA4627FFCE621E /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppStore.swift"; sourceTree = "<group>"; };
-		B45634CEEE3EB39F8AD6FF61 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets.xcassets"; sourceTree = "<group>"; };
-		08084EE98332C5F6E69FC871 /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppColors.swift"; sourceTree = "<group>"; };
-		BBC031472AAA1EC74D75E279 /* AppTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppTypography.swift"; sourceTree = "<group>"; };
-		E505FC6938F78F58D5111BF2 /* GlassCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GlassCard.swift"; sourceTree = "<group>"; };
-		AEB60067025EEE78B7AF22FC /* GradientBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GradientBackground.swift"; sourceTree = "<group>"; };
-		F1ED3A53108876BD01D6D10C /* IconBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IconBadge.swift"; sourceTree = "<group>"; };
-		887BC54B61BCA96E23839BA0 /* PageIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PageIndicator.swift"; sourceTree = "<group>"; };
-		2AA7CFCF6984A6BD29D9B7D5 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PrimaryButton.swift"; sourceTree = "<group>"; };
-		3026624B700D80D11A6A490B /* StatusTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatusTag.swift"; sourceTree = "<group>"; };
-		E0CE25BDF9BBE41D2254BBD8 /* AddWarrantyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddWarrantyView.swift"; sourceTree = "<group>"; };
-		395416B988E7894C920EE8F6 /* CameraPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraPicker.swift"; sourceTree = "<group>"; };
-		1CDFC5EF569FED8CE46AB3E2 /* LocationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocationPickerView.swift"; sourceTree = "<group>"; };
-		42DBB6488DBB39D2383AE76B /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationView.swift"; sourceTree = "<group>"; };
-		095254A4332EF34AFA688196 /* MainAppPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainAppPlaceholderView.swift"; sourceTree = "<group>"; };
-		95A47CEA66A2F6C68CAC6243 /* ClaimChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClaimChatView.swift"; sourceTree = "<group>"; };
-		08336CB9A2B2301A0574C44B /* ClaimsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClaimsListView.swift"; sourceTree = "<group>"; };
-		F2D9BB87D4EF8DC3D04C48C4 /* ClaimStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClaimStatusView.swift"; sourceTree = "<group>"; };
-		2C44CDB6A511F95BBEE288B2 /* FileClaimView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileClaimView.swift"; sourceTree = "<group>"; };
-		201496A8EB94AF1DA1AA1E02 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardView.swift"; sourceTree = "<group>"; };
-		E0F822488B1123A47CDD3358 /* HouseholdCreateJoinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HouseholdCreateJoinView.swift"; sourceTree = "<group>"; };
-		80902AB9904C5C9462ECF0F9 /* HouseholdHubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HouseholdHubView.swift"; sourceTree = "<group>"; };
-		96AC6A7293978C458ABEBF4D /* InviteMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InviteMemberView.swift"; sourceTree = "<group>"; };
-		B8939F9C4055C8C84F2C1B3E /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabView.swift"; sourceTree = "<group>"; };
-		79A6FD4962999E1ABDA2D0E6 /* OnboardingContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingContainerView.swift"; sourceTree = "<group>"; };
-		902DD5128FE982DF03E147BF /* OnboardingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingData.swift"; sourceTree = "<group>"; };
-		6B84FE987CFD544215D02529 /* OnboardingIllustrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingIllustrationView.swift"; sourceTree = "<group>"; };
-		14302FE240598CD2938ADE56 /* OnboardingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingPageView.swift"; sourceTree = "<group>"; };
-		DABDF9F4D19DFE43FB93D3D2 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileView.swift"; sourceTree = "<group>"; };
-		0A574EE65BEC3076702D270F /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SplashView.swift"; sourceTree = "<group>"; };
-		A62449098787AC125A5B7092 /* WarrantyDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WarrantyDetailView.swift"; sourceTree = "<group>"; };
-		0BFCF47C94865CCCA1C7C67D /* Claim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Claim.swift"; sourceTree = "<group>"; };
-		EEABCA8C5DFDBD2A5000D4C1 /* Household.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Household.swift"; sourceTree = "<group>"; };
-		84587C2D80F1CAF473030EBD /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockData.swift"; sourceTree = "<group>"; };
-		DA25800BB215D55C4CCF1857 /* Warranty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Warranty.swift"; sourceTree = "<group>"; };
-		4FD921B5B7D139EF8D6A0829 /* ActivityEntry+Bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivityEntry+Bridge.swift"; sourceTree = "<group>"; };
-		E06580A71FD35BFC9949114A /* Claim+Bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Claim+Bridge.swift"; sourceTree = "<group>"; };
-		61C501E5261B4DDB5063E6AD /* Warranty+Bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Warranty+Bridge.swift"; sourceTree = "<group>"; };
-		CC325F5D55C9303B3E0E2C29 /* CalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CalendarService.swift"; sourceTree = "<group>"; };
-		74A0B88E4D8C3B42E33ADAD8 /* CategoryPredictor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CategoryPredictor.swift"; sourceTree = "<group>"; };
-		8DAFC14F269EDBCF63BA1C54 /* ActivityEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivityEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
-		6683EFCB65871313418473DD /* ActivityEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivityEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		0605DE40290970C2D42A6772 /* ReceiptScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptScanner.swift; sourceTree = "<group>"; };
+		08084EE98332C5F6E69FC871 /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
+		08336CB9A2B2301A0574C44B /* ClaimsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimsListView.swift; sourceTree = "<group>"; };
+		095254A4332EF34AFA688196 /* MainAppPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppPlaceholderView.swift; sourceTree = "<group>"; };
+		0A574EE65BEC3076702D270F /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		0B7A2788E57165228D71ECD9 /* ClaimEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClaimEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
-		289A7F013E6181ECDF8AB5DC /* ClaimEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClaimEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		9D60B2675D348951D4CE1505 /* WarrantyEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WarrantyEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
-		B24AEE743D783631FEBFA450 /* WarrantyEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WarrantyEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		2ECDE40458958063EEA2BEEC /* ImageProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageProcessing.swift"; sourceTree = "<group>"; };
-		4CBA6CECEE989193FA10E3B5 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocationService.swift"; sourceTree = "<group>"; };
-		A1742C9D25B10917F452469D /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationService.swift"; sourceTree = "<group>"; };
-		5E97D67F3238351114B404D4 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersistenceController.swift"; sourceTree = "<group>"; };
-		0605DE40290970C2D42A6772 /* ReceiptScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReceiptScanner.swift"; sourceTree = "<group>"; };
-		A8EA15AD0732484AEFC07568 /* WidgetSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WidgetSnapshot.swift"; sourceTree = "<group>"; };
-		757D7FD6E847403B72ECD838 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		6A7F151FE197B09404C6E293 /* WarrantyVault.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "WarrantyVault.entitlements"; sourceTree = "<group>"; };
-		2855521D3CECE57610385E92 /* WarrantyVaultApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WarrantyVaultApp.swift"; sourceTree = "<group>"; };
-		5DA9F4E3758FC8FF0FCB6190 /* AppStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppStoreTests.swift"; sourceTree = "<group>"; };
-		0F0E7B63B9F4A1200ACDEF11 /* CategoryPredictorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CategoryPredictorTests.swift"; sourceTree = "<group>"; };
-		5FD76C58304D4FA951A3C0FA /* PersistenceBridgingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersistenceBridgingTests.swift"; sourceTree = "<group>"; };
-		87171539BAC9C42B0994A447 /* ReceiptScannerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReceiptScannerTests.swift"; sourceTree = "<group>"; };
-		CB0ED24D14C9F9D973339652 /* WarrantyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WarrantyTests.swift"; sourceTree = "<group>"; };
-		893508FDE97718C78B7994B7 /* WidgetSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WidgetSnapshotTests.swift"; sourceTree = "<group>"; };
-		895D8AB316C04604E15C38FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info.plist"; sourceTree = "<group>"; };
-		264FB44AF9D9B32C66D1E604 /* WarrantyVaultWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "WarrantyVaultWidget.entitlements"; sourceTree = "<group>"; };
-		26F3595DA10CBCD352575781 /* WarrantyVaultWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WarrantyVaultWidget.swift"; sourceTree = "<group>"; };
-		A76F63FEB525BAB2DC000E15 /* WarrantyVault 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WarrantyVault 2.xcdatamodel"; sourceTree = "<group>"; };
-		E78A845584175F04D717E134 /* WarrantyVault 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WarrantyVault 3.xcdatamodel"; sourceTree = "<group>"; };
-		8B241F3F735E85EE0A4C7A95 /* WarrantyVault 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WarrantyVault 4.xcdatamodel"; sourceTree = "<group>"; };
+		0BFCF47C94865CCCA1C7C67D /* Claim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Claim.swift; sourceTree = "<group>"; };
+		0D0322E2CAA4266464DEAC9F /* WarrantyVault.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WarrantyVault.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F0E7B63B9F4A1200ACDEF11 /* CategoryPredictorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPredictorTests.swift; sourceTree = "<group>"; };
+		14302FE240598CD2938ADE56 /* OnboardingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageView.swift; sourceTree = "<group>"; };
+		1CDFC5EF569FED8CE46AB3E2 /* LocationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPickerView.swift; sourceTree = "<group>"; };
+		201496A8EB94AF1DA1AA1E02 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		211E0E3500BECD7248EC6A15 /* WarrantyVault 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WarrantyVault 5.xcdatamodel"; sourceTree = "<group>"; };
-		EE093E46BBB7A5A72250A01C /* WarrantyVault.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WarrantyVault.xcdatamodel"; sourceTree = "<group>"; };
+		264FB44AF9D9B32C66D1E604 /* WarrantyVaultWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WarrantyVaultWidget.entitlements; sourceTree = "<group>"; };
+		26F3595DA10CBCD352575781 /* WarrantyVaultWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantyVaultWidget.swift; sourceTree = "<group>"; };
+		2855521D3CECE57610385E92 /* WarrantyVaultApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantyVaultApp.swift; sourceTree = "<group>"; };
+		289A7F013E6181ECDF8AB5DC /* ClaimEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClaimEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2AA7CFCF6984A6BD29D9B7D5 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
+		2C44CDB6A511F95BBEE288B2 /* FileClaimView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileClaimView.swift; sourceTree = "<group>"; };
+		2ECDE40458958063EEA2BEEC /* ImageProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessing.swift; sourceTree = "<group>"; };
+		3026624B700D80D11A6A490B /* StatusTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusTag.swift; sourceTree = "<group>"; };
+		395416B988E7894C920EE8F6 /* CameraPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPicker.swift; sourceTree = "<group>"; };
+		42DBB6488DBB39D2383AE76B /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
+		4CBA6CECEE989193FA10E3B5 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		4FD921B5B7D139EF8D6A0829 /* ActivityEntry+Bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivityEntry+Bridge.swift"; sourceTree = "<group>"; };
+		5DA9F4E3758FC8FF0FCB6190 /* AppStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreTests.swift; sourceTree = "<group>"; };
+		5E97D67F3238351114B404D4 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		5FD76C58304D4FA951A3C0FA /* PersistenceBridgingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceBridgingTests.swift; sourceTree = "<group>"; };
+		61C501E5261B4DDB5063E6AD /* Warranty+Bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Warranty+Bridge.swift"; sourceTree = "<group>"; };
+		6683EFCB65871313418473DD /* ActivityEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivityEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		6A7F151FE197B09404C6E293 /* WarrantyVault.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WarrantyVault.entitlements; sourceTree = "<group>"; };
+		6B5025D03E8BC208A38D405D /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		6B84FE987CFD544215D02529 /* OnboardingIllustrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingIllustrationView.swift; sourceTree = "<group>"; };
+		74A0B88E4D8C3B42E33ADAD8 /* CategoryPredictor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPredictor.swift; sourceTree = "<group>"; };
+		757D7FD6E847403B72ECD838 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		79A6FD4962999E1ABDA2D0E6 /* OnboardingContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerView.swift; sourceTree = "<group>"; };
+		80902AB9904C5C9462ECF0F9 /* HouseholdHubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseholdHubView.swift; sourceTree = "<group>"; };
+		84288769D97076435D0A184C /* WarrantyVaultWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WarrantyVaultWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		84587C2D80F1CAF473030EBD /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		87171539BAC9C42B0994A447 /* ReceiptScannerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptScannerTests.swift; sourceTree = "<group>"; };
+		887BC54B61BCA96E23839BA0 /* PageIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageIndicator.swift; sourceTree = "<group>"; };
+		893508FDE97718C78B7994B7 /* WidgetSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSnapshotTests.swift; sourceTree = "<group>"; };
+		895D8AB316C04604E15C38FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8B241F3F735E85EE0A4C7A95 /* WarrantyVault 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WarrantyVault 4.xcdatamodel"; sourceTree = "<group>"; };
+		8DAFC14F269EDBCF63BA1C54 /* ActivityEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivityEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		902DD5128FE982DF03E147BF /* OnboardingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingData.swift; sourceTree = "<group>"; };
+		95A47CEA66A2F6C68CAC6243 /* ClaimChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimChatView.swift; sourceTree = "<group>"; };
+		96AC6A7293978C458ABEBF4D /* InviteMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteMemberView.swift; sourceTree = "<group>"; };
+		9D60B2675D348951D4CE1505 /* WarrantyEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WarrantyEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		A1742C9D25B10917F452469D /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		A62449098787AC125A5B7092 /* WarrantyDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantyDetailView.swift; sourceTree = "<group>"; };
+		A76F63FEB525BAB2DC000E15 /* WarrantyVault 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WarrantyVault 2.xcdatamodel"; sourceTree = "<group>"; };
+		A8EA15AD0732484AEFC07568 /* WidgetSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSnapshot.swift; sourceTree = "<group>"; };
+		AEB60067025EEE78B7AF22FC /* GradientBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientBackground.swift; sourceTree = "<group>"; };
+		B24AEE743D783631FEBFA450 /* WarrantyEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WarrantyEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		B45634CEEE3EB39F8AD6FF61 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B51D5D193ADA4627FFCE621E /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
+		B8939F9C4055C8C84F2C1B3E /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		BBC031472AAA1EC74D75E279 /* AppTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTypography.swift; sourceTree = "<group>"; };
+		C64991FC42A1B066F1802CF8 /* WarrantyVaultTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WarrantyVaultTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB0ED24D14C9F9D973339652 /* WarrantyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarrantyTests.swift; sourceTree = "<group>"; };
+		CC325F5D55C9303B3E0E2C29 /* CalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarService.swift; sourceTree = "<group>"; };
+		DA25800BB215D55C4CCF1857 /* Warranty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Warranty.swift; sourceTree = "<group>"; };
+		DABDF9F4D19DFE43FB93D3D2 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		E06580A71FD35BFC9949114A /* Claim+Bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Claim+Bridge.swift"; sourceTree = "<group>"; };
+		E0CE25BDF9BBE41D2254BBD8 /* AddWarrantyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWarrantyView.swift; sourceTree = "<group>"; };
+		E0F822488B1123A47CDD3358 /* HouseholdCreateJoinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseholdCreateJoinView.swift; sourceTree = "<group>"; };
+		E505FC6938F78F58D5111BF2 /* GlassCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassCard.swift; sourceTree = "<group>"; };
+		E78A845584175F04D717E134 /* WarrantyVault 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WarrantyVault 3.xcdatamodel"; sourceTree = "<group>"; };
+		EE093E46BBB7A5A72250A01C /* WarrantyVault.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WarrantyVault.xcdatamodel; sourceTree = "<group>"; };
+		EEABCA8C5DFDBD2A5000D4C1 /* Household.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Household.swift; sourceTree = "<group>"; };
+		F1ED3A53108876BD01D6D10C /* IconBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconBadge.swift; sourceTree = "<group>"; };
+		F2D9BB87D4EF8DC3D04C48C4 /* ClaimStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimStatusView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		DEC93E76350DA35A44BCFD34 /* Frameworks (WarrantyVault) */ = {
+		660D264B0866227EF30CA4F6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		660D264B0866227EF30CA4F6 /* Frameworks (WarrantyVaultWidget) */ = {
+		D9D8037555B5D0FD46C240B0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D9D8037555B5D0FD46C240B0 /* Frameworks (WarrantyVaultTests) */ = {
+		DEC93E76350DA35A44BCFD34 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -206,6 +206,69 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		00D90C097BE66951372CDF9D /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				201496A8EB94AF1DA1AA1E02 /* DashboardView.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		090929A5E75239A742BB34B1 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				DABDF9F4D19DFE43FB93D3D2 /* ProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		09705805699FF62331F5009C /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				08084EE98332C5F6E69FC871 /* AppColors.swift */,
+				BBC031472AAA1EC74D75E279 /* AppTypography.swift */,
+				E505FC6938F78F58D5111BF2 /* GlassCard.swift */,
+				AEB60067025EEE78B7AF22FC /* GradientBackground.swift */,
+				F1ED3A53108876BD01D6D10C /* IconBadge.swift */,
+				887BC54B61BCA96E23839BA0 /* PageIndicator.swift */,
+				2AA7CFCF6984A6BD29D9B7D5 /* PrimaryButton.swift */,
+				3026624B700D80D11A6A490B /* StatusTag.swift */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		0C846BAFF22516A808F23DDF /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				8DAFC14F269EDBCF63BA1C54 /* ActivityEntity+CoreDataClass.swift */,
+				6683EFCB65871313418473DD /* ActivityEntity+CoreDataProperties.swift */,
+				0B7A2788E57165228D71ECD9 /* ClaimEntity+CoreDataClass.swift */,
+				289A7F013E6181ECDF8AB5DC /* ClaimEntity+CoreDataProperties.swift */,
+				9D60B2675D348951D4CE1505 /* WarrantyEntity+CoreDataClass.swift */,
+				B24AEE743D783631FEBFA450 /* WarrantyEntity+CoreDataProperties.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		0D008C1A21B7BC2A24E7FF04 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				6B5025D03E8BC208A38D405D /* AppCoordinator.swift */,
+				B51D5D193ADA4627FFCE621E /* AppStore.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		0EFA55D81FA73A39D90C92B5 /* WarrantyVaultWidget */ = {
+			isa = PBXGroup;
+			children = (
+				895D8AB316C04604E15C38FA /* Info.plist */,
+				264FB44AF9D9B32C66D1E604 /* WarrantyVaultWidget.entitlements */,
+				26F3595DA10CBCD352575781 /* WarrantyVaultWidget.swift */,
+			);
+			path = WarrantyVaultWidget;
+			sourceTree = "<group>";
+		};
 		0FC4D4225F8AED18EE7FD8F8 = {
 			isa = PBXGroup;
 			children = (
@@ -216,14 +279,27 @@
 			);
 			sourceTree = "<group>";
 		};
-		C769FEA752C22F7B25D62158 /* Products */ = {
+		1118E5B78C063E0DEDCA8154 /* WarrantyVaultTests */ = {
 			isa = PBXGroup;
 			children = (
-				0D0322E2CAA4266464DEAC9F /* WarrantyVault.app */,
-				84288769D97076435D0A184C /* WarrantyVaultWidget.appex */,
-				C64991FC42A1B066F1802CF8 /* WarrantyVaultTests.xctest */,
+				5DA9F4E3758FC8FF0FCB6190 /* AppStoreTests.swift */,
+				0F0E7B63B9F4A1200ACDEF11 /* CategoryPredictorTests.swift */,
+				5FD76C58304D4FA951A3C0FA /* PersistenceBridgingTests.swift */,
+				87171539BAC9C42B0994A447 /* ReceiptScannerTests.swift */,
+				CB0ED24D14C9F9D973339652 /* WarrantyTests.swift */,
+				893508FDE97718C78B7994B7 /* WidgetSnapshotTests.swift */,
 			);
-			name = Products;
+			path = WarrantyVaultTests;
+			sourceTree = "<group>";
+		};
+		1C0D4DE3AA05F5F407F5F402 /* Bridging */ = {
+			isa = PBXGroup;
+			children = (
+				4FD921B5B7D139EF8D6A0829 /* ActivityEntry+Bridge.swift */,
+				E06580A71FD35BFC9949114A /* Claim+Bridge.swift */,
+				61C501E5261B4DDB5063E6AD /* Warranty+Bridge.swift */,
+			);
+			path = Bridging;
 			sourceTree = "<group>";
 		};
 		25D8D3C2BDB8A1DC3E5E78E4 /* WarrantyVault */ = {
@@ -239,31 +315,29 @@
 				6A7F151FE197B09404C6E293 /* WarrantyVault.entitlements */,
 				2855521D3CECE57610385E92 /* WarrantyVaultApp.swift */,
 			);
-			path = "WarrantyVault";
+			path = WarrantyVault;
 			sourceTree = "<group>";
 		};
-		0D008C1A21B7BC2A24E7FF04 /* App */ = {
+		5BA652A257FE4F6EED9E0AF8 /* Claim */ = {
 			isa = PBXGroup;
 			children = (
-				6B5025D03E8BC208A38D405D /* AppCoordinator.swift */,
-				B51D5D193ADA4627FFCE621E /* AppStore.swift */,
+				95A47CEA66A2F6C68CAC6243 /* ClaimChatView.swift */,
+				08336CB9A2B2301A0574C44B /* ClaimsListView.swift */,
+				F2D9BB87D4EF8DC3D04C48C4 /* ClaimStatusView.swift */,
+				2C44CDB6A511F95BBEE288B2 /* FileClaimView.swift */,
 			);
-			path = "App";
+			path = Claim;
 			sourceTree = "<group>";
 		};
-		09705805699FF62331F5009C /* DesignSystem */ = {
+		5F7E28E9D8CF4089873EB0F1 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				08084EE98332C5F6E69FC871 /* AppColors.swift */,
-				BBC031472AAA1EC74D75E279 /* AppTypography.swift */,
-				E505FC6938F78F58D5111BF2 /* GlassCard.swift */,
-				AEB60067025EEE78B7AF22FC /* GradientBackground.swift */,
-				F1ED3A53108876BD01D6D10C /* IconBadge.swift */,
-				887BC54B61BCA96E23839BA0 /* PageIndicator.swift */,
-				2AA7CFCF6984A6BD29D9B7D5 /* PrimaryButton.swift */,
-				3026624B700D80D11A6A490B /* StatusTag.swift */,
+				79A6FD4962999E1ABDA2D0E6 /* OnboardingContainerView.swift */,
+				902DD5128FE982DF03E147BF /* OnboardingData.swift */,
+				6B84FE987CFD544215D02529 /* OnboardingIllustrationView.swift */,
+				14302FE240598CD2938ADE56 /* OnboardingPageView.swift */,
 			);
-			path = "DesignSystem";
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		66125CDA0D2A8E79D916935C /* Features */ = {
@@ -280,17 +354,31 @@
 				817A4530C59ECDC10D9F3C29 /* Splash */,
 				E9292D3E0216AF91F90DA87A /* WarrantyDetail */,
 			);
-			path = "Features";
+			path = Features;
 			sourceTree = "<group>";
 		};
-		F1FA1D03BF65F7F562DBCCDC /* AddWarranty */ = {
+		66D135FABC7EEA8D46FC2B53 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				E0CE25BDF9BBE41D2254BBD8 /* AddWarrantyView.swift */,
-				395416B988E7894C920EE8F6 /* CameraPicker.swift */,
-				1CDFC5EF569FED8CE46AB3E2 /* LocationPickerView.swift */,
+				757D7FD6E847403B72ECD838 /* Preview Assets.xcassets */,
 			);
-			path = "AddWarranty";
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		7ECBA18BD5E708B24E2CA851 /* MainTab */ = {
+			isa = PBXGroup;
+			children = (
+				B8939F9C4055C8C84F2C1B3E /* MainTabView.swift */,
+			);
+			path = MainTab;
+			sourceTree = "<group>";
+		};
+		817A4530C59ECDC10D9F3C29 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				0A574EE65BEC3076702D270F /* SplashView.swift */,
+			);
+			path = Splash;
 			sourceTree = "<group>";
 		};
 		A390140E3475AF17E98DD38C /* Authentication */ = {
@@ -299,26 +387,7 @@
 				42DBB6488DBB39D2383AE76B /* AuthenticationView.swift */,
 				095254A4332EF34AFA688196 /* MainAppPlaceholderView.swift */,
 			);
-			path = "Authentication";
-			sourceTree = "<group>";
-		};
-		5BA652A257FE4F6EED9E0AF8 /* Claim */ = {
-			isa = PBXGroup;
-			children = (
-				95A47CEA66A2F6C68CAC6243 /* ClaimChatView.swift */,
-				08336CB9A2B2301A0574C44B /* ClaimsListView.swift */,
-				F2D9BB87D4EF8DC3D04C48C4 /* ClaimStatusView.swift */,
-				2C44CDB6A511F95BBEE288B2 /* FileClaimView.swift */,
-			);
-			path = "Claim";
-			sourceTree = "<group>";
-		};
-		00D90C097BE66951372CDF9D /* Dashboard */ = {
-			isa = PBXGroup;
-			children = (
-				201496A8EB94AF1DA1AA1E02 /* DashboardView.swift */,
-			);
-			path = "Dashboard";
+			path = Authentication;
 			sourceTree = "<group>";
 		};
 		A5895810D17A573D406829C2 /* Household */ = {
@@ -328,50 +397,7 @@
 				80902AB9904C5C9462ECF0F9 /* HouseholdHubView.swift */,
 				96AC6A7293978C458ABEBF4D /* InviteMemberView.swift */,
 			);
-			path = "Household";
-			sourceTree = "<group>";
-		};
-		7ECBA18BD5E708B24E2CA851 /* MainTab */ = {
-			isa = PBXGroup;
-			children = (
-				B8939F9C4055C8C84F2C1B3E /* MainTabView.swift */,
-			);
-			path = "MainTab";
-			sourceTree = "<group>";
-		};
-		5F7E28E9D8CF4089873EB0F1 /* Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-				79A6FD4962999E1ABDA2D0E6 /* OnboardingContainerView.swift */,
-				902DD5128FE982DF03E147BF /* OnboardingData.swift */,
-				6B84FE987CFD544215D02529 /* OnboardingIllustrationView.swift */,
-				14302FE240598CD2938ADE56 /* OnboardingPageView.swift */,
-			);
-			path = "Onboarding";
-			sourceTree = "<group>";
-		};
-		090929A5E75239A742BB34B1 /* Profile */ = {
-			isa = PBXGroup;
-			children = (
-				DABDF9F4D19DFE43FB93D3D2 /* ProfileView.swift */,
-			);
-			path = "Profile";
-			sourceTree = "<group>";
-		};
-		817A4530C59ECDC10D9F3C29 /* Splash */ = {
-			isa = PBXGroup;
-			children = (
-				0A574EE65BEC3076702D270F /* SplashView.swift */,
-			);
-			path = "Splash";
-			sourceTree = "<group>";
-		};
-		E9292D3E0216AF91F90DA87A /* WarrantyDetail */ = {
-			isa = PBXGroup;
-			children = (
-				A62449098787AC125A5B7092 /* WarrantyDetailView.swift */,
-			);
-			path = "WarrantyDetail";
+			path = Household;
 			sourceTree = "<group>";
 		};
 		C1AFDCBE9747978E1E0A00B6 /* Models */ = {
@@ -382,7 +408,35 @@
 				84587C2D80F1CAF473030EBD /* MockData.swift */,
 				DA25800BB215D55C4CCF1857 /* Warranty.swift */,
 			);
-			path = "Models";
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C769FEA752C22F7B25D62158 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0D0322E2CAA4266464DEAC9F /* WarrantyVault.app */,
+				84288769D97076435D0A184C /* WarrantyVaultWidget.appex */,
+				C64991FC42A1B066F1802CF8 /* WarrantyVaultTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E9292D3E0216AF91F90DA87A /* WarrantyDetail */ = {
+			isa = PBXGroup;
+			children = (
+				A62449098787AC125A5B7092 /* WarrantyDetailView.swift */,
+			);
+			path = WarrantyDetail;
+			sourceTree = "<group>";
+		};
+		F1FA1D03BF65F7F562DBCCDC /* AddWarranty */ = {
+			isa = PBXGroup;
+			children = (
+				E0CE25BDF9BBE41D2254BBD8 /* AddWarrantyView.swift */,
+				395416B988E7894C920EE8F6 /* CameraPicker.swift */,
+				1CDFC5EF569FED8CE46AB3E2 /* LocationPickerView.swift */,
+			);
+			path = AddWarranty;
 			sourceTree = "<group>";
 		};
 		FC3AF74B6ABE838C3AF59064 /* Persistence */ = {
@@ -400,61 +454,7 @@
 				8A33099F64A214C051F2B74C /* WarrantyVault.xcdatamodeld */,
 				A8EA15AD0732484AEFC07568 /* WidgetSnapshot.swift */,
 			);
-			path = "Persistence";
-			sourceTree = "<group>";
-		};
-		1C0D4DE3AA05F5F407F5F402 /* Bridging */ = {
-			isa = PBXGroup;
-			children = (
-				4FD921B5B7D139EF8D6A0829 /* ActivityEntry+Bridge.swift */,
-				E06580A71FD35BFC9949114A /* Claim+Bridge.swift */,
-				61C501E5261B4DDB5063E6AD /* Warranty+Bridge.swift */,
-			);
-			path = "Bridging";
-			sourceTree = "<group>";
-		};
-		0C846BAFF22516A808F23DDF /* Entities */ = {
-			isa = PBXGroup;
-			children = (
-				8DAFC14F269EDBCF63BA1C54 /* ActivityEntity+CoreDataClass.swift */,
-				6683EFCB65871313418473DD /* ActivityEntity+CoreDataProperties.swift */,
-				0B7A2788E57165228D71ECD9 /* ClaimEntity+CoreDataClass.swift */,
-				289A7F013E6181ECDF8AB5DC /* ClaimEntity+CoreDataProperties.swift */,
-				9D60B2675D348951D4CE1505 /* WarrantyEntity+CoreDataClass.swift */,
-				B24AEE743D783631FEBFA450 /* WarrantyEntity+CoreDataProperties.swift */,
-			);
-			path = "Entities";
-			sourceTree = "<group>";
-		};
-		66D135FABC7EEA8D46FC2B53 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				757D7FD6E847403B72ECD838 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		1118E5B78C063E0DEDCA8154 /* WarrantyVaultTests */ = {
-			isa = PBXGroup;
-			children = (
-				5DA9F4E3758FC8FF0FCB6190 /* AppStoreTests.swift */,
-				0F0E7B63B9F4A1200ACDEF11 /* CategoryPredictorTests.swift */,
-				5FD76C58304D4FA951A3C0FA /* PersistenceBridgingTests.swift */,
-				87171539BAC9C42B0994A447 /* ReceiptScannerTests.swift */,
-				CB0ED24D14C9F9D973339652 /* WarrantyTests.swift */,
-				893508FDE97718C78B7994B7 /* WidgetSnapshotTests.swift */,
-			);
-			path = "WarrantyVaultTests";
-			sourceTree = "<group>";
-		};
-		0EFA55D81FA73A39D90C92B5 /* WarrantyVaultWidget */ = {
-			isa = PBXGroup;
-			children = (
-				895D8AB316C04604E15C38FA /* Info.plist */,
-				264FB44AF9D9B32C66D1E604 /* WarrantyVaultWidget.entitlements */,
-				26F3595DA10CBCD352575781 /* WarrantyVaultWidget.swift */,
-			);
-			path = "WarrantyVaultWidget";
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -462,7 +462,7 @@
 /* Begin PBXNativeTarget section */
 		0FC95B99A5D24B89F38EE1B6 /* WarrantyVault */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 471840B722CA48623966211F;
+			buildConfigurationList = 471840B722CA48623966211F /* Build configuration list for PBXNativeTarget "WarrantyVault" */;
 			buildPhases = (
 				F41DCAEAEF0A6A9DFC566113 /* Sources */,
 				DEC93E76350DA35A44BCFD34 /* Frameworks */,
@@ -481,7 +481,7 @@
 		};
 		AB4A2E9E4FEE2E56ADA9A04B /* WarrantyVaultWidget */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EF8392858C32B3EB35318E2C;
+			buildConfigurationList = EF8392858C32B3EB35318E2C /* Build configuration list for PBXNativeTarget "WarrantyVaultWidget" */;
 			buildPhases = (
 				664CE16C977859DF87DB039F /* Sources */,
 				660D264B0866227EF30CA4F6 /* Frameworks */,
@@ -498,7 +498,7 @@
 		};
 		FD3DFA9E7F6D0ADA340B6CC9 /* WarrantyVaultTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A12F2C9394035E7AED4275D5;
+			buildConfigurationList = A12F2C9394035E7AED4275D5 /* Build configuration list for PBXNativeTarget "WarrantyVaultTests" */;
 			buildPhases = (
 				2978370B1790FD6D11F90A3C /* Sources */,
 				D9D8037555B5D0FD46C240B0 /* Frameworks */,
@@ -535,7 +535,7 @@
 					};
 				};
 			};
-			buildConfigurationList = AD1FAECF431DB1192FDD043C;
+			buildConfigurationList = AD1FAECF431DB1192FDD043C /* Build configuration list for PBXProject "WarrantyVault" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -556,7 +556,7 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		09FBF41E26BC400019BC4DD2 /* Resources (WarrantyVault) */ = {
+		09FBF41E26BC400019BC4DD2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -565,14 +565,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		1B12A00E8EAA8DE8C8876BFC /* Resources (WarrantyVaultWidget) */ = {
+		1B12A00E8EAA8DE8C8876BFC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		69E7C2626A1342237488BF28 /* Resources (WarrantyVaultTests) */ = {
+		69E7C2626A1342237488BF28 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -582,7 +582,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		F41DCAEAEF0A6A9DFC566113 /* Sources (WarrantyVault) */ = {
+		2978370B1790FD6D11F90A3C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76694E81399C3A1475A2151C /* AppStoreTests.swift in Sources */,
+				F967692DF517A1DA80FDB1AE /* CategoryPredictorTests.swift in Sources */,
+				15B3EA5043A44D0616D249AC /* PersistenceBridgingTests.swift in Sources */,
+				02AA677129B1DBEFC6548781 /* ReceiptScannerTests.swift in Sources */,
+				C7BBFE5F51800976754A5AD3 /* WarrantyTests.swift in Sources */,
+				01FB16D811014FF1B39EB58D /* WidgetSnapshotTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		664CE16C977859DF87DB039F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				56723835FFEEEAA88D79C24B /* WidgetSnapshot.swift in Sources */,
+				FE37144E8DF5E9E14F46965D /* WarrantyVaultWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F41DCAEAEF0A6A9DFC566113 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -643,44 +665,102 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		664CE16C977859DF87DB039F /* Sources (WarrantyVaultWidget) */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				56723835FFEEEAA88D79C24B /* WidgetSnapshot.swift in Sources */,
-				FE37144E8DF5E9E14F46965D /* WarrantyVaultWidget.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2978370B1790FD6D11F90A3C /* Sources (WarrantyVaultTests) */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				76694E81399C3A1475A2151C /* AppStoreTests.swift in Sources */,
-				F967692DF517A1DA80FDB1AE /* CategoryPredictorTests.swift in Sources */,
-				15B3EA5043A44D0616D249AC /* PersistenceBridgingTests.swift in Sources */,
-				02AA677129B1DBEFC6548781 /* ReceiptScannerTests.swift in Sources */,
-				C7BBFE5F51800976754A5AD3 /* WarrantyTests.swift in Sources */,
-				01FB16D811014FF1B39EB58D /* WidgetSnapshotTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		B5CBC65345A40C3D1DAC561B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = AB4A2E9E4FEE2E56ADA9A04B /* WarrantyVaultWidget */;
-			targetProxy = 0A7C9ECC98D808BD376D95D6 /* PBXContainerItemProxy */;
-		};
 		0798153BA137FF14EEB190FF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 0FC95B99A5D24B89F38EE1B6 /* WarrantyVault */;
 			targetProxy = 2AE88BA1AFE0E2E359392E30 /* PBXContainerItemProxy */;
 		};
+		B5CBC65345A40C3D1DAC561B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AB4A2E9E4FEE2E56ADA9A04B /* WarrantyVaultWidget */;
+			targetProxy = 0A7C9ECC98D808BD376D95D6 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		035E33747E9786E97F44D217 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WarrantyVault/WarrantyVault.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"WarrantyVault/Preview Content\"";
+				DEVELOPMENT_TEAM = XPWP3S28TL;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Used to add warranty expiry dates to your calendar.";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Used to add warranty expiry dates to your calendar.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Used to capture receipt images of your purchases.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "WarrantyVault uses Face ID to unlock your vault.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Used to remember where you bought your warranties.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Used to attach receipt images to your warranties.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.salwis.warrantyvault;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		16442D0D46454EB844680D15 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = WarrantyVaultWidget/WarrantyVaultWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XPWP3S28TL;
+				INFOPLIST_FILE = WarrantyVaultWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = WarrantyVaultWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.salwis.warrantyvault.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		169FDC263BE1D655EF535AE1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.salwis.warrantyvault.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WarrantyVault.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/WarrantyVault";
+			};
+			name = Release;
+		};
 		393195A78D1A00C4A1A3A581 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -714,10 +794,18 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -726,25 +814,42 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4DF1F785FB28403D9F5FED01 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = WarrantyVaultWidget/WarrantyVaultWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XPWP3S28TL;
+				INFOPLIST_FILE = WarrantyVaultWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = WarrantyVaultWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.salwis.warrantyvault.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_TESTABILITY = YES;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				ONLY_ACTIVE_ARCH = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
-			name = Debug;
+			name = Release;
 		};
 		51F2FFCAAA985AA2266B47B0 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -779,6 +884,8 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -791,53 +898,16 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
-		};
-		035E33747E9786E97F44D217 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = WarrantyVault/WarrantyVault.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"WarrantyVault/Preview Content\"";
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Used to add warranty expiry dates to your calendar.";
-				INFOPLIST_KEY_NSCalendarsUsageDescription = "Used to add warranty expiry dates to your calendar.";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Used to capture receipt images of your purchases.";
-				INFOPLIST_KEY_NSFaceIDUsageDescription = "WarrantyVault uses Face ID to unlock your vault.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Used to remember where you bought your warranties.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Used to attach receipt images to your warranties.";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.salwis.warrantyvault;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
 		};
 		555D63CDC51D27052B0BE901 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -848,6 +918,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"WarrantyVault/Preview Content\"";
+				DEVELOPMENT_TEAM = XPWP3S28TL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Used to add warranty expiry dates to your calendar.";
@@ -868,54 +939,6 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.salwis.warrantyvault;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		16442D0D46454EB844680D15 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = WarrantyVaultWidget/WarrantyVaultWidget.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_FILE = WarrantyVaultWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WarrantyVaultWidget";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.salwis.warrantyvault.widget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		4DF1F785FB28403D9F5FED01 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = WarrantyVaultWidget/WarrantyVaultWidget.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_FILE = WarrantyVaultWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WarrantyVaultWidget";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.salwis.warrantyvault.widget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -941,38 +964,10 @@
 			};
 			name = Debug;
 		};
-		169FDC263BE1D655EF535AE1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.salwis.warrantyvault.tests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WarrantyVault.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/WarrantyVault";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AD1FAECF431DB1192FDD043C = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				393195A78D1A00C4A1A3A581 /* Debug */,
-				51F2FFCAAA985AA2266B47B0 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		471840B722CA48623966211F = {
+		471840B722CA48623966211F /* Build configuration list for PBXNativeTarget "WarrantyVault" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				035E33747E9786E97F44D217 /* Debug */,
@@ -981,20 +976,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		EF8392858C32B3EB35318E2C = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				16442D0D46454EB844680D15 /* Debug */,
-				4DF1F785FB28403D9F5FED01 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		A12F2C9394035E7AED4275D5 = {
+		A12F2C9394035E7AED4275D5 /* Build configuration list for PBXNativeTarget "WarrantyVaultTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B0183021E16192408B79B29B /* Debug */,
 				169FDC263BE1D655EF535AE1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD1FAECF431DB1192FDD043C /* Build configuration list for PBXProject "WarrantyVault" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				393195A78D1A00C4A1A3A581 /* Debug */,
+				51F2FFCAAA985AA2266B47B0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EF8392858C32B3EB35318E2C /* Build configuration list for PBXNativeTarget "WarrantyVaultWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				16442D0D46454EB844680D15 /* Debug */,
+				4DF1F785FB28403D9F5FED01 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1012,12 +1016,11 @@
 				EE093E46BBB7A5A72250A01C /* WarrantyVault.xcdatamodel */,
 			);
 			currentVersion = 211E0E3500BECD7248EC6A15 /* WarrantyVault 5.xcdatamodel */;
-			path = "WarrantyVault.xcdatamodeld";
+			path = WarrantyVault.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
 /* End XCVersionGroup section */
-
 	};
 	rootObject = 4907EFA227030F13220C7AA7 /* Project object */;
 }

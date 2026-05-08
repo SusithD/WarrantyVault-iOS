@@ -36,21 +36,30 @@ struct AddWarrantyView: View {
 
     private static let calendarSyncDefaultKey = "calendarSyncDefault"
 
-    init(editing: Warranty? = nil) {
+    /// Two distinct flows the form supports:
+    ///   - `editing`: an existing warranty in Core Data → save() takes the
+    ///     update path so we don't create a duplicate.
+    ///   - `prefilled`: a fresh draft (e.g. from the dashboard scan flow) with
+    ///     fields populated by OCR. save() takes the create path.
+    init(editing: Warranty? = nil, prefilled: Warranty? = nil) {
         self.editing = editing
-        _productName   = State(initialValue: editing?.productName ?? "")
-        _brand         = State(initialValue: editing?.brand ?? "")
-        _category      = State(initialValue: editing?.category ?? .electronics)
-        _retailer      = State(initialValue: editing?.retailer ?? "")
-        _serial        = State(initialValue: editing?.serialNumber ?? "")
-        _notes         = State(initialValue: editing?.notes ?? "")
-        _priceText     = State(initialValue: editing.map { String(format: "%.2f", $0.price) } ?? "")
-        _purchaseDate  = State(initialValue: editing?.purchaseDate ?? Date())
-        _expiryDate    = State(initialValue: editing?.expiryDate ?? Calendar.current.date(byAdding: .year, value: 1, to: Date()) ?? Date())
-        _receiptImage    = State(initialValue: editing?.receiptImage)
-        _reminderEnabled = State(initialValue: editing?.reminderEnabled ?? true)
-        _latitude        = State(initialValue: editing?.latitude)
-        _longitude       = State(initialValue: editing?.longitude)
+        // Whichever is non-nil seeds the form; `editing` wins if both are set
+        // because that's the safer assumption.
+        let baseline = editing ?? prefilled
+
+        _productName   = State(initialValue: baseline?.productName ?? "")
+        _brand         = State(initialValue: baseline?.brand ?? "")
+        _category      = State(initialValue: baseline?.category ?? .electronics)
+        _retailer      = State(initialValue: baseline?.retailer ?? "")
+        _serial        = State(initialValue: baseline?.serialNumber ?? "")
+        _notes         = State(initialValue: baseline?.notes ?? "")
+        _priceText     = State(initialValue: baseline.map { $0.price > 0 ? String(format: "%.2f", $0.price) : "" } ?? "")
+        _purchaseDate  = State(initialValue: baseline?.purchaseDate ?? Date())
+        _expiryDate    = State(initialValue: baseline?.expiryDate ?? Calendar.current.date(byAdding: .year, value: 1, to: Date()) ?? Date())
+        _receiptImage    = State(initialValue: baseline?.receiptImage)
+        _reminderEnabled = State(initialValue: baseline?.reminderEnabled ?? true)
+        _latitude        = State(initialValue: baseline?.latitude)
+        _longitude       = State(initialValue: baseline?.longitude)
 
         // Editing existing warranty: derive calendar toggle from whether an event exists.
         // New warranty: read the user's saved default from UserDefaults (off until opted in once).
@@ -60,9 +69,15 @@ struct AddWarrantyView: View {
             _calendarSyncEnabled = State(initialValue: UserDefaults.standard.bool(forKey: Self.calendarSyncDefaultKey))
         }
 
-        // Treat the existing category as "manually picked" when editing so OCR
-        // never overrides a deliberate prior choice.
-        _categoryWasManuallyPicked = State(initialValue: editing != nil)
+        // Treat the category as "manually picked" when editing or prefilled,
+        // so the in-form OCR auto-fill doesn't override a value we just set
+        // from the dashboard scan flow.
+        _categoryWasManuallyPicked = State(initialValue: editing != nil || prefilled != nil)
+
+        // Mark a prefilled draft as "auto-filled from receipt" so the same
+        // banner that shows after in-form OCR also shows here. The user sees
+        // the same affordance regardless of where the scan happened.
+        _didAutoFillFromReceipt = State(initialValue: prefilled != nil)
     }
 
     var body: some View {

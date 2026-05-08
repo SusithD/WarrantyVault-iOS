@@ -1,7 +1,24 @@
 import SwiftUI
+import PhotosUI
 
 struct DashboardView: View {
     @Environment(AppStore.self) private var store
+
+    // MARK: - Scan flow state
+    /// True while the source-picker confirmation dialog is on screen.
+    @State private var presentingScanSourcePicker = false
+    /// True while the system Photos sheet is open.
+    @State private var presentingPhotosPicker = false
+    /// True while the camera capture sheet is open (real device only).
+    @State private var presentingCameraPicker = false
+    /// Photos picker output — observed via `.onChange` to start the OCR flow.
+    @State private var photosPickerItem: PhotosPickerItem?
+    /// True while OCR + prediction are running. Drives the full-screen overlay.
+    @State private var isScanning = false
+    /// When set, the AddWarrantyView sheet opens with these fields pre-filled.
+    /// Using `Identifiable item:` binding so the sheet only opens after a
+    /// successful scan — never with a stale empty draft.
+    @State private var scannedDraft: Warranty?
 
     var body: some View {
         @Bindable var store = store
@@ -9,6 +26,7 @@ struct DashboardView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 header
+                scanCard
                 summaryStrip
                 searchField
                 categoryChips
@@ -46,6 +64,122 @@ struct DashboardView: View {
         .navigationDestination(for: Warranty.self) { w in
             WarrantyDetailView(warrantyID: w.id)
         }
+        // -- Scan flow plumbing -----------------------------------------------
+        // Source-picker dialog: lets the user choose Library or Camera.
+        .confirmationDialog("Scan a receipt", isPresented: $presentingScanSourcePicker, titleVisibility: .visible) {
+            Button("Choose from Library") { presentingPhotosPicker = true }
+            if CameraPicker.isAvailable {
+                Button("Capture with Camera") { presentingCameraPicker = true }
+            }
+            Button("Cancel", role: .cancel) {}
+        }
+        // System Photos picker — `.images` filter restricts to image assets.
+        .photosPicker(isPresented: $presentingPhotosPicker, selection: $photosPickerItem, matching: .images)
+        // Camera sheet — only effective on real devices (CameraPicker guards
+        // `isAvailable` via UIImagePickerController.isSourceTypeAvailable).
+        .fullScreenCover(isPresented: $presentingCameraPicker) {
+            CameraPicker { image in
+                Task { await processScannedImage(image) }
+            }
+            .ignoresSafeArea()
+        }
+        // When a Photos asset is loaded, kick off the scan pipeline.
+        .onChange(of: photosPickerItem) { _, item in
+            guard let item else { return }
+            Task {
+                if let data = try? await item.loadTransferable(type: Data.self),
+                   let image = UIImage(data: data) {
+                    await processScannedImage(image)
+                }
+                // Reset so re-picking the same image triggers `.onChange` again.
+                photosPickerItem = nil
+            }
+        }
+        // Once OCR finishes successfully, present the AddWarranty form
+        // with the parsed fields pre-filled.
+        .sheet(item: $scannedDraft) { draft in
+            NavigationStack {
+                AddWarrantyView(prefilled: draft)
+            }
+            .presentationDetents([.large])
+            .presentationDragIndicator(.visible)
+        }
+        // Full-screen "Scanning…" overlay during OCR.
+        .overlay {
+            if isScanning {
+                ZStack {
+                    Color.black.opacity(0.55).ignoresSafeArea()
+                    VStack(spacing: 12) {
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                            .tint(AppColors.accent)
+                        Text("Scanning receipt…")
+                            .font(AppTypography.bodyStrong)
+                            .foregroundStyle(AppColors.textPrimary)
+                    }
+                    .padding(.horizontal, 24).padding(.vertical, 20)
+                    .background(
+                        RoundedRectangle(cornerRadius: 14, style: .continuous)
+                            .fill(AppColors.bgSurface)
+                    )
+                }
+                .transition(.opacity)
+            }
+        }
+        .animation(.easeInOut(duration: 0.18), value: isScanning)
+    }
+
+    /// Runs Vision OCR + the category predictor over a picked/captured image,
+    /// then opens the AddWarranty form with a pre-filled draft. The image
+    /// itself is encoded for storage so it round-trips into the receipt slot
+    /// on the warranty without a second pick.
+    @MainActor
+    private func processScannedImage(_ image: UIImage) async {
+        isScanning = true
+        defer { isScanning = false }
+
+        // OCR + parse (already non-blocking inside the scanner).
+        guard let result = try? await ReceiptScanner.shared.scan(image) else {
+            // Even if OCR fails, drop the user into a blank form with the
+            // image attached so they can fill it in manually.
+            scannedDraft = blankDraft(with: image)
+            return
+        }
+
+        // Heuristic post-processing: the OCR `purchaseDate` is the receipt's
+        // own date if it found one. Default expiry to one year out — typical
+        // for consumer warranties — so the user only needs to adjust if the
+        // coverage period differs.
+        let purchase = result.purchaseDate ?? Date()
+        let expiry = Calendar.current.date(byAdding: .year, value: 1, to: purchase) ?? purchase
+
+        let predictedCategory = CategoryPredictor.shared.predict(from: result.rawText) ?? .electronics
+
+        scannedDraft = Warranty(
+            productName: result.productName ?? "",
+            brand: "",  // brand isn't reliably extractable; user fills it
+            category: predictedCategory,
+            purchaseDate: purchase,
+            expiryDate: expiry,
+            retailer: result.retailer ?? "",
+            price: result.totalPrice ?? 0,
+            receiptImage: image.receiptEncoded()
+        )
+    }
+
+    /// Fallback when OCR fails — empty draft, but with the image already
+    /// attached so the manual flow doesn't lose what the user picked.
+    private func blankDraft(with image: UIImage) -> Warranty {
+        Warranty(
+            productName: "",
+            brand: "",
+            category: .electronics,
+            purchaseDate: Date(),
+            expiryDate: Calendar.current.date(byAdding: .year, value: 1, to: Date()) ?? Date(),
+            retailer: "",
+            price: 0,
+            receiptImage: image.receiptEncoded()
+        )
     }
 
     // MARK: Subviews
@@ -99,6 +233,53 @@ struct DashboardView: View {
         .padding(.top, 8)
         .accessibilityElement(children: .combine)
         .accessibilityLabel("Welcome back. Your coverage, at a glance.")
+    }
+
+    /// Hero CTA card: opens a Library/Camera dialog and runs OCR + category
+    /// prediction on the picked image, then drops the user into a pre-filled
+    /// AddWarranty form. Lime fill so it reads as a primary action; sits just
+    /// below the welcome header where the eye lands first.
+    private var scanCard: some View {
+        Button {
+            presentingScanSourcePicker = true
+        } label: {
+            HStack(spacing: 14) {
+                ZStack {
+                    Circle()
+                        .fill(AppColors.bgApp)
+                        .frame(width: 44, height: 44)
+                    Image(systemName: "camera.viewfinder")
+                        .font(.system(size: 19, weight: .semibold))
+                        .foregroundStyle(AppColors.accent)
+                }
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Scan a receipt")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundStyle(AppColors.textInverse)
+                    Text("Add a warranty in seconds")
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundStyle(AppColors.textInverse.opacity(0.7))
+                }
+
+                Spacer()
+
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 13, weight: .heavy))
+                    .foregroundStyle(AppColors.textInverse.opacity(0.7))
+                    .accessibilityHidden(true)
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 14)
+            .background(
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .fill(AppColors.accent)
+            )
+        }
+        .buttonStyle(.plain)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Scan a receipt")
+        .accessibilityHint("Double-tap to scan a receipt and create a new warranty automatically")
     }
 
     private var summaryStrip: some View {
