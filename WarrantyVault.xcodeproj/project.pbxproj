@@ -61,6 +61,9 @@
 		D79F9007F6445C64C1A741DC /* DocumentScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C303C49D1CC5FACB30B5ACF0 /* DocumentScannerView.swift */; };
 		DDF3855DA9395A7B024F7C81 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8939F9C4055C8C84F2C1B3E /* MainTabView.swift */; };
 		E33CDB8A6EB51113B24EA0CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B45634CEEE3EB39F8AD6FF61 /* Assets.xcassets */; };
+		E43D3AF22FAE257C00D4906B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E43D3AF12FAE257B00D4906B /* GoogleService-Info.plist */; };
+		E43D3AF32FAE257C00D4906B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E43D3AF12FAE257B00D4906B /* GoogleService-Info.plist */; };
+		E43D3AF42FAE257C00D4906B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E43D3AF12FAE257B00D4906B /* GoogleService-Info.plist */; };
 		E4A75844BA60685A520404EA /* GradientBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB60067025EEE78B7AF22FC /* GradientBackground.swift */; };
 		E7D329FFDF18BADD48AAC9DB /* MainAppPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095254A4332EF34AFA688196 /* MainAppPlaceholderView.swift */; };
 		E835BAA96A9108A0707A85C6 /* ClaimsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08336CB9A2B2301A0574C44B /* ClaimsListView.swift */; };
@@ -173,6 +176,7 @@
 		E06580A71FD35BFC9949114A /* Claim+Bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Claim+Bridge.swift"; sourceTree = "<group>"; };
 		E0CE25BDF9BBE41D2254BBD8 /* AddWarrantyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWarrantyView.swift; sourceTree = "<group>"; };
 		E0F822488B1123A47CDD3358 /* HouseholdCreateJoinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseholdCreateJoinView.swift; sourceTree = "<group>"; };
+		E43D3AF12FAE257B00D4906B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E505FC6938F78F58D5111BF2 /* GlassCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassCard.swift; sourceTree = "<group>"; };
 		E78A845584175F04D717E134 /* WarrantyVault 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WarrantyVault 3.xcdatamodel"; sourceTree = "<group>"; };
 		EE093E46BBB7A5A72250A01C /* WarrantyVault.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WarrantyVault.xcdatamodel; sourceTree = "<group>"; };
@@ -314,6 +318,7 @@
 				B45634CEEE3EB39F8AD6FF61 /* Assets.xcassets */,
 				6A7F151FE197B09404C6E293 /* WarrantyVault.entitlements */,
 				2855521D3CECE57610385E92 /* WarrantyVaultApp.swift */,
+				E43D3AF12FAE257B00D4906B /* GoogleService-Info.plist */,
 			);
 			path = WarrantyVault;
 			sourceTree = "<group>";
@@ -544,6 +549,9 @@
 				Base,
 			);
 			mainGroup = 0FC4D4225F8AED18EE7FD8F8;
+			packageReferences = (
+				E43D3AF52FAE2A1100D4906B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = C769FEA752C22F7B25D62158 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -562,6 +570,7 @@
 			files = (
 				E33CDB8A6EB51113B24EA0CA /* Assets.xcassets in Resources */,
 				335A207BE1E1BE37DEB5B684 /* Preview Assets.xcassets in Resources */,
+				E43D3AF22FAE257C00D4906B /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -569,6 +578,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E43D3AF42FAE257C00D4906B /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -576,6 +586,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E43D3AF32FAE257C00D4906B /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1004,6 +1015,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E43D3AF52FAE2A1100D4906B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.13.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCVersionGroup section */
 		8A33099F64A214C051F2B74C /* WarrantyVault.xcdatamodeld */ = {
