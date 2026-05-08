@@ -17,6 +17,7 @@ struct WarrantyVaultApp: App {
     @State private var store: AppStore
 
     init() {
+        FirebaseSetup.configure()
         _store = State(initialValue: AppStore(context: PersistenceController.shared.viewContext))
     }
 

@@ -18,15 +18,12 @@
 		1397BC8936E1DEDDB564C827 /* ImageProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECDE40458958063EEA2BEEC /* ImageProcessing.swift */; };
 		14A8465A9977354AE3918A58 /* OnboardingContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A6FD4962999E1ABDA2D0E6 /* OnboardingContainerView.swift */; };
 		15B3EA5043A44D0616D249AC /* PersistenceBridgingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD76C58304D4FA951A3C0FA /* PersistenceBridgingTests.swift */; };
-		16B8437690A1CA8623D564E5 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92444DF0B1835883A146CEE3 /* AuthService.swift */; };
 		1924FEEF938E6C85BAC1FF8F /* IconBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1ED3A53108876BD01D6D10C /* IconBadge.swift */; };
-		1D914ACF83C38FDDD7025508 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 27FF466A9E7F3D8340941A20 /* FirebaseAuth */; };
 		23BDA1E47BE382D7E3488D0C /* Claim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFCF47C94865CCCA1C7C67D /* Claim.swift */; };
 		2CDF4034AAFB934314C6C0A0 /* FileClaimView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C44CDB6A511F95BBEE288B2 /* FileClaimView.swift */; };
 		2D6D099AB8BB4A748FFA403D /* WarrantyVaultWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 84288769D97076435D0A184C /* WarrantyVaultWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2ECBE9CD5F5C0D62836D2D4F /* CategoryPredictor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A0B88E4D8C3B42E33ADAD8 /* CategoryPredictor.swift */; };
 		335A207BE1E1BE37DEB5B684 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 757D7FD6E847403B72ECD838 /* Preview Assets.xcassets */; };
-		3A4E40E987DE97E33F9B2E2E /* CloudSyncView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8041E382C147CEAFBFFF80 /* CloudSyncView.swift */; };
 		3A9824F97FE7FC09FE5E924F /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA6CECEE989193FA10E3B5 /* LocationService.swift */; };
 		3A9C1E31E2BD80C801CDF0D8 /* CalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC325F5D55C9303B3E0E2C29 /* CalendarService.swift */; };
 		3F28EB1F44ED9EE85EB46F52 /* ClaimStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2D9BB87D4EF8DC3D04C48C4 /* ClaimStatusView.swift */; };
@@ -37,13 +34,11 @@
 		6A8C5CC6E8347B19FCE35504 /* OnboardingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14302FE240598CD2938ADE56 /* OnboardingPageView.swift */; };
 		6AD8AF935DB6FAD6A9ECB0C9 /* WidgetSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EA15AD0732484AEFC07568 /* WidgetSnapshot.swift */; };
 		6C9AD36B66AC5A733B0FC1C4 /* ClaimEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 289A7F013E6181ECDF8AB5DC /* ClaimEntity+CoreDataProperties.swift */; };
-		6FB6480B8867A4751E83983A /* SyncDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A31431D99C07FC0C8D0E346 /* SyncDTO.swift */; };
 		76694E81399C3A1475A2151C /* AppStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA9F4E3758FC8FF0FCB6190 /* AppStoreTests.swift */; };
 		7B488B60A9D067FEFFFF72B0 /* StatusTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3026624B700D80D11A6A490B /* StatusTag.swift */; };
 		8188759A2D80595F320D6BED /* ClaimEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7A2788E57165228D71ECD9 /* ClaimEntity+CoreDataClass.swift */; };
 		8951B8224B48764275A1EB61 /* OnboardingIllustrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84FE987CFD544215D02529 /* OnboardingIllustrationView.swift */; };
 		8D921DC19381E8CD79C10C55 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABDF9F4D19DFE43FB93D3D2 /* ProfileView.swift */; };
-		9261490297C3C8D62F777A10 /* FirebaseSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B44107951267E87F6BDC23 /* FirebaseSetup.swift */; };
 		93652C56C5AD01D6986A6E2B /* ReceiptScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0605DE40290970C2D42A6772 /* ReceiptScanner.swift */; };
 		97203B43A0412C913BB3B8DB /* GlassCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E505FC6938F78F58D5111BF2 /* GlassCard.swift */; };
 		999BCF4DB55832BE25E084BD /* PageIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887BC54B61BCA96E23839BA0 /* PageIndicator.swift */; };
@@ -52,7 +47,6 @@
 		9E17C879FF720695CBBCDE78 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08084EE98332C5F6E69FC871 /* AppColors.swift */; };
 		AA560F0103904C164BFA401B /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A574EE65BEC3076702D270F /* SplashView.swift */; };
 		B2141EB1B751C1B9E806E112 /* HouseholdCreateJoinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F822488B1123A47CDD3358 /* HouseholdCreateJoinView.swift */; };
-		B53C4CDB8976A444E69FF80D /* WarrantySyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBA4F278CFCE95BE7E5F92D /* WarrantySyncService.swift */; };
 		BE35B77492A9228CCAD2F873 /* InviteMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96AC6A7293978C458ABEBF4D /* InviteMemberView.swift */; };
 		C6CE87D75F9F44E0155CE95D /* WarrantyVaultApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2855521D3CECE57610385E92 /* WarrantyVaultApp.swift */; };
 		C7BBFE5F51800976754A5AD3 /* WarrantyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0ED24D14C9F9D973339652 /* WarrantyTests.swift */; };
@@ -81,7 +75,6 @@
 		FE37144E8DF5E9E14F46965D /* WarrantyVaultWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F3595DA10CBCD352575781 /* WarrantyVaultWidget.swift */; };
 		FE40D797EC44A7CDFF9C3627 /* Claim+Bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06580A71FD35BFC9949114A /* Claim+Bridge.swift */; };
 		FE64C9A6E9B1B8C3E7694B81 /* HouseholdHubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80902AB9904C5C9462ECF0F9 /* HouseholdHubView.swift */; };
-		FECC46C7949468A8C79632B8 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = C4F14393BF234F225EC3D177 /* FirebaseFirestore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,9 +116,7 @@
 		0A574EE65BEC3076702D270F /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		0B7A2788E57165228D71ECD9 /* ClaimEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClaimEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		0BFCF47C94865CCCA1C7C67D /* Claim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Claim.swift; sourceTree = "<group>"; };
-		0C8041E382C147CEAFBFFF80 /* CloudSyncView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CloudSyncView.swift; path = WarrantyVault/Features/CloudSync/CloudSyncView.swift; sourceTree = SOURCE_ROOT; };
 		0D0322E2CAA4266464DEAC9F /* WarrantyVault.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WarrantyVault.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		0DBA4F278CFCE95BE7E5F92D /* WarrantySyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WarrantySyncService.swift; path = WarrantyVault/Cloud/WarrantySyncService.swift; sourceTree = SOURCE_ROOT; };
 		0F0E7B63B9F4A1200ACDEF11 /* CategoryPredictorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPredictorTests.swift; sourceTree = "<group>"; };
 		14302FE240598CD2938ADE56 /* OnboardingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageView.swift; sourceTree = "<group>"; };
 		1CDFC5EF569FED8CE46AB3E2 /* LocationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPickerView.swift; sourceTree = "<group>"; };
@@ -140,7 +131,6 @@
 		2ECDE40458958063EEA2BEEC /* ImageProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessing.swift; sourceTree = "<group>"; };
 		3026624B700D80D11A6A490B /* StatusTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusTag.swift; sourceTree = "<group>"; };
 		42DBB6488DBB39D2383AE76B /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
-		4A31431D99C07FC0C8D0E346 /* SyncDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SyncDTO.swift; path = WarrantyVault/Cloud/SyncDTO.swift; sourceTree = SOURCE_ROOT; };
 		4CBA6CECEE989193FA10E3B5 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		4FD921B5B7D139EF8D6A0829 /* ActivityEntry+Bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivityEntry+Bridge.swift"; sourceTree = "<group>"; };
 		5DA9F4E3758FC8FF0FCB6190 /* AppStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreTests.swift; sourceTree = "<group>"; };
@@ -155,7 +145,6 @@
 		757D7FD6E847403B72ECD838 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		79A6FD4962999E1ABDA2D0E6 /* OnboardingContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerView.swift; sourceTree = "<group>"; };
 		80902AB9904C5C9462ECF0F9 /* HouseholdHubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HouseholdHubView.swift; sourceTree = "<group>"; };
-		81B44107951267E87F6BDC23 /* FirebaseSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FirebaseSetup.swift; path = WarrantyVault/Cloud/FirebaseSetup.swift; sourceTree = SOURCE_ROOT; };
 		84288769D97076435D0A184C /* WarrantyVaultWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WarrantyVaultWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		84587C2D80F1CAF473030EBD /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		87171539BAC9C42B0994A447 /* ReceiptScannerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptScannerTests.swift; sourceTree = "<group>"; };
@@ -165,7 +154,6 @@
 		8B241F3F735E85EE0A4C7A95 /* WarrantyVault 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WarrantyVault 4.xcdatamodel"; sourceTree = "<group>"; };
 		8DAFC14F269EDBCF63BA1C54 /* ActivityEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivityEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		902DD5128FE982DF03E147BF /* OnboardingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingData.swift; sourceTree = "<group>"; };
-		92444DF0B1835883A146CEE3 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AuthService.swift; path = WarrantyVault/Cloud/AuthService.swift; sourceTree = SOURCE_ROOT; };
 		95A47CEA66A2F6C68CAC6243 /* ClaimChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimChatView.swift; sourceTree = "<group>"; };
 		96AC6A7293978C458ABEBF4D /* InviteMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteMemberView.swift; sourceTree = "<group>"; };
 		9D60B2675D348951D4CE1505 /* WarrantyEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WarrantyEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -216,8 +204,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D914ACF83C38FDDD7025508 /* FirebaseAuth in Frameworks */,
-				FECC46C7949468A8C79632B8 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,11 +280,6 @@
 				0EFA55D81FA73A39D90C92B5 /* WarrantyVaultWidget */,
 				1118E5B78C063E0DEDCA8154 /* WarrantyVaultTests */,
 				C769FEA752C22F7B25D62158 /* Products */,
-				81B44107951267E87F6BDC23 /* FirebaseSetup.swift */,
-				92444DF0B1835883A146CEE3 /* AuthService.swift */,
-				4A31431D99C07FC0C8D0E346 /* SyncDTO.swift */,
-				0DBA4F278CFCE95BE7E5F92D /* WarrantySyncService.swift */,
-				0C8041E382C147CEAFBFFF80 /* CloudSyncView.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -499,10 +480,6 @@
 				B5CBC65345A40C3D1DAC561B /* PBXTargetDependency */,
 			);
 			name = WarrantyVault;
-			packageProductDependencies = (
-				27FF466A9E7F3D8340941A20 /* FirebaseAuth */,
-				C4F14393BF234F225EC3D177 /* FirebaseFirestore */,
-			);
 			productName = WarrantyVault;
 			productReference = 0D0322E2CAA4266464DEAC9F /* WarrantyVault.app */;
 			productType = "com.apple.product-type.application";
@@ -696,11 +673,6 @@
 				6AD8AF935DB6FAD6A9ECB0C9 /* WidgetSnapshot.swift in Sources */,
 				C6CE87D75F9F44E0155CE95D /* WarrantyVaultApp.swift in Sources */,
 				07B2FB8DFCF304231F73AF47 /* WarrantyVault.xcdatamodeld in Sources */,
-				9261490297C3C8D62F777A10 /* FirebaseSetup.swift in Sources */,
-				16B8437690A1CA8623D564E5 /* AuthService.swift in Sources */,
-				6FB6480B8867A4751E83983A /* SyncDTO.swift in Sources */,
-				B53C4CDB8976A444E69FF80D /* WarrantySyncService.swift in Sources */,
-				3A4E40E987DE97E33F9B2E2E /* CloudSyncView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1054,19 +1026,6 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		27FF466A9E7F3D8340941A20 /* FirebaseAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E43D3AF52FAE2A1100D4906B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAuth;
-		};
-		C4F14393BF234F225EC3D177 /* FirebaseFirestore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E43D3AF52FAE2A1100D4906B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestore;
-		};
-/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		8A33099F64A214C051F2B74C /* WarrantyVault.xcdatamodeld */ = {

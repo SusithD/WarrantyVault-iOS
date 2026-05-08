@@ -43,6 +43,37 @@ final class AppStore {
         self.messages  = messages
         reloadAll()
         refreshWidgetSnapshot()
+        bindCloudSync()
+    }
+
+    /// Wires AuthService and WarrantySyncService into the store. When a user
+    /// signs in we attach Firestore listeners; on sign-out they detach. Remote
+    /// changes call back into reloadWarranties / reloadClaims so the in-memory
+    /// arrays stay current. Idempotent — safe to call once at init.
+    private func bindCloudSync() {
+        let sync = WarrantySyncService.shared
+        sync.onWarrantiesChanged = { [weak self] in
+            self?.reloadWarranties()
+            self?.refreshWidgetSnapshot()
+        }
+        sync.onClaimsChanged = { [weak self] in
+            self?.reloadClaims()
+        }
+
+        // Start immediately if a session was restored at boot.
+        if let uid = AuthService.shared.uid {
+            sync.start(uid: uid, context: context)
+        }
+
+        // React to subsequent sign-ins / sign-outs.
+        AuthService.shared.onAuthStateChanged = { [weak self] uid in
+            guard let self else { return }
+            if let uid {
+                sync.start(uid: uid, context: self.context)
+            } else {
+                sync.stop()
+            }
+        }
     }
 
     /// Convenience init used by SwiftUI previews. Spins up an in-memory Core Data
@@ -111,6 +142,7 @@ final class AppStore {
         reloadActivity()
         refreshWidgetSnapshot()
 
+        WarrantySyncService.shared.pushWarranty(w)
         Task.detached { await NotificationService.shared.schedule(for: w) }
     }
 
@@ -120,6 +152,7 @@ final class AppStore {
         reloadWarranties()
         refreshWidgetSnapshot()
 
+        WarrantySyncService.shared.pushWarranty(w)
         Task.detached {
             NotificationService.shared.cancel(for: w.id)
             await NotificationService.shared.schedule(for: w)
@@ -139,6 +172,7 @@ final class AppStore {
         reloadWarranties()
         refreshWidgetSnapshot()
 
+        WarrantySyncService.shared.deleteWarranty(id: id)
         Task.detached { NotificationService.shared.cancel(for: id) }
         if let calendarEventId {
             Task.detached { try? CalendarService.shared.deleteEvent(identifier: calendarEventId) }
@@ -192,6 +226,8 @@ final class AppStore {
         save()
         reloadClaims()
         reloadActivity()
+
+        WarrantySyncService.shared.pushClaim(c)
     }
 
     // MARK: Mutations — Chat / Household (in-memory only)
