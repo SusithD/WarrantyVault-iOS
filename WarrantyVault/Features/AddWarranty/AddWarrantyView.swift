@@ -1,5 +1,6 @@
 import SwiftUI
 import PhotosUI
+import CoreLocation
 
 struct AddWarrantyView: View {
     @Environment(AppStore.self) private var store
@@ -21,6 +22,11 @@ struct AddWarrantyView: View {
     @State private var photosPickerItem: PhotosPickerItem?
     @State private var presentingCamera = false
     @State private var reminderEnabled: Bool
+    @State private var latitude: Double?
+    @State private var longitude: Double?
+    @State private var locationLabel: String = ""
+    @State private var presentingLocationPicker = false
+    @State private var locationDeniedHint = false
 
     init(editing: Warranty? = nil) {
         self.editing = editing
@@ -35,6 +41,8 @@ struct AddWarrantyView: View {
         _expiryDate    = State(initialValue: editing?.expiryDate ?? Calendar.current.date(byAdding: .year, value: 1, to: Date()) ?? Date())
         _receiptImage    = State(initialValue: editing?.receiptImage)
         _reminderEnabled = State(initialValue: editing?.reminderEnabled ?? true)
+        _latitude        = State(initialValue: editing?.latitude)
+        _longitude       = State(initialValue: editing?.longitude)
     }
 
     var body: some View {
@@ -46,6 +54,7 @@ struct AddWarrantyView: View {
                     categoryCard
                     datesCard
                     purchaseDetailsCard
+                    locationCard
                     receiptCard
                     reminderToggle
                     notesField
@@ -69,6 +78,13 @@ struct AddWarrantyView: View {
             }
             .ignoresSafeArea()
         }
+        .sheet(isPresented: $presentingLocationPicker) {
+            LocationPickerView(initial: currentCoordinate) { coord in
+                latitude  = coord.latitude
+                longitude = coord.longitude
+                Task { await refreshLocationLabel() }
+            }
+        }
         .onChange(of: photosPickerItem) { _, item in
             guard let item else { return }
             Task {
@@ -78,6 +94,12 @@ struct AddWarrantyView: View {
                 }
             }
         }
+        .task { await refreshLocationLabel() }
+    }
+
+    private var currentCoordinate: CLLocationCoordinate2D? {
+        guard let lat = latitude, let lon = longitude else { return nil }
+        return CLLocationCoordinate2D(latitude: lat, longitude: lon)
     }
 
     // MARK: Form cards
@@ -140,6 +162,83 @@ struct AddWarrantyView: View {
                 LabeledTextField(label: "Retailer", text: $retailer, placeholder: "e.g. Best Buy")
                 LabeledTextField(label: "Price (USD)", text: $priceText, placeholder: "0.00", keyboard: .decimalPad)
             }
+        }
+    }
+
+    private var locationCard: some View {
+        GlassCard {
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Purchase location".uppercased()).overlineStyle()
+
+                HStack(spacing: 10) {
+                    Image(systemName: currentCoordinate == nil ? "mappin.slash" : "mappin.and.ellipse")
+                        .foregroundStyle(AppColors.brandBlue)
+                        .frame(width: 22)
+                    Text(locationLabel.isEmpty ? "Not set" : locationLabel)
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundStyle(AppColors.textPrimary)
+                        .lineLimit(2)
+                    Spacer(minLength: 0)
+                }
+
+                HStack(spacing: 8) {
+                    Button {
+                        Task { await useCurrentLocation() }
+                    } label: {
+                        receiptActionLabel(symbol: "location.fill", text: "Current")
+                    }
+
+                    Button {
+                        presentingLocationPicker = true
+                    } label: {
+                        receiptActionLabel(symbol: "map", text: "Pick on map")
+                    }
+
+                    if currentCoordinate != nil {
+                        Button(role: .destructive) {
+                            latitude = nil
+                            longitude = nil
+                            locationLabel = ""
+                        } label: {
+                            receiptActionLabel(symbol: "trash", text: "Clear")
+                        }
+                    }
+                }
+
+                if locationDeniedHint {
+                    Text("Location is off. Enable it in Settings → Privacy → Location Services → WarrantyVault.")
+                        .font(.system(size: 11))
+                        .foregroundStyle(AppColors.danger)
+                }
+            }
+        }
+    }
+
+    private func useCurrentLocation() async {
+        locationDeniedHint = false
+        do {
+            let location = try await LocationService.shared.requestCurrentLocation()
+            latitude  = location.coordinate.latitude
+            longitude = location.coordinate.longitude
+            await refreshLocationLabel()
+        } catch LocationService.Failure.authorizationDenied {
+            locationDeniedHint = true
+        } catch {
+            // Silent — user can fall back to Pick on map.
+        }
+    }
+
+    private func refreshLocationLabel() async {
+        guard let coord = currentCoordinate else {
+            locationLabel = ""
+            return
+        }
+        let geo = CLGeocoder()
+        let location = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
+        if let p = try? await geo.reverseGeocodeLocation(location).first {
+            locationLabel = [p.name, p.locality].compactMap { $0 }.joined(separator: ", ")
+        } else {
+            locationLabel = String(format: "%.4f, %.4f", coord.latitude, coord.longitude)
         }
     }
 
@@ -273,6 +372,8 @@ struct AddWarrantyView: View {
             updated.expiryDate = expiryDate
             updated.receiptImage    = receiptImage
             updated.reminderEnabled = reminderEnabled
+            updated.latitude        = latitude
+            updated.longitude       = longitude
             store.updateWarranty(updated)
         } else {
             let w = Warranty(
@@ -286,7 +387,9 @@ struct AddWarrantyView: View {
                 serialNumber: serial,
                 notes: notes,
                 receiptImage: receiptImage,
-                reminderEnabled: reminderEnabled
+                reminderEnabled: reminderEnabled,
+                latitude: latitude,
+                longitude: longitude
             )
             store.addWarranty(w)
         }

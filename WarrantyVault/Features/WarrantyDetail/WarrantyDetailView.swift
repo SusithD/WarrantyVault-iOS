@@ -1,4 +1,5 @@
 import SwiftUI
+import MapKit
 
 struct WarrantyDetailView: View {
     let warrantyID: UUID
@@ -22,6 +23,7 @@ struct WarrantyDetailView: View {
                         hero(w)
                         coverageCard(w)
                         detailsCard(w)
+                        locationCard(w)
                         receiptCard(w)
                         actions(w)
                         notesCard(w)
@@ -159,6 +161,63 @@ struct WarrantyDetailView: View {
                 .font(.system(size: 13, weight: .semibold))
                 .foregroundStyle(AppColors.textPrimary)
         }
+    }
+
+    @ViewBuilder
+    private func locationCard(_ w: Warranty) -> some View {
+        GlassCard {
+            VStack(alignment: .leading, spacing: 12) {
+                HStack {
+                    Text("Purchase location".uppercased()).overlineStyle()
+                    Spacer()
+                    if w.coordinate != nil {
+                        Button {
+                            openInMaps(w)
+                        } label: {
+                            Label("Open in Maps", systemImage: "arrow.up.right.square")
+                                .font(.system(size: 12, weight: .semibold))
+                                .foregroundStyle(AppColors.brandBlue)
+                        }
+                    }
+                }
+
+                if let coord = w.coordinate {
+                    Map(initialPosition: .region(
+                        MKCoordinateRegion(
+                            center: coord,
+                            span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                        )
+                    )) {
+                        Marker(w.retailer.isEmpty ? "Purchased here" : w.retailer, coordinate: coord)
+                            .tint(AppColors.brandBlue)
+                    }
+                    .mapStyle(.standard(elevation: .realistic))
+                    .frame(height: 200)
+                    .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    .allowsHitTesting(false)
+                } else {
+                    HStack(spacing: 10) {
+                        Image(systemName: "mappin.slash")
+                            .foregroundStyle(AppColors.textTertiary)
+                        Text("No location captured")
+                            .font(.system(size: 13, weight: .medium))
+                            .foregroundStyle(AppColors.textSecondary)
+                        Spacer()
+                    }
+                    .padding(.vertical, 8)
+                }
+            }
+        }
+    }
+
+    private func openInMaps(_ w: Warranty) {
+        guard let coord = w.coordinate else { return }
+        let placemark = MKPlacemark(coordinate: coord)
+        let item = MKMapItem(placemark: placemark)
+        item.name = w.retailer.isEmpty ? w.productName : w.retailer
+        item.openInMaps(launchOptions: [
+            MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: coord)
+        ])
     }
 
     private func receiptCard(_ w: Warranty) -> some View {

@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import CoreLocation
 
 enum WarrantyCategory: String, CaseIterable, Identifiable, Codable {
     case electronics = "Electronics"
@@ -50,10 +51,18 @@ struct Warranty: Identifiable, Hashable, Codable {
     var notes: String
     var receiptImage: Data?
     var reminderEnabled: Bool
+    var latitude: Double?
+    var longitude: Double?
 
     /// Derived from `receiptImage` — kept for one release so views that read
     /// the legacy `receiptAttached` flag continue to compile unchanged.
     var receiptAttached: Bool { receiptImage != nil }
+
+    /// Returns a coordinate when both lat/lon are present, else `nil`.
+    var coordinate: CLLocationCoordinate2D? {
+        guard let lat = latitude, let lon = longitude else { return nil }
+        return CLLocationCoordinate2D(latitude: lat, longitude: lon)
+    }
 
     init(
         id: UUID = UUID(),
@@ -67,7 +76,9 @@ struct Warranty: Identifiable, Hashable, Codable {
         serialNumber: String = "",
         notes: String = "",
         receiptImage: Data? = nil,
-        reminderEnabled: Bool = true
+        reminderEnabled: Bool = true,
+        latitude: Double? = nil,
+        longitude: Double? = nil
     ) {
         self.id = id
         self.productName = productName
@@ -81,6 +92,8 @@ struct Warranty: Identifiable, Hashable, Codable {
         self.notes = notes
         self.receiptImage = receiptImage
         self.reminderEnabled = reminderEnabled
+        self.latitude = latitude
+        self.longitude = longitude
     }
 
     var daysRemaining: Int {
