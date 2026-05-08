@@ -51,6 +51,10 @@ struct RootView: View {
                 LoginView()
                     .transition(.opacity)
 
+            case .biometricLock:
+                AuthenticationView(onAuthenticated: { coordinator.biometricsUnlocked() })
+                    .transition(.opacity)
+
             case .mainApp:
                 MainTabView()
                     .transition(.opacity)

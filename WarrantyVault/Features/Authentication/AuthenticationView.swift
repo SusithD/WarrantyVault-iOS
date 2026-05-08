@@ -14,8 +14,10 @@ import LocalAuthentication
 struct AuthenticationView: View {
     var onAuthenticated: () -> Void
 
+    @Environment(AppCoordinator.self) private var coordinator
+    @State private var auth = AuthService.shared
     @State private var isScanning = false
-    @State private var showPasscode = false
+    @State private var hasAutoPrompted = false
     @State private var errorMessage: String?
 
     /// Honour the system "Reduce Motion" setting — when on, we drop the
@@ -59,8 +61,12 @@ struct AuthenticationView: View {
             }
             .padding(.horizontal, 28)
         }
-        .sheet(isPresented: $showPasscode) {
-            PasscodeEntrySheet(onUnlock: onAuthenticated)
+        .onAppear {
+            // Auto-prompt the system biometric sheet so the user doesn't have
+            // to tap. Guarded so transient re-renders don't fire it twice.
+            guard !hasAutoPrompted else { return }
+            hasAutoPrompted = true
+            beginBiometricAuth()
         }
     }
 
@@ -98,10 +104,11 @@ struct AuthenticationView: View {
 
     private var copyBlock: some View {
         VStack(spacing: 8) {
-            Text("Welcome Back")
+            Text(auth.displayName.map { "Welcome back, \($0)" } ?? "Welcome Back")
                 .font(.system(size: 28, weight: .bold))
                 .tracking(-0.3)
                 .foregroundStyle(AppColors.textPrimary)
+                .multilineTextAlignment(.center)
             Text("Verify your identity to access your vault")
                 .font(AppTypography.body)
                 .foregroundStyle(AppColors.textSecondary)
@@ -203,19 +210,17 @@ struct AuthenticationView: View {
         .foregroundStyle(AppColors.textTertiary)
     }
 
-    // MARK: - Footer (passcode + forgot)
+    // MARK: - Footer
 
+    /// Fallback when biometrics are unavailable, denied, or the user wants
+    /// to switch accounts: signs out of Firebase and bounces to the login
+    /// gate where they can enter their email + password.
     private var footer: some View {
-        VStack(spacing: 12) {
-            Button("Enter Passcode Instead") { showPasscode = true }
-                .font(AppTypography.bodyStrong)
-                .foregroundStyle(AppColors.accent)
-
-            Button("FORGOT PASSCODE?") { }
-                .font(AppTypography.overline)
-                .tracking(1.4)
-                .foregroundStyle(AppColors.textSecondary)
+        Button("Use password instead") {
+            coordinator.signOut()
         }
+        .font(AppTypography.bodyStrong)
+        .foregroundStyle(AppColors.accent)
     }
 
     // MARK: - Auth
@@ -251,51 +256,7 @@ struct AuthenticationView: View {
     }
 }
 
-// MARK: - Passcode Sheet
-
-private struct PasscodeEntrySheet: View {
-    var onUnlock: () -> Void
-    @Environment(\.dismiss) private var dismiss
-    @State private var passcode = ""
-
-    var body: some View {
-        VStack(spacing: 24) {
-            Capsule()
-                .fill(AppColors.borderSubtle)
-                .frame(width: 40, height: 4)
-                .padding(.top, 12)
-
-            Text("Enter Passcode")
-                .font(AppTypography.title)
-                .foregroundStyle(AppColors.textPrimary)
-
-            SecureField("", text: $passcode,
-                        prompt: Text("••••••")
-                            .foregroundColor(AppColors.textTertiary))
-                .multilineTextAlignment(.center)
-                .keyboardType(.numberPad)
-                .padding(14)
-                .background(
-                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .fill(AppColors.bgSurface)
-                )
-                .foregroundStyle(AppColors.textPrimary)
-                .padding(.horizontal, 40)
-
-            PrimaryButton(title: "Unlock", isEnabled: passcode.count >= 4) {
-                onUnlock()
-                dismiss()
-            }
-            .padding(.horizontal, 24)
-
-            Spacer()
-        }
-        .background(AppColors.bgSurfaceMax)
-        .presentationDetents([.height(340)])
-        .presentationBackground(AppColors.bgSurfaceMax)
-    }
-}
-
 #Preview {
     AuthenticationView(onAuthenticated: {})
+        .environment(AppCoordinator())
 }

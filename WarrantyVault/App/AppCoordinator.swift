@@ -14,7 +14,8 @@ import SwiftUI
 enum AppFlowStage: Hashable {
     case splash
     case onboarding
-    case authentication
+    case authentication      // email login gate (first sign-in / after sign-out)
+    case biometricLock       // returning user — Face ID re-unlock over a restored session
     case mainApp
 }
 
@@ -30,12 +31,13 @@ final class AppCoordinator {
         set { UserDefaults.standard.set(newValue, forKey: Self.onboardingKey) }
     }
 
-    /// Called by `SplashView` after its animation finishes. Picks the right
-    /// next stage based on whether the user has onboarded and whether
-    /// Firebase has restored a session.
+    /// Called by `SplashView` after its animation finishes. A restored
+    /// Firebase session sends the user through the biometric re-lock so a
+    /// stolen-but-unlocked phone doesn't expose the vault. A fresh sign-in
+    /// (no session yet) goes through the email login gate.
     func advanceFromSplash() {
         if AuthService.shared.isSignedIn {
-            stage = .mainApp
+            stage = .biometricLock
         } else if hasCompletedOnboarding {
             stage = .authentication
         } else {
@@ -50,13 +52,21 @@ final class AppCoordinator {
         stage = AuthService.shared.isSignedIn ? .mainApp : .authentication
     }
 
-    /// Called by `RootView` whenever Firebase's auth state flips. Bounces
-    /// between login and main app to keep the gate honest.
+    /// Called by `AuthenticationView` once Face ID succeeds.
+    func biometricsUnlocked() {
+        stage = .mainApp
+    }
+
+    /// Called by `RootView` whenever Firebase's auth state flips. Sign-in
+    /// bypasses the biometric step (the user just typed their password —
+    /// re-prompting for a face scan would be redundant). Sign-out from any
+    /// post-login stage drops the user back to the email gate.
     func applyAuthState(isSignedIn: Bool) {
         switch stage {
         case .authentication where isSignedIn:
             stage = .mainApp
-        case .mainApp where !isSignedIn:
+        case .biometricLock where !isSignedIn,
+             .mainApp where !isSignedIn:
             stage = .authentication
         default:
             break
