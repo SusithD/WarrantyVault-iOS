@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 import CoreData
+import WidgetKit
 
 /// Core Data-backed observable store. Views still read `warranties`, `claims`,
 /// `activity` etc. as struct arrays — the store keeps them in sync with the
@@ -41,6 +42,7 @@ final class AppStore {
         self.household = household
         self.messages  = messages
         reloadAll()
+        refreshWidgetSnapshot()
     }
 
     /// Convenience init used by SwiftUI previews. Spins up an in-memory Core Data
@@ -107,6 +109,7 @@ final class AppStore {
         save()
         reloadWarranties()
         reloadActivity()
+        refreshWidgetSnapshot()
 
         Task.detached { await NotificationService.shared.schedule(for: w) }
     }
@@ -115,6 +118,7 @@ final class AppStore {
         WarrantyEntity.upsert(from: w, in: context)
         save()
         reloadWarranties()
+        refreshWidgetSnapshot()
 
         Task.detached {
             NotificationService.shared.cancel(for: w.id)
@@ -133,6 +137,7 @@ final class AppStore {
             save()
         }
         reloadWarranties()
+        refreshWidgetSnapshot()
 
         Task.detached { NotificationService.shared.cancel(for: id) }
         if let calendarEventId {
@@ -246,6 +251,32 @@ final class AppStore {
         request.sortDescriptors = [NSSortDescriptor(keyPath: \ActivityEntity.occurredAt, ascending: false)]
         let entities = (try? context.fetch(request)) ?? []
         activity = entities.map(ActivityEntry.init)
+    }
+
+    /// Persist a small snapshot of "what's expiring next" to the App Group
+    /// container and ask WidgetKit to redraw. Cheap; safe to call after every
+    /// mutation. No-op when the App Group container isn't available.
+    private func refreshWidgetSnapshot() {
+        let candidate = warranties
+            .filter { $0.status != .expired }
+            .min(by: { $0.expiryDate < $1.expiryDate })
+
+        let snapshot: WidgetSnapshot
+        if let next = candidate {
+            snapshot = WidgetSnapshot(
+                nextWarrantyId: next.id,
+                nextProductName: next.productName,
+                nextCategoryRaw: next.category.rawValue,
+                nextDaysUntilExpiry: next.daysRemaining,
+                totalActive: warranties.filter { $0.status != .expired }.count,
+                writtenAt: Date()
+            )
+        } else {
+            snapshot = WidgetSnapshot.empty
+        }
+
+        WidgetSnapshotStore.write(snapshot)
+        WidgetCenter.shared.reloadAllTimelines()
     }
 }
 
