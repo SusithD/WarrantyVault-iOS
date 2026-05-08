@@ -17,7 +17,7 @@ extension WarrantyEntity {
     @NSManaged public var price: Double
     @NSManaged public var serialNumber: String
     @NSManaged public var notes: String
-    @NSManaged public var receiptAttached: Bool
+    @NSManaged public var receiptImage: Data?
     @NSManaged public var reminderEnabled: Bool
     @NSManaged public var createdAt: Date
     @NSManaged public var updatedAt: Date

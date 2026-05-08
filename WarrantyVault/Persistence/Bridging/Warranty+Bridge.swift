@@ -16,7 +16,7 @@ extension Warranty {
             price: entity.price,
             serialNumber: entity.serialNumber,
             notes: entity.notes,
-            receiptAttached: entity.receiptAttached,
+            receiptImage: entity.receiptImage,
             reminderEnabled: entity.reminderEnabled
         )
     }
@@ -36,7 +36,7 @@ extension WarrantyEntity {
         self.price           = value.price
         self.serialNumber    = value.serialNumber
         self.notes           = value.notes
-        self.receiptAttached = value.receiptAttached
+        self.receiptImage    = value.receiptImage
         self.reminderEnabled = value.reminderEnabled
         self.updatedAt       = Date()
     }

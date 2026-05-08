@@ -16,6 +16,7 @@
 		C91C82DFF26C94B98B65E584 /* PageIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887BC54B61BCA96E23839BA0 /* PageIndicator.swift */; };
 		187BDFAA22AEE194740A56C7 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA7CFCF6984A6BD29D9B7D5 /* PrimaryButton.swift */; };
 		75DED1E49FD3556399FB06DE /* AddWarrantyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0CE25BDF9BBE41D2254BBD8 /* AddWarrantyView.swift */; };
+		E7A0997F1D19B7D57707BD5B /* CameraPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395416B988E7894C920EE8F6 /* CameraPicker.swift */; };
 		190D98B557B268DEF1B6906F /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DBB6488DBB39D2383AE76B /* AuthenticationView.swift */; };
 		9F51A559E62A9547D99E16A8 /* MainAppPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095254A4332EF34AFA688196 /* MainAppPlaceholderView.swift */; };
 		6A50B6D38BEE6D33DCC6A4D6 /* ClaimChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A47CEA66A2F6C68CAC6243 /* ClaimChatView.swift */; };
@@ -47,6 +48,7 @@
 		875DD61EB0B341FBB313E6CF /* ClaimEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 289A7F013E6181ECDF8AB5DC /* ClaimEntity+CoreDataProperties.swift */; };
 		09F01F53591CEEF0B7C10FE4 /* WarrantyEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D60B2675D348951D4CE1505 /* WarrantyEntity+CoreDataClass.swift */; };
 		9803F7CBC316BB8060ED16A5 /* WarrantyEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24AEE743D783631FEBFA450 /* WarrantyEntity+CoreDataProperties.swift */; };
+		5CF68C559D36CB928C31585A /* ImageProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECDE40458958063EEA2BEEC /* ImageProcessing.swift */; };
 		533D78D209768B0620E806B4 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1742C9D25B10917F452469D /* NotificationService.swift */; };
 		C2547F273BC1D92C0CE36C8F /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E97D67F3238351114B404D4 /* PersistenceController.swift */; };
 		09A4B4018EE19DB9F182FB10 /* WarrantyVaultApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2855521D3CECE57610385E92 /* WarrantyVaultApp.swift */; };
@@ -66,6 +68,7 @@
 		887BC54B61BCA96E23839BA0 /* PageIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PageIndicator.swift"; sourceTree = "<group>"; };
 		2AA7CFCF6984A6BD29D9B7D5 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PrimaryButton.swift"; sourceTree = "<group>"; };
 		E0CE25BDF9BBE41D2254BBD8 /* AddWarrantyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddWarrantyView.swift"; sourceTree = "<group>"; };
+		395416B988E7894C920EE8F6 /* CameraPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraPicker.swift"; sourceTree = "<group>"; };
 		42DBB6488DBB39D2383AE76B /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationView.swift"; sourceTree = "<group>"; };
 		095254A4332EF34AFA688196 /* MainAppPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainAppPlaceholderView.swift"; sourceTree = "<group>"; };
 		95A47CEA66A2F6C68CAC6243 /* ClaimChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClaimChatView.swift"; sourceTree = "<group>"; };
@@ -97,12 +100,14 @@
 		289A7F013E6181ECDF8AB5DC /* ClaimEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClaimEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9D60B2675D348951D4CE1505 /* WarrantyEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WarrantyEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		B24AEE743D783631FEBFA450 /* WarrantyEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WarrantyEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2ECDE40458958063EEA2BEEC /* ImageProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageProcessing.swift"; sourceTree = "<group>"; };
 		A1742C9D25B10917F452469D /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationService.swift"; sourceTree = "<group>"; };
 		5E97D67F3238351114B404D4 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersistenceController.swift"; sourceTree = "<group>"; };
 		2855521D3CECE57610385E92 /* WarrantyVaultApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WarrantyVaultApp.swift"; sourceTree = "<group>"; };
 		B45634CEEE3EB39F8AD6FF61 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets.xcassets"; sourceTree = "<group>"; };
 		757D7FD6E847403B72ECD838 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A76F63FEB525BAB2DC000E15 /* WarrantyVault 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WarrantyVault 2.xcdatamodel"; sourceTree = "<group>"; };
+		E78A845584175F04D717E134 /* WarrantyVault 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WarrantyVault 3.xcdatamodel"; sourceTree = "<group>"; };
 		EE093E46BBB7A5A72250A01C /* WarrantyVault.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WarrantyVault.xcdatamodel"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -191,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				E0CE25BDF9BBE41D2254BBD8 /* AddWarrantyView.swift */,
+				395416B988E7894C920EE8F6 /* CameraPicker.swift */,
 			);
 			path = "AddWarranty";
 			sourceTree = "<group>";
@@ -292,6 +298,7 @@
 			children = (
 				1C0D4DE3AA05F5F407F5F402 /* Bridging */,
 				0C846BAFF22516A808F23DDF /* Entities */,
+				2ECDE40458958063EEA2BEEC /* ImageProcessing.swift */,
 				A1742C9D25B10917F452469D /* NotificationService.swift */,
 				5E97D67F3238351114B404D4 /* PersistenceController.swift */,
 				8A33099F64A214C051F2B74C /* WarrantyVault.xcdatamodeld */,
@@ -409,6 +416,7 @@
 				C91C82DFF26C94B98B65E584 /* PageIndicator.swift in Sources */,
 				187BDFAA22AEE194740A56C7 /* PrimaryButton.swift in Sources */,
 				75DED1E49FD3556399FB06DE /* AddWarrantyView.swift in Sources */,
+				E7A0997F1D19B7D57707BD5B /* CameraPicker.swift in Sources */,
 				190D98B557B268DEF1B6906F /* AuthenticationView.swift in Sources */,
 				9F51A559E62A9547D99E16A8 /* MainAppPlaceholderView.swift in Sources */,
 				6A50B6D38BEE6D33DCC6A4D6 /* ClaimChatView.swift in Sources */,
@@ -440,6 +448,7 @@
 				875DD61EB0B341FBB313E6CF /* ClaimEntity+CoreDataProperties.swift in Sources */,
 				09F01F53591CEEF0B7C10FE4 /* WarrantyEntity+CoreDataClass.swift in Sources */,
 				9803F7CBC316BB8060ED16A5 /* WarrantyEntity+CoreDataProperties.swift in Sources */,
+				5CF68C559D36CB928C31585A /* ImageProcessing.swift in Sources */,
 				533D78D209768B0620E806B4 /* NotificationService.swift in Sources */,
 				C2547F273BC1D92C0CE36C8F /* PersistenceController.swift in Sources */,
 				09A4B4018EE19DB9F182FB10 /* WarrantyVaultApp.swift in Sources */,
@@ -454,9 +463,10 @@
 			isa = XCVersionGroup;
 			children = (
 				A76F63FEB525BAB2DC000E15 /* WarrantyVault 2.xcdatamodel */,
+				E78A845584175F04D717E134 /* WarrantyVault 3.xcdatamodel */,
 				EE093E46BBB7A5A72250A01C /* WarrantyVault.xcdatamodel */,
 			);
-			currentVersion = A76F63FEB525BAB2DC000E15 /* WarrantyVault 2.xcdatamodel */;
+			currentVersion = E78A845584175F04D717E134 /* WarrantyVault 3.xcdatamodel */;
 			path = "WarrantyVault.xcdatamodeld";
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
@@ -597,7 +607,9 @@
 				DEVELOPMENT_ASSET_PATHS = "\"WarrantyVault/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Used to capture receipt images of your purchases.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "WarrantyVault uses Face ID to unlock your vault.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Used to attach receipt images to your warranties.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -626,7 +638,9 @@
 				DEVELOPMENT_ASSET_PATHS = "\"WarrantyVault/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Used to capture receipt images of your purchases.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "WarrantyVault uses Face ID to unlock your vault.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Used to attach receipt images to your warranties.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

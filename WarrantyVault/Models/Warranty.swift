@@ -48,8 +48,12 @@ struct Warranty: Identifiable, Hashable, Codable {
     var price: Double
     var serialNumber: String
     var notes: String
-    var receiptAttached: Bool
+    var receiptImage: Data?
     var reminderEnabled: Bool
+
+    /// Derived from `receiptImage` — kept for one release so views that read
+    /// the legacy `receiptAttached` flag continue to compile unchanged.
+    var receiptAttached: Bool { receiptImage != nil }
 
     init(
         id: UUID = UUID(),
@@ -62,7 +66,7 @@ struct Warranty: Identifiable, Hashable, Codable {
         price: Double,
         serialNumber: String = "",
         notes: String = "",
-        receiptAttached: Bool = true,
+        receiptImage: Data? = nil,
         reminderEnabled: Bool = true
     ) {
         self.id = id
@@ -75,7 +79,7 @@ struct Warranty: Identifiable, Hashable, Codable {
         self.price = price
         self.serialNumber = serialNumber
         self.notes = notes
-        self.receiptAttached = receiptAttached
+        self.receiptImage = receiptImage
         self.reminderEnabled = reminderEnabled
     }
 

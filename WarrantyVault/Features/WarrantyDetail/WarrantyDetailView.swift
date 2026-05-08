@@ -163,25 +163,33 @@ struct WarrantyDetailView: View {
 
     private func receiptCard(_ w: Warranty) -> some View {
         GlassCard {
-            HStack(spacing: 14) {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .fill(AppColors.brandBlueSoft)
-                        .frame(width: 44, height: 44)
-                    Image(systemName: w.receiptAttached ? "doc.text.fill" : "doc.text")
-                        .foregroundStyle(AppColors.brandBlue)
+            VStack(alignment: .leading, spacing: 12) {
+                HStack(spacing: 14) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(AppColors.brandBlueSoft)
+                            .frame(width: 44, height: 44)
+                        Image(systemName: w.receiptAttached ? "doc.text.fill" : "doc.text")
+                            .foregroundStyle(AppColors.brandBlue)
+                    }
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(w.receiptAttached ? "Receipt" : "No receipt attached")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundStyle(AppColors.textPrimary)
+                        Text(w.receiptAttached ? "Saved with this warranty" : "Edit to add one")
+                            .font(.system(size: 12))
+                            .foregroundStyle(AppColors.textSecondary)
+                    }
+                    Spacer()
                 }
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(w.receiptAttached ? "Receipt attached" : "No receipt yet")
-                        .font(.system(size: 14, weight: .semibold))
-                        .foregroundStyle(AppColors.textPrimary)
-                    Text(w.receiptAttached ? "Tap to preview" : "Tap to upload one")
-                        .font(.system(size: 12))
-                        .foregroundStyle(AppColors.textSecondary)
+
+                if let data = w.receiptImage, let img = UIImage(data: data) {
+                    Image(uiImage: img)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: .infinity)
+                        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                 }
-                Spacer()
-                Image(systemName: "chevron.right")
-                    .foregroundStyle(AppColors.textTertiary)
             }
         }
     }

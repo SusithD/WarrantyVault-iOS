@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22515" systemVersion="23F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="WarrantyEntity" representedClassName="WarrantyEntity" syncable="YES">
+        <attribute name="brand" attributeType="String" defaultValueString=""/>
+        <attribute name="categoryRaw" attributeType="String" defaultValueString="Other"/>
+        <attribute name="createdAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="expiryDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="notes" attributeType="String" defaultValueString=""/>
+        <attribute name="price" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="productName" attributeType="String" defaultValueString=""/>
+        <attribute name="purchaseDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="receiptImage" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="reminderEnabled" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="retailer" attributeType="String" defaultValueString=""/>
+        <attribute name="serialNumber" attributeType="String" defaultValueString=""/>
+        <attribute name="updatedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="ClaimEntity" representedClassName="ClaimEntity" syncable="YES">
+        <attribute name="filedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="issueSummary" attributeType="String" defaultValueString=""/>
+        <attribute name="productName" attributeType="String" defaultValueString=""/>
+        <attribute name="referenceCode" attributeType="String" defaultValueString=""/>
+        <attribute name="statusRaw" attributeType="String" defaultValueString="Submitted"/>
+        <attribute name="timelineData" optional="YES" attributeType="Binary"/>
+        <attribute name="updatedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="warrantyId" attributeType="UUID" usesScalarValueType="NO"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="ActivityEntity" representedClassName="ActivityEntity" syncable="YES">
+        <attribute name="actorAccentHex" attributeType="String" defaultValueString="#0A84FF"/>
+        <attribute name="actorInitials" attributeType="String" defaultValueString=""/>
+        <attribute name="actorName" attributeType="String" defaultValueString=""/>
+        <attribute name="detail" attributeType="String" defaultValueString=""/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="kindRaw" attributeType="String" defaultValueString="added"/>
+        <attribute name="occurredAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="title" attributeType="String" defaultValueString=""/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+</model>

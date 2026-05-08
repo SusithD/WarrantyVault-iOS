@@ -1,4 +1,5 @@
 import SwiftUI
+import PhotosUI
 
 struct AddWarrantyView: View {
     @Environment(AppStore.self) private var store
@@ -16,7 +17,9 @@ struct AddWarrantyView: View {
     @State private var priceText: String
     @State private var purchaseDate: Date
     @State private var expiryDate: Date
-    @State private var receiptAttached: Bool
+    @State private var receiptImage: Data?
+    @State private var photosPickerItem: PhotosPickerItem?
+    @State private var presentingCamera = false
     @State private var reminderEnabled: Bool
 
     init(editing: Warranty? = nil) {
@@ -30,7 +33,7 @@ struct AddWarrantyView: View {
         _priceText     = State(initialValue: editing.map { String(format: "%.2f", $0.price) } ?? "")
         _purchaseDate  = State(initialValue: editing?.purchaseDate ?? Date())
         _expiryDate    = State(initialValue: editing?.expiryDate ?? Calendar.current.date(byAdding: .year, value: 1, to: Date()) ?? Date())
-        _receiptAttached = State(initialValue: editing?.receiptAttached ?? false)
+        _receiptImage    = State(initialValue: editing?.receiptImage)
         _reminderEnabled = State(initialValue: editing?.reminderEnabled ?? true)
     }
 
@@ -43,7 +46,7 @@ struct AddWarrantyView: View {
                     categoryCard
                     datesCard
                     purchaseDetailsCard
-                    receiptToggle
+                    receiptCard
                     reminderToggle
                     notesField
                     savingButton
@@ -58,6 +61,21 @@ struct AddWarrantyView: View {
             ToolbarItem(placement: .topBarLeading) {
                 Button("Cancel") { dismiss() }
                     .foregroundStyle(AppColors.textSecondary)
+            }
+        }
+        .sheet(isPresented: $presentingCamera) {
+            CameraPicker { image in
+                receiptImage = image.receiptEncoded()
+            }
+            .ignoresSafeArea()
+        }
+        .onChange(of: photosPickerItem) { _, item in
+            guard let item else { return }
+            Task {
+                if let data = try? await item.loadTransferable(type: Data.self),
+                   let image = UIImage(data: data) {
+                    await MainActor.run { receiptImage = image.receiptEncoded() }
+                }
             }
         }
     }
@@ -125,20 +143,77 @@ struct AddWarrantyView: View {
         }
     }
 
-    private var receiptToggle: some View {
+    private var receiptCard: some View {
         GlassCard {
-            Toggle(isOn: $receiptAttached) {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Receipt attached")
-                        .font(.system(size: 14, weight: .semibold))
-                        .foregroundStyle(AppColors.textPrimary)
-                    Text("Helps speed up future claims.")
-                        .font(.system(size: 12))
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Receipt".uppercased()).overlineStyle()
+
+                receiptPreview
+
+                HStack(spacing: 8) {
+                    PhotosPicker(selection: $photosPickerItem, matching: .images) {
+                        receiptActionLabel(symbol: "photo.on.rectangle.angled", text: "Library")
+                    }
+
+                    if CameraPicker.isAvailable {
+                        Button {
+                            presentingCamera = true
+                        } label: {
+                            receiptActionLabel(symbol: "camera.fill", text: "Camera")
+                        }
+                    }
+
+                    if receiptImage != nil {
+                        Button(role: .destructive) {
+                            receiptImage = nil
+                            photosPickerItem = nil
+                        } label: {
+                            receiptActionLabel(symbol: "trash", text: "Remove")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var receiptPreview: some View {
+        if let data = receiptImage, let img = UIImage(data: data) {
+            Image(uiImage: img)
+                .resizable()
+                .scaledToFill()
+                .frame(maxWidth: .infinity)
+                .frame(height: 180)
+                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+        } else {
+            ZStack {
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(AppColors.surfaceMuted.opacity(0.6))
+                    .frame(height: 120)
+                VStack(spacing: 6) {
+                    Image(systemName: "doc.text")
+                        .font(.system(size: 22, weight: .semibold))
+                        .foregroundStyle(AppColors.textTertiary)
+                    Text("No receipt attached")
+                        .font(.system(size: 12, weight: .medium))
                         .foregroundStyle(AppColors.textSecondary)
                 }
             }
-            .tint(AppColors.brandBlue)
         }
+    }
+
+    private func receiptActionLabel(symbol: String, text: String) -> some View {
+        HStack(spacing: 6) {
+            Image(systemName: symbol)
+            Text(text)
+        }
+        .font(.system(size: 13, weight: .semibold))
+        .foregroundStyle(AppColors.brandBlue)
+        .frame(maxWidth: .infinity, minHeight: 38)
+        .background(
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .fill(AppColors.brandBlueSoft)
+        )
     }
 
     private var reminderToggle: some View {
@@ -196,7 +271,7 @@ struct AddWarrantyView: View {
             updated.price = price
             updated.purchaseDate = purchaseDate
             updated.expiryDate = expiryDate
-            updated.receiptAttached = receiptAttached
+            updated.receiptImage    = receiptImage
             updated.reminderEnabled = reminderEnabled
             store.updateWarranty(updated)
         } else {
@@ -210,7 +285,7 @@ struct AddWarrantyView: View {
                 price: price,
                 serialNumber: serial,
                 notes: notes,
-                receiptAttached: receiptAttached,
+                receiptImage: receiptImage,
                 reminderEnabled: reminderEnabled
             )
             store.addWarranty(w)

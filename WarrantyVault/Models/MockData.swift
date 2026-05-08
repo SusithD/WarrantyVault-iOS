@@ -36,8 +36,7 @@ enum MockData {
             retailer: "Best Buy",
             price: 1999.00,
             serialNumber: "SM-QN90C-8827-33021",
-            notes: "Includes 2 year manufacturer + 1 year store extended.",
-            receiptAttached: true
+            notes: "Includes 2 year manufacturer + 1 year store extended."
         ),
         Warranty(
             productName: "MacBook Pro 14\" M3",
@@ -48,8 +47,7 @@ enum MockData {
             retailer: "Apple Store",
             price: 2399.00,
             serialNumber: "C02ZL0AC-JK23",
-            notes: "AppleCare+ included.",
-            receiptAttached: true
+            notes: "AppleCare+ included."
         ),
         Warranty(
             productName: "LG WashTower",
@@ -60,8 +58,7 @@ enum MockData {
             retailer: "Home Depot",
             price: 2699.00,
             serialNumber: "WT-7901-XL",
-            notes: "Front-load, extended coverage.",
-            receiptAttached: true
+            notes: "Front-load, extended coverage."
         ),
         Warranty(
             productName: "Dyson V15 Detect",
@@ -72,8 +69,7 @@ enum MockData {
             retailer: "Dyson.com",
             price: 749.00,
             serialNumber: "V15-DET-2001",
-            notes: "Expired — renew soon.",
-            receiptAttached: false
+            notes: "Expired — renew soon."
         ),
         Warranty(
             productName: "Herman Miller Aeron",
@@ -84,8 +80,7 @@ enum MockData {
             retailer: "HermanMiller.com",
             price: 1695.00,
             serialNumber: "HM-AER-SIZEB",
-            notes: "12-year warranty.",
-            receiptAttached: true
+            notes: "12-year warranty."
         ),
         Warranty(
             productName: "Tesla Model Y",
@@ -96,8 +91,7 @@ enum MockData {
             retailer: "Tesla",
             price: 48900.00,
             serialNumber: "5YJYG...",
-            notes: "Basic + battery/drive unit coverage.",
-            receiptAttached: true
+            notes: "Basic + battery/drive unit coverage."
         ),
         Warranty(
             productName: "Bosch 18V Cordless Drill",
@@ -108,8 +102,7 @@ enum MockData {
             retailer: "Lowe's",
             price: 189.00,
             serialNumber: "BOS-18V-441",
-            notes: "3-year pro tool warranty.",
-            receiptAttached: true
+            notes: "3-year pro tool warranty."
         )
     ]
 
